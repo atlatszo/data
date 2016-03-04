@@ -1,0 +1,98 @@
+[zoom <= 8] {
+	#output_megye{
+    	polygon-fill: #FFFFB2;
+  		polygon-opacity: 0.8;
+  		line-color: #012700;
+  		line-width: 0.5;
+  		line-opacity: 1;
+	}
+	
+  	#output_megye [ donation <= 2292164.023476] {
+   		polygon-fill: #B10026;
+	}
+	#output_megye [ donation <= 527804.962649001] {
+   		polygon-fill: #E31A1C;
+	}
+	#output_megye [ donation <= 444088.794373999] {
+   		polygon-fill: #FC4E2A;
+	}
+	#output_megye [ donation <= 376634.510912] {
+   		polygon-fill: #FD8D3C;
+	}
+	#output_megye [ donation <= 309747.735656] {
+   		polygon-fill: #FEB24C;
+	}
+	#output_megye [ donation <= 290953.995003] {
+   		polygon-fill: #FED976;
+	}
+	#output_megye [ donation <= 187703.850966] {
+   		polygon-fill: #FFFFB2;
+	}
+}
+
+[zoom = 9] {
+	#output_kisterseg{
+  		polygon-fill: #FFFFB2;
+  		polygon-opacity: 0.8;
+  		line-color: #012700;
+  		line-width: 0.5;
+  		line-opacity: 0.6;
+	}
+  	#output_kisterseg [ donation <= 2292164.023476] {
+   		polygon-fill: #B10026;
+	}
+	#output_kisterseg [ donation <= 54599.9911655] {
+   		polygon-fill: #E31A1C;
+	}
+	#output_kisterseg [ donation <= 32092.8935495] {
+   		polygon-fill: #FC4E2A;
+	}
+	#output_kisterseg [ donation <= 22657.1257535] {
+   		polygon-fill: #FD8D3C;
+	}
+	#output_kisterseg [ donation <= 18169.7981235] {
+   		polygon-fill: #FEB24C;
+	}
+	#output_kisterseg [ donation <= 13041.453012] {
+   		polygon-fill: #FED976;
+	}
+	#output_kisterseg [ donation <= 8478.1198955] {
+   		polygon-fill: #FFFFB2;
+	}
+  
+}
+
+[zoom >= 10] {
+
+	#output_telepules{
+  		polygon-fill: #FFFFB2;
+  		polygon-opacity: 0.8;
+  		line-color: #012700;
+  		line-width: 0.5;
+  		line-opacity: 1;
+	}
+	#output_telepules [ donation <= 2292164.023476] {
+   		polygon-fill: #B10026;
+	}
+	#output_telepules [ donation <= 2405.752534] {
+   		polygon-fill: #E31A1C;
+	}
+	#output_telepules [ donation <= 850.908555] {
+   		polygon-fill: #FC4E2A;
+	}
+	#output_telepules [ donation <= 399.843039] {
+   		polygon-fill: #FD8D3C;
+	}
+	#output_telepules [ donation <= 190.471144] {
+   		polygon-fill: #FEB24C;
+	}
+	#output_telepules [ donation <= 85.945873] {
+   		polygon-fill: #FED976;
+	}
+	#output_telepules [ donation <= 26.78908] {
+   		polygon-fill: #FFFFB2;
+	}
+  	#output_telepules [ donation = 0] {
+   		polygon-fill: #D4D4D4;
+	}
+}

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="author" content="Balazs Krich" />
+        <meta name="description" content="A map for Atlatszo.hu">
+        <title>Átlátszó térkép</title>
+
+        <!-- add styles and scripts -->
+        <link rel="stylesheet" type="text/css" href="/css/atlatszo.css"/>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="/js/megye.js"></script>
+        <script src="/js/kisterseg.js"></script>
+        <script src="/js/telepules.js"></script>
+
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript" src="/js/d3-tip.js"></script>
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    </head>
+
+    <body>
+        <div id="map"></div>
+
+        <script>
+            //D3.JS CHART GENERATION FUNCTIONS
+
+            function ConvertToCSV(objArray) {
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ','
+                            line += array[i][index];
+                        }
+                        str += line + '\r\n';
+                    }
+                    return str;
+                }
+
+            function render_chart(songId, inputData) {
+                var margin = {top: 72, right: 25, bottom: 66, left: 55},
+                    width = 320 - margin.left - margin.right,
+                    height = 317 - margin.top - margin.bottom;
+
+                //var parseDate = d3.time.format("%Y-%m-%d").parse
+                //var parseDate2 = d3.time.format("%d/%m/%Y").parse
+                //var formatDate = d3.time.format("%A %d %b %Y");
+                //var formatDate2 = d3.time.format("%d/%m/%Y");
+
+                var parseDate = d3.time.format("%Y").parse
+                var parseDate2 = d3.time.format("%Y").parse
+                var formatDate = d3.time.format("%Y");
+                var formatDate2 = d3.time.format("%Y");
+
+                var x = d3.scale.ordinal()
+                    .rangeRoundBands([0, width], .1);
+
+                var y = d3.scale.linear()
+                    .rangeRound([height, 0]);
+
+                var color = d3.scale.ordinal()
+                    .range(["#FF665A", "#FFCA63"]);
+
+                var songId = d3.selectAll("#playchart").append("svg")
+                    .attr("class", "playchart_" + songId)
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                    .append("g")
+                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                songId.append("g")
+                    .attr("class", "background_group")
+
+                /* Origin of data is session_account_history2.json passed by view.py. This is read
+                as json then converted to .csv and loaded into D3.js for visualisation */
+                var data0 =  inputData;
+                var jsonObject = JSON.stringify(data0);
+                var data2 = "SZ,USZ,N,TrDate,c,t"+"\n"+ConvertToCSV(jsonObject);
+                //console.log(data2);
+
+                data = d3.csv.parse(data2, function(d) {
+                    return {
+                        TrDate: formatDate2(parseDate(d.TrDate)),
+                        plays:+d.c,
+                        starts:+d.t
+                    };
+                });
+
+                color.domain(d3.keys(data[0]).filter(function(key) { return key !== "TrDate"; }));
+
+                data.forEach(function(d) {
+                    var y0 = 0;
+                    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], date: d["TrDate"], plays: d["plays"]}; });
+                    d.total = d.ages[d.ages.length - 1].y1;
+                    d.plays = d.ages[d.ages.length - 1].plays;
+                });
+
+                x.domain(data.map(function(d) { return d.TrDate; }));
+                y.domain([0, d3.max(data, function(d) { return d.total; })]);
+
+		        var line = d3.svg.line()
+		            .x(function(d) { return x(d.TrDate); })
+			        .y(function(d) { return y(d.total); });
+
+                var dataMiddle = Math.round((data.length-1)/2)
+
+                var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom")
+                    .tickValues([data[0].TrDate, data[dataMiddle].TrDate, data[data.length -1].TrDate]);
+
+                // function for the x grid lines
+                function make_y_axis() {
+                    return d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                        .ticks(5)
+                }
+
+                // Draw the y Grid lines
+                songId.append("g")
+                    .attr("class", "grid")
+                    .call(make_y_axis()
+                        .tickSize(-width, 0, 0)
+                        .tickFormat("")
+                    )
+
+        // Draw the y Grid lines
+        songId.append("g")
+            .attr("class", "grid")
+            .call(make_y_axis()
+                .tickSize(-width, 0, 0)
+                .tickFormat("")
+            )
+
+        var y_max = y.domain().slice(-1)
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(5, "s")
+            .tickFormat(d3.format(",.0f"));
+
+        songId.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height+ ")")
+            .call(xAxis);
+
+        songId.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
+
+        /*TRENDLINE*/
+
+		var xLabels = data.map(function (d) { return d.TrDate; })
+
+	    // get the x and y values for least squares
+		var xSeries = d3.range(1, xLabels.length + 1);
+		var ySeries = data.map(function(d) { return parseFloat(d.total); });
+		var ySeriesPlays = data.map(function(d) { return parseFloat(d.plays); });
+
+		var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+		var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
+
+
+		// apply the reults of the least squares regression
+
+		var x1 = xLabels[0];
+		var yCorr = 0;
+		var yCorrPlays = 0;
+		var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+		if (y1 < 0) {
+		    yCorr = y1 *-1;
+		    y1 = 0;
+		}
+		var y1Plays = leastSquaresCoeffPlays[0] + leastSquaresCoeffPlays[1];
+		if (y1Plays < 0) {
+		    yCorrPlays = y1 *-1;
+		    y1Plays = 0;
+		}
+		var x2 = xLabels[xLabels.length - 1];
+		var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
+		var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
+		var trendData = [[x1,y1,x2,y2]];
+		var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
+
+        // returns slope, intercept and r-square of the line
+	    function leastSquares(xSeries, ySeries) {
+	        var reduceSumFunc = function(prev, cur) { return prev + cur; };
+
+		    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+		    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+		    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+			    .reduce(reduceSumFunc);
+
+		    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+			    .reduce(reduceSumFunc);
+
+		    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+			    .reduce(reduceSumFunc);
+
+		    var slope = ssXY / ssXX;
+		    var intercept = yBar - (xBar * slope);
+		    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+
+		    return [slope, intercept, rSquare];
+	    }
+
+        /*TRENDLINE*/
+
+        var transdate = songId.selectAll(".transdate")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "g balance_bar")
+            .attr("transform", function(d) { return "translate(" + x(d.TrDate) + ",0)"; });
+
+
+        /*var tip = d3.tip().attr('class', 'd3-tip').offset([25, 82]).html(function(data) {
+            if (data.name == "plays") {
+                return '<span class="tooltip_header plays">Number of '+data.name+': </span><span>'+humanizeNumber(data.y1)+'</span><br><span class="tooltip_header plays">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
+            }
+            else {
+                return '<span class="tooltip_header starts">Number of '+data.name+': </span><span>'+humanizeNumber(data.y1)+'</span><br><span class="tooltip_header starts">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
+            }
+        });
+
+        songId.call(tip);*/
+
+        transdate.selectAll("rect")
+            .data(function(d) { return d.ages; })
+            .enter().append("rect")
+            .attr("width", x.rangeBand())
+            .attr("class", function(d) { return d.name +" bars"; })
+            .attr("data-date", function(d) { return d.date; })
+            .attr("y", function(d) { return y(0); })
+            .attr("height", function(d) { return y(0) - y(0); })
+            //.attr("fill", "rgba(255,255,255,0)")
+            //.style('stroke', "rgba(255,255,255,0)")
+            //.style('stroke-width', '0')
+            //.on('mouseover', tip.show)
+            //.on('mouseout', tip.hide)
+            .transition()
+            .duration(1500)
+            .attr("y", function(d) { return (y(d.y1)-1); })
+            .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+            .style("fill", function(d) { return color(d.name); })
+            .style('stroke', '#333')
+            .style('stroke-width', '0.5');
+
+        songId.selectAll(".g")
+            .data(data)
+            .attr("data", function(d) { return d.TrDate; })
+            .attr("balance", function(d) {return d.total; });
+
+        /*TRENDLINE */
+
+        var trendline = songId.selectAll(".trendline")
+		    .data(trendData);
+
+		trendline.enter()
+		    .append("line")
+			.attr("class", "trendline")
+			.attr("x1", function(d) { return x(d[0]); })
+			.attr("y1", function(d) { return y(d[1]); })
+			.attr("x2", function(d) { return x(d[2]); })
+			.attr("y2", function(d) { return y(d[3]); })
+			.attr("stroke", "#79DCE8")
+			.attr("stroke-width", 2)
+			.style("stroke-dasharray", ("3, 3"))
+			.style("stroke-opacity", 0.7);
+
+		var trendlinePlays = songId.selectAll(".trendlinePlays")
+		    .data(trendDataPlays);
+
+		trendlinePlays.enter()
+		    .append("line")
+			.attr("class", "trendlinePlays")
+			.attr("x1", function(d) { return x(d[0]); })
+			.attr("y1", function(d) { return y(d[1]); })
+			.attr("x2", function(d) { return x(d[2]); })
+			.attr("y2", function(d) { return y(d[3]); })
+			.attr("stroke", "#79DCE8")
+			.attr("stroke-width", 2)
+			.style("stroke-dasharray", ("3, 3"))
+			.style("stroke-opacity", 0.7);
+
+		/*TRENDLINE */
+
+    }
+
+
+
+
+
+
+
+
+
+            var mapboxAccessToken = "pk.eyJ1IjoiYmFsa2V5IiwiYSI6IkVEUHU3UVEifQ.ULJj3xCWhQvw4_jLEnHpTQ";
+            //var map = L.map('map').setView([47.162494, 19.503304], 8);
+
+            var map = L.map('map', {
+                center: [47.162494, 19.503304],
+                zoom: 8,
+            });
+
+            var geojson;
+            var geojson_kisterseg
+
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+                id: 'mapbox.light',
+                attribution: ""
+            }).addTo(map);
+
+            function getColor_m(d) {
+                return d >= 2292160 ? '#B10026' :
+                       d >= 527800  ? '#E31A1C' :
+                       d >= 444080  ? '#FC4E2A' :
+                       d >= 376630  ? '#FD8D3C' :
+                       d >= 309740   ? '#FEB24C' :
+                       d >= 290950   ? '#FED976' :
+                       d >= 187700   ? '#FFFFB2' :
+                       d === 0   ? '#FFFFB2' :
+                       '#FFFFB2';
+            }
+            function getColor_k(d) {
+                return d >= 2292160 ? '#B10026' :
+                       d >= 54599  ? '#E31A1C' :
+                       d >= 32092  ? '#FC4E2A' :
+                       d >= 18169  ? '#FD8D3C' :
+                       d >= 13041   ? '#FEB24C' :
+                       d >= 8478   ? '#FED976' :
+                       '#FFFFB2';
+            }
+
+            function getColor_t(d) {
+                return d >= 2292164.023476 ? '#B10026' :
+                       d >= 2405.752534  ? '#E31A1C' :
+                       d >= 850.908555  ? '#FC4E2A' :
+                       d >= 399.843039  ? '#FD8D3C' :
+                       d >= 190.471144   ? '#FEB24C' :
+                       d >= 85.945873   ? '#FED976' :
+                       d >= 26.78908   ? '#FFFFB2' :
+                       d === 0   ? '#D4D4D4' :
+                       '#D4D4D4';
+            }
+
+            function style_m(feature) {
+                return {
+                    fillColor: getColor_m(feature.properties.DONATION),
+                    weight: 1,
+                    opacity: 0.8,
+                    color: '#333333',
+                    dashArray: '',
+                    fillOpacity: 0.6
+                };
+            }
+            function style_k(feature) {
+                return {
+                    fillColor: getColor_k(feature.properties.DONATION),
+                    weight: 1,
+                    opacity: 0.8,
+                    color: '#333333',
+                    dashArray: '',
+                    fillOpacity: 0.6
+                };
+            }
+            function style_k_tr(feature) {
+                return {
+                    fillColor: getColor_k(feature.properties.DONATION),
+                    weight: 1,
+                    opacity: 0.1,
+                    color: '#333333',
+                    dashArray: '',
+                    fillOpacity: 0.6
+                };
+            }
+            function style_t(feature) {
+                return {
+                    fillColor: getColor_t(feature.properties.DONATION),
+                    weight: 1,
+                    opacity: 0.8,
+                    color: '#333333',
+                    dashArray: '',
+                    fillOpacity: 0.6
+                };
+            }
+
+            function highlightFeature(e) {
+                var layer = e.target;
+
+                layer.setStyle({
+                    weight: 2,
+                    color: '#000000',
+                    dashArray: '',
+                    fillOpacity: 0.2
+                });
+
+                if (!L.Browser.ie && !L.Browser.opera) {
+                    layer.bringToFront();
+                }
+                info.update(layer.feature.properties);
+            }
+
+            function resetHighlight(e) {
+                geojson.resetStyle(e.target);
+                info.update();
+            }
+
+            function zoomToFeature(e) {
+                map.fitBounds(e.target.getBounds());
+            }
+
+            function onEachFeature(feature, layer) {
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: zoomToFeature
+                });
+            }
+
+            var info = L.control();
+
+            var chart = L.control();
+
+            info.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                this.update();
+                return this._div;
+            };
+
+            chart.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'chart'); // create a div with a class "info"
+                return this._div;
+            };
+
+            // method that we will use to update the control based on feature properties passed
+            info.update = function (props) {
+            this._div.innerHTML = '<h4>EU támogatások 2007- 2013</h4>' +  (props ?
+                '<b>' + props.TEL_NEV + '</b><br />' + props.DONATION + ' millió Ft'
+                : 'Mozgasd az egeret egy település fölé!');
+            $('.playchart_1').remove();
+            if (props) {
+                $('#playchart').show();
+            }
+            else {
+                $('#playchart').hide();
+            }
+
+            if (typeof props != "undefined") {
+                //console.log(JSON.stringify(props.DONATION_TIME));
+                if (typeof props.DONATION_TIME != "undefined") {
+                    render_chart("1", props.DONATION_TIME);
+                    $('#playchart').show();
+                }
+                else {
+                    $('#playchart').hide();
+                }
+            }
+
+            };
+
+            info.addTo(map);
+            chart.addTo(map);
+
+            geojson = L.geoJson(megye, {
+                style: style_m,
+                onEachFeature: onEachFeature
+            }).addTo(map);
+
+            /*geojson.on('dblclick', function(event){
+                map.zoomIn();
+            });*/
+
+            var legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function (map) {
+
+                var div = L.DomUtil.create('div', 'info legend'),
+                grades = [21, 85, 190, 399, 850, 2405, 2292164],
+                labels = [];
+
+                // loop through our density intervals and generate a label with a colored square for each interval
+                for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColor_t(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                }
+
+                return div;
+            };
+
+            legend.addTo(map);
+
+            map.on('zoomend', function() {
+                // here's where you decided what zoom levels the layer should and should
+                // not be available for: use javascript comparisons like < and > if
+                // you want something other than just one zoom level, like
+                // (map.getZoom > 10)
+                if (map.getZoom() <= 9) {
+                    map.removeLayer(geojson);
+                    geojson = L.geoJson(megye, {
+                        style: style_m,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+
+                }
+                else if (map.getZoom() <= 11) {
+                    map.removeLayer(geojson);
+                    geojson = L.geoJson(kisterseg, {
+                        style: style_k,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                    // setFilter is available on L.mapbox.featureLayers only. Here
+                    // we're hiding and showing the default marker layer that's attached
+                    // to the map - change the reference if you want to hide or show a
+                    // different featureLayer.
+                    // If you want to hide or show a different kind of layer, you can use
+                    // similar methods like .setOpacity(0) and .setOpacity(1)
+                    // to hide or show it.
+                    //map.featureLayer.setFilter(function() { return true; });
+                }
+                else {
+                    map.removeLayer(geojson);
+                    geojson = L.geoJson(telepules, {
+                        style: style_t,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                    //map.featureLayer.setFilter(function() { return false; });
+                }
+            });
+
+
+            $(document).ready(function(){
+               $('.leaflet-bottom.leaflet-left').append('<div id="playchart"> \
+                                                            <div class="legend_header"> \
+                                                                <div class="legend_header_starts">Támogatás összesen: 0 Ft</div> \
+                                                            </div> \
+                                                            <div class="chart_legend"> \
+                                                                <div class="legend_starts"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Kutatási, techn. és innov. alap</div> \
+                                                                </div> \
+                                                                <div class="legend_plays"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">EU 2007-2013 tám. program</div> \
+                                                                </div> \
+                                                            </div> \
+                                                        </div>');
+            });
+
+        </script>
+    </body>
+</html>

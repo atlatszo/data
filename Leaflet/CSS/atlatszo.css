@@ -1,0 +1,211 @@
+#map {
+    width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Helvetica, Arial, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+#playchart {
+    background: rgba(0,0,0,0.7);
+    display: none;
+    z-index: 2000;
+    height: 322px;
+    width: 320px;
+    margin-top: 25px;
+    position: absolute;
+    left: 10px;
+    bottom: 20px;
+    box-shadow: 1px 1px 3px rgba(0,0,0, 1);
+    border-radius: 4px;
+}
+
+.chart_legend {
+    bottom: 10px;
+    left: 56px;
+    width: 100%;
+    position: absolute;
+}
+
+.legend_header {
+    position: relative;
+}
+
+.legend_header_starts,
+.legend_header_plays {
+    position: absolute;
+    left:0;
+    right:0;
+    text-align: center;
+    top: 40px;
+    color: #999;
+    text-shadow: 0px 2px 3px #171717;
+    font-family: helvetica;
+    font-weight: bold;
+    font-size: 15px;
+    z-index: 2003;
+}
+
+.legend_starts {
+    display:inline-block;
+    padding: 5px;
+    width: 101px;
+    border-radius:4px;
+    cursor:default;
+}
+
+.legend_plays {
+    display: inline-block;
+    padding: 5px;
+    width: 112px;
+    border-radius:4px;
+    cursor: default;
+}
+
+.legend_starts:hover,
+.legend_plays:hover {
+    background-color: #333;
+    border: 1px solid black;
+    padding: 4px;
+}
+
+
+.legend_starts > .legend_icon,
+.legend_plays > .legend_icon {
+    width: 19px;
+    height: 19px;
+    border: 1px solid #333;
+    margin-right: 5px;
+    border-radius: 2px;
+    float: left;
+    clear: both;
+}
+
+.legend_starts > .legend_icon {
+    background-color: #FFCA63;
+}
+
+.legend_plays > .legend_icon {
+    background-color: #FF665A;
+}
+
+.legend_text {
+    font-family: helvetica;
+    color: #999;
+    font-size: 10px;
+    line-height: 1;
+    text-shadow: 0px 2px 3px #171717;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+	fill: #999;
+	font-family: helvetica;
+	font-size: 12px;
+}
+
+.d3-tip {
+  line-height: 1.2;
+  padding: 8px;
+  font-size: 10px;
+  font-family: helvetica;
+  color: #999;
+  border-radius: 2px;
+  z-index: 2001;
+  background: rgba(35,34,27,0.9);
+  border: 1px solid rgba(0,0,0,.7);
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.3)), to(rgba(0,0,0,0)));
+  background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.3), rgba(0,0,0,0));
+  background-image:    -moz-linear-gradient(top, rgba(255,255,255,0.3), rgba(0,0,0,0));
+  background-image:     -ms-linear-gradient(top, rgba(255,255,255,0.3), rgba(0,0,0,0));
+  background-image:      -o-linear-gradient(top, rgba(255,255,255,0.3), rgba(0,0,0,0));
+  background-image:         linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(0,0,0,0));
+  box-shadow: inset 0px 1px 0px rgba(255,255,255,0.5);
+  pointer-events: none;
+}
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    position: absolute;
+    text-align: center;
+	content: '';
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right:10px solid rgba(72,70,65,0.8);
+	pointer-events: none;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: 0px 0px 0px -11px;
+  top: 26%;
+  left: 0;
+  pointer-events: none;
+}
+
+.tooltip_header {
+    font-weight: bold;
+}
+
+.tooltip_header.plays {
+    color: #FF665A;
+}
+
+.tooltip_header.starts {
+    color: #FFCA63;
+}
+
+.grid .tick {
+    stroke: #d6d6d6;
+    stroke-opacity: 0.1;
+    shape-rendering: crispEdges;
+}
+.grid path {
+    stroke-width: 0;
+}
+
+.trendlinePlays {
+    display: none;
+}

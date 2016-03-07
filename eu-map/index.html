@@ -432,10 +432,25 @@
                 return this._div;
             };
 
+            /**
+             * Number.prototype.format(n, x, s, c)
+             * 
+             * @param integer n: length of decimal
+             * @param integer x: length of whole part
+             * @param mixed   s: sections delimiter
+             * @param mixed   c: decimal delimiter
+             */
+            Number.prototype.format = function(n, x, s, c) {
+                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                    num = this.toFixed(Math.max(0, ~~n));
+
+                return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+            };
+
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
             this._div.innerHTML = '<h4>EU támogatások 2007- 2013</h4>' +  (props ?
-                '<b>' + props.TEL_NEV + '</b><br />' + props.DONATION + ' millió Ft'
+                '<b>' + props.TEL_NEV + '</b><br />' + props.DONATION.format(0, 3, ' ') + ' millió Ft'
                 : 'Mozgasd az egeret egy település fölé!');
             $('.playchart_1').remove();
             if (props) {

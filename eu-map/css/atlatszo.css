@@ -1,3 +1,11 @@
+.hidden_preloader {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    position: absolute;
+    z-index: -10;
+}
+
 #header {
     position: absolute;
     z-index: 2900000;
@@ -117,6 +125,23 @@ a {
     height: 30px;
 }
 
+#cash_logo {
+    content:url("//img/cash.png")
+}
+
+#cash_logo.active_logo {
+    content:url("//img/cash_active3.png")
+}
+
+#human_logo {
+    content:url("//img/human.png")
+}
+
+#human_logo.active_logo {
+    content:url("//img/human_active.png")
+}
+
+
 .language_change {
     float: right;
     margin-right: 10px;
@@ -139,10 +164,10 @@ a {
 
 #map {
     width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .info {
@@ -304,9 +329,9 @@ a {
 }
 
 .axis text {
-  fill: #91BED4;
-  font-family: helvetica;
-  font-size: 12px;
+    fill: #91BED4;
+    font-family: helvetica;
+    font-size: 12px;
 }
 
 .d3-tip {
@@ -340,13 +365,13 @@ a {
     line-height: 1;
     position: absolute;
     text-align: center;
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right:10px solid rgba(72,70,65,0.8);
-  pointer-events: none;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid rgba(72,70,65,0.8);
+    pointer-events: none;
 }
 
 /* Style northward tooltips differently */

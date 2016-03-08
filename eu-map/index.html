@@ -19,14 +19,15 @@
         <script src="js/telepules.js"></script>
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <script type="text/javascript" src="js/d3-tip.js"></script>
+        <script type="text/javascript" src="/js/d3-tip.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     </head>
 
     <body>
+        <div class="hidden_preloader"></div>
         <div id="header">
             <div class="logo_wrapper">
-                <a href="/">
+                <a href="/atlatszo">
                     <div class="logo_text">EU-FORRÁSOK</div>
                     <div class="logo_text_small">MAGYARORSZÁGON</div>
                     <img id="header_logo" src="http://atlatszo.hu/wp-content/themes/atlatszo/assets/img/sh-logos-al.png"/>
@@ -37,8 +38,8 @@
                 <div class="autocomplete_container"></div>
             </div>
             <div class="header_svg_container">
-                <img class="logo" id="cash_logo" src="img/cash_active3.png"/>
-                <img class="logo" id="human_logo" src="img/human.png"/>
+                <img class="logo active_logo" id="cash_logo"/>
+                <img class="logo" id="human_logo"/>
                 <img class="logo" id="bank_logo" src="img/bank.png"/>
             </div>
             <div class="language_change">
@@ -51,6 +52,10 @@
             //D3.JS CHART GENERATION FUNCTIONS
 
             var chartHover = "off";
+
+            var adminUnit = "megye";
+            var metric = "DONATION";
+            var timeSeries = "DONATION_TIME";
 
              /**
              * Number.prototype.format(n, x, s, c)
@@ -374,78 +379,114 @@
                 attribution: ""
             }).addTo(map);
 
-            function getColor_m(d) {
-                return d >= 2292160 ? '#B10026' :
-                       d >= 527800  ? '#E31A1C' :
-                       d >= 444080  ? '#FC4E2A' :
-                       d >= 376630  ? '#FD8D3C' :
-                       d >= 309740   ? '#FEB24C' :
-                       d >= 290950   ? '#FED976' :
-                       d >= 187700   ? '#FFFFB2' :
-                       d === 0   ? '#FFFFB2' :
-                       '#FFFFB2';
+            function getColor_m(d, metric) {
+                if (metric === "DONATION") {
+                    return d >= 2675472 ? '#B10026' :
+                           d >= 590828  ? '#B10026' :
+                           d >= 477281  ? '#E31A1C' :
+                           d >= 411403  ? '#FC4E2A' :
+                           d >= 339351   ? '#FD8D3C' :
+                           d >= 316725   ? '#FEB24C' :
+                           d >= 200732   ? '#FED976' :
+                           d >= 1   ? '#FFFFB2' :
+                           '#FFFFB2';
+                }
+                else if (metric === "CAPITA") {
+
+                    return d >= 1543228 ? '#0C2C84' :
+                           d >= 1400640  ? '#0C2C84' :
+                           d >= 1008979  ? '#225EA8' :
+                           d >= 883432  ? '#1D91C0' :
+                           d >= 805802   ? '#41B6C4' :
+                           d >= 672658   ? '#7FCDBB' :
+                           d >= 387974   ? '#C7E9B4' :
+                           d >= 1   ? '#FFFFCC' :
+                           '#FFFFCC';
+                }
             }
-            function getColor_k(d) {
-                return d >= 2292160 ? '#B10026' :
-                       d >= 54599  ? '#E31A1C' :
-                       d >= 32092  ? '#FC4E2A' :
-                       d >= 18169  ? '#FD8D3C' :
-                       d >= 13041   ? '#FEB24C' :
-                       d >= 8478   ? '#FED976' :
-                       '#FFFFB2';
+            function getColor_k(d, metric) {
+                if (metric === "DONATION") {
+                    return d >= 2292160 ? '#B10026' :
+                           d >= 393346  ? '#B10026' :
+                           d >= 155903  ? '#E31A1C' :
+                           d >= 45328  ? '#FC4E2A' :
+                           d >= 31826  ? '#FD8D3C' :
+                           d >= 17689   ? '#FEB24C' :
+                           d >= 17620   ? '#FED976' :
+                           d >= 1   ? '#FFFFB2' :
+                           '#FFFFB2';
+                }
+                else if (metric === "CAPITA") {
+                    return d >= 6713015 ? '#0C2C84' :
+                           d >= 3991456  ? '#0C2C84' :
+                           d >= 1214538  ? '#225EA8' :
+                           d >= 1022784  ? '#1D91C0' :
+                           d >= 730618  ? '#41B6C4' :
+                           d >= 561674   ? '#7FCDBB' :
+                           d >= 555546   ? '#C7E9B4' :
+                           d >= 1   ? '#FFFFCC' :
+                           '#FFFFCC';
+                }
             }
 
-            function getColor_t(d) {
-                return d >= 2292164.023476 ? '#B10026' :
-                       d >= 2405.752534  ? '#E31A1C' :
-                       d >= 850.908555  ? '#FC4E2A' :
-                       d >= 399.843039  ? '#FD8D3C' :
-                       d >= 190.471144   ? '#FEB24C' :
-                       d >= 85.945873   ? '#FED976' :
-                       d >= 26.78908   ? '#FFFFB2' :
-                       d === 0   ? '#D4D4D4' :
-                       '#D4D4D4';
+            function getColor_t(d, metric) {
+                if (metric === "DONATION") {
+                    return d >= 2675472 ? '#B10026' :
+                           d >= 271551  ? '#B10026' :
+                           d >= 3316  ? '#E31A1C' :
+                           d >= 1828  ? '#FC4E2A' :
+                           d >= 592   ? '#FD8D3C' :
+                           d >= 133   ? '#FEB24C' :
+                           d >= 130   ? '#FED976' :
+                           d >= 1   ? '#FFFFB2' :
+                           d === 0   ? '#D4D4D4' :
+                           '#FFFFB2';
+                }
+                else if (metric === "CAPITA") {
+                    return d >= 44534232 ? '#0C2C84' :
+                           d >= 10738345  ? '#0C2C84' :
+                           d >= 1635418  ? '#225EA8' :
+                           d >= 864218  ? '#1D91C0' :
+                           d >= 429965   ? '#41B6C4' :
+                           d >= 148955   ? '#7FCDBB' :
+                           d >= 147594   ? '#C7E9B4' :
+                           d >= 1   ? '#FFFFCC' :
+                           d === 0   ? '#D4D4D4' :
+                           '#FFFFCC';
+                }
             }
 
-            function style_m(feature) {
-                return {
-                    fillColor: getColor_m(feature.properties.DONATION),
-                    weight: 1,
-                    opacity: 0.8,
-                    color: '#333333',
-                    dashArray: '',
-                    fillOpacity: 0.6
-                };
-            }
-            function style_k(feature) {
-                return {
-                    fillColor: getColor_k(feature.properties.DONATION),
-                    weight: 1,
-                    opacity: 0.8,
-                    color: '#333333',
-                    dashArray: '',
-                    fillOpacity: 0.6
-                };
-            }
-            function style_k_tr(feature) {
-                return {
-                    fillColor: getColor_k(feature.properties.DONATION),
-                    weight: 1,
-                    opacity: 0.1,
-                    color: '#333333',
-                    dashArray: '',
-                    fillOpacity: 0.6
-                };
-            }
-            function style_t(feature) {
-                return {
-                    fillColor: getColor_t(feature.properties.DONATION),
-                    weight: 1,
-                    opacity: 0.8,
-                    color: '#333333',
-                    dashArray: '',
-                    fillOpacity: 0.6
-                };
+            function style(feature) {
+                if (adminUnit === "megye" ) {
+                    return {
+                        fillColor: getColor_m(feature['properties'][metric], metric),
+                        weight: 1,
+                        opacity: 0.8,
+                        color: '#333333',
+                        dashArray: '',
+                        fillOpacity: 0.6
+                    };
+                }
+                else if (adminUnit === "kisterseg") {
+                    return {
+                        fillColor: getColor_k(feature['properties'][metric], metric),
+                        weight: 1,
+                        opacity: 0.8,
+                        color: '#333333',
+                        dashArray: '',
+                        fillOpacity: 0.6
+                    };
+                }
+                else if (adminUnit === "telepules") {
+                    return {
+                        fillColor: getColor_t(feature['properties'][metric], metric),
+                        weight: 1,
+                        opacity: 0.8,
+                        color: '#333333',
+                        dashArray: '',
+                        fillOpacity: 0.6
+                    };
+                }
             }
 
             function highlightFeature(e) {
@@ -506,11 +547,17 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-            this._div.innerHTML = '<h4>EU támogatások 2007-2013</h4>' +  (props ?
-                '<b>' + props.TEL_NEV + '</b><br />' + props.DONATION.format(0, 3, ' ') + ' millió Ft'
-                : 'Mozgasd az egeret egy település fölé!');
+            if (metric === "DONATION") {
+                this._div.innerHTML = '<h4>Összes EU támogatás</h4>' +  (props ?
+                    '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' millió Ft'
+                    : 'Mozgasd az egeret egy település fölé!');
+            }
+            else if (metric === "CAPITA") {
+                this._div.innerHTML = '<h4>Egy főre jutó EU támogatás</h4>' +  (props ?
+                    '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' Ft'
+                    : 'Mozgasd az egeret egy település fölé!');
+            }
             $('.playchart_1').remove();
-            $('.legend_subheader').text(props ? props.DONATION + ' millió Ft': '0 Ft');
             if (props) {
                 $('#playchart').show();
             }
@@ -520,8 +567,8 @@
 
             if (typeof props != "undefined") {
                 //console.log(JSON.stringify(props.DONATION_TIME));
-                if (typeof props.DONATION_TIME != "undefined") {
-                    render_chart("1", props.DONATION_TIME);
+                if (typeof props[timeSeries] != "undefined") {
+                    render_chart("1", props[timeSeries]);
                     $('#playchart').show();
                 }
                 else {
@@ -535,7 +582,7 @@
             chart.addTo(map);
 
             geojson = L.geoJson(megye, {
-                style: style_m,
+                style: style,
                 onEachFeature: onEachFeature
             }).addTo(map);
 
@@ -554,7 +601,7 @@
                 // loop through our density intervals and generate a label with a colored square for each interval
                 for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
-                    '<i style="background:' + getColor_t(grades[i] + 1) + '"></i> ' +
+                    '<i style="background:' + getColor_t(grades[i] + 1, metric) + '"></i> ' +
                     (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
                 }
 
@@ -570,16 +617,18 @@
                 // (map.getZoom > 10)
                 if (map.getZoom() <= 9) {
                     map.removeLayer(geojson);
+                    adminUnit = "megye";
                     geojson = L.geoJson(megye, {
-                        style: style_m,
+                        style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
 
                 }
                 else if (map.getZoom() <= 11) {
                     map.removeLayer(geojson);
+                    adminUnit = "kisterseg";
                     geojson = L.geoJson(kisterseg, {
-                        style: style_k,
+                        style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
                     // setFilter is available on L.mapbox.featureLayers only. Here
@@ -593,8 +642,9 @@
                 }
                 else {
                     map.removeLayer(geojson);
+                    adminUnit = "telepules";
                     geojson = L.geoJson(telepules, {
-                        style: style_t,
+                        style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
                     //map.featureLayer.setFilter(function() { return false; });
@@ -639,6 +689,100 @@
                 $('.chart').on('mouseleave', function(){
                    chartHover === "off";
                 });
+
+                /*$(".main_search").autocomplete({
+                    minlength: 8,
+                    autofocus: "true",
+                    //appendTo: ".search_wrapper",
+                    appendTo: ".autocomplete_container",
+                    source: "http://www.balkeyplayer.com/search?time="+$.now(),
+                    focus: function( event, ui ) {
+                        //$( ".main_search" ).val( ui.item.song_title + " (" + ui.item.artist + ")");
+
+                        return false;
+                    },
+                    select: function( event, ui ) {
+                        $( ".main_search" ).val( ui.item.song_title + " (" + ui.item.artist + ")");
+                        window.location.href = ui.item.path + "?song=" + encodeURIComponent(ui.item.song_title);
+
+                        return false;
+                    }
+                });*/
+
+                $('#human_logo').on('click', function() {
+                    if(metric != "CAPITA") {
+                        metric = "CAPITA";
+                        timeSeries = "CAPITA_TIME";
+                        map.removeLayer(geojson);
+                        $('.logo').each(function(){
+                           $(this).removeClass('active_logo');
+                        });
+                        $("#human_logo").addClass('active_logo');
+                        $('.info h4').text('Egy főre jutó EU támogatás');
+                        if (adminUnit === "megye") {
+                            geojson = L.geoJson(megye, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                        else if (adminUnit === "kisterseg") {
+                            geojson = L.geoJson(kisterseg, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                        else if (adminUnit === "telepules") {
+                            geojson = L.geoJson(telepules, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                   }
+                });
+
+                $('#cash_logo').on('click', function() {
+                    if(metric != "DONATION") {
+                        metric = "DONATION";
+                        timeSeries = "DONATION_TIME";
+                        map.removeLayer(geojson);
+                        $('.logo').each(function(){
+                           $(this).removeClass('active_logo');
+                        });
+                        $("#cash_logo").addClass('active_logo');
+                        $('.info h4').text('Összes EU támogatás');
+                        if (adminUnit === "megye") {
+                            geojson = L.geoJson(megye, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                        else if (adminUnit === "kisterseg") {
+                            geojson = L.geoJson(kisterseg, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                        else if (adminUnit === "telepules") {
+                            geojson = L.geoJson(telepules, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+                        }
+                   }
+                });
+
+                function imageLoader(image, elem) {
+                    var c = new Image();
+                    c.onload = function(){
+                        elem.css("background-image", "url("+ image+")");
+                        elem.css("background-size", "100%, 100%");
+                    }
+
+                    c.src = image;
+                }
+                imageLoader("//img/cash_active3.png", $(".hidden_reloader"));
+                imageLoader("//img/human_active.png", $(".hidden_reloader"));
+
 
             });
 

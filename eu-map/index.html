@@ -555,12 +555,12 @@
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
             if (metric === "DONATION") {
-                this._div.innerHTML = '<h4>Összes EU támogatás</h4>' +  (props ?
+                this._div.innerHTML = '<h4>Összes EU támogatás (millió Ft)</h4>' +  (props ?
                     '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' millió Ft'
                     : 'Mozgasd az egeret egy település fölé!');
             }
             else if (metric === "CAPITA") {
-                this._div.innerHTML = '<h4>Egy főre jutó EU támogatás</h4>' +  (props ?
+                this._div.innerHTML = '<h4>Egy főre jutó EU támogatás (fő / Ft)</h4>' +  (props ?
                     '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' Ft'
                     : 'Mozgasd az egeret egy település fölé!');
             }
@@ -815,7 +815,7 @@
                            $(this).removeClass('active_logo');
                         });
                         $("#human_logo").addClass('active_logo');
-                        $('.info h4').text('Egy főre jutó EU támogatás');
+                        $('.info h4').text('Egy főre jutó EU támogatás (fő / Ft)');
                         if (adminUnit === "megye") {
                             geojson = L.geoJson(megye, {
                                 style: style,
@@ -848,7 +848,7 @@
                            $(this).removeClass('active_logo');
                         });
                         $("#cash_logo").addClass('active_logo');
-                        $('.info h4').text('Összes EU támogatás');
+                        $('.info h4').text('Összes EU támogatás (millió Ft)');
                         if (adminUnit === "megye") {
                             geojson = L.geoJson(megye, {
                                 style: style,

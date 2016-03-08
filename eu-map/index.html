@@ -9,6 +9,7 @@
         <title>Átlátszó térkép</title>
 
         <!-- add styles and scripts -->
+        <link rel="icon" type="image/ico" href="http://atlatszo.hu/wp-content/themes/atlatszo/favicon.ico?v=1"/>
         <link rel="stylesheet" type="text/css" href="css/atlatszo.css"/>
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
@@ -23,10 +24,64 @@
     </head>
 
     <body>
+        <div id="header">
+            <div class="logo_wrapper">
+                <a href="/">
+                    <div class="logo_text">EU-FORRÁSOK</div>
+                    <div class="logo_text_small">MAGYARORSZÁGON</div>
+                    <img id="header_logo" src="http://atlatszo.hu/wp-content/themes/atlatszo/assets/img/sh-logos-al.png"/>
+                </a>
+            </div>
+            <div class="search_wrapper">
+                <span class="main_search_padding_box"><input class="main_search" type="text" value="" placeholder=" Te hol költenéd el a legtöbb EU-forrást?" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="80"/></span>
+                <div class="autocomplete_container"></div>
+            </div>
+            <div class="header_svg_container">
+                <img class="logo" id="cash_logo" src="img/cash_active3.png"/>
+                <img class="logo" id="human_logo" src="img/human.png"/>
+                <img class="logo" id="bank_logo" src="img/bank.png"/>
+            </div>
+            <div class="language_change">
+                <div id="english">EN</div>
+            </div>
+        </div>
         <div id="map"></div>
 
         <script>
             //D3.JS CHART GENERATION FUNCTIONS
+
+            var chartHover = "off";
+
+             /**
+             * Number.prototype.format(n, x, s, c)
+             *
+             * @param integer n: length of decimal
+             * @param integer x: length of whole part
+             * @param mixed   s: sections delimiter
+             * @param mixed   c: decimal delimiter
+             */
+            Number.prototype.format = function(n, x, s, c) {
+                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+                    num = this.toFixed(Math.max(0, ~~n));
+                return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+            }
+
+            var hufFormat = d3.locale({
+                "decimal": ".",
+                "thousands": " ",
+                "grouping": [3],
+                "currency": ["", "HUF"],
+                "dateTime": "%a %b %e %X %Y",
+                "date": "%m/%d/%Y",
+                "time": "%H:%M:%S",
+                "periods": ["de", "du"],
+                "days": ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
+                "shortDays": ["V", "H", "K", "Sze", "Cs", "P", "Szo"],
+                "months": ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"],
+                "shortMonths": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"]
+            });
+
+            d3.format = hufFormat.numberFormat;
 
             function ConvertToCSV(objArray) {
                 var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
@@ -44,9 +99,9 @@
                 }
 
             function render_chart(songId, inputData) {
-                var margin = {top: 72, right: 25, bottom: 66, left: 55},
+                var margin = {top: 22, right: 25, bottom: 22, left: 65},
                     width = 320 - margin.left - margin.right,
-                    height = 317 - margin.top - margin.bottom;
+                    height = 250 - margin.top - margin.bottom;
 
                 //var parseDate = d3.time.format("%Y-%m-%d").parse
                 //var parseDate2 = d3.time.format("%d/%m/%Y").parse
@@ -65,7 +120,7 @@
                     .rangeRound([height, 0]);
 
                 var color = d3.scale.ordinal()
-                    .range(["#FF665A", "#FFCA63"]);
+                    .range(["#FF665A", "#FFCA63", "#594324", "#176B86", "#4D8E27"]);
 
                 var songId = d3.selectAll("#playchart").append("svg")
                     .attr("class", "playchart_" + songId)
@@ -81,16 +136,22 @@
                 as json then converted to .csv and loaded into D3.js for visualisation */
                 var data0 =  inputData;
                 var jsonObject = JSON.stringify(data0);
-                var data2 = "SZ,USZ,N,TrDate,c,t"+"\n"+ConvertToCSV(jsonObject);
-                //console.log(data2);
+                var data2 = "SZ,KTIA,N,TrDate,EU,USZ"+"\n"+ConvertToCSV(jsonObject);
+                console.log(data2);
 
                 data = d3.csv.parse(data2, function(d) {
                     return {
                         TrDate: formatDate2(parseDate(d.TrDate)),
-                        plays:+d.c,
-                        starts:+d.t
+                        plays:+d.EU,
+                        starts:+d.KTIA,
+                        szechenyi: d.SZ,
+                        ujszechenyi: d.USZ,
+                        nemzeti: d.N
+
                     };
                 });
+
+                //console.log(JSON.stringify(data));
 
                 color.domain(d3.keys(data[0]).filter(function(key) { return key !== "TrDate"; }));
 
@@ -139,13 +200,16 @@
                         .tickFormat("")
                     )
 
+                //d3.format = hufFormat.numberFormat
+
                 var y_max = y.domain().slice(-1)
 
                 var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
                     .ticks(5, "s")
-                    .tickFormat(d3.format(",.0f"));
+                    //.tickFormat(d3.format(",.0f"));
+                    .tickFormat(d3.format(','));
 
                 songId.append("g")
                     .attr("class", "x axis")
@@ -299,14 +363,14 @@
 
             var map = L.map('map', {
                 center: [47.162494, 19.503304],
-                zoom: 8,
+                zoom: 7,
             });
 
             var geojson;
             var geojson_kisterseg
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
-                id: 'mapbox.light',
+                id: 'mapbox.streets',
                 attribution: ""
             }).addTo(map);
 
@@ -417,6 +481,14 @@
                 });
             }
 
+            /*function onEachFeature(feature, layer) {
+                layer.on({
+                    mouseover: highlightFeature,
+                    mouseout: resetHighlight,
+                    click: zoomToFeature
+                });
+            }*/
+
             var info = L.control();
 
             var chart = L.control();
@@ -432,27 +504,13 @@
                 return this._div;
             };
 
-            /**
-             * Number.prototype.format(n, x, s, c)
-             * 
-             * @param integer n: length of decimal
-             * @param integer x: length of whole part
-             * @param mixed   s: sections delimiter
-             * @param mixed   c: decimal delimiter
-             */
-            Number.prototype.format = function(n, x, s, c) {
-                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
-                    num = this.toFixed(Math.max(0, ~~n));
-
-                return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
-            };
-
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-            this._div.innerHTML = '<h4>EU támogatások 2007- 2013</h4>' +  (props ?
+            this._div.innerHTML = '<h4>EU támogatások 2007-2013</h4>' +  (props ?
                 '<b>' + props.TEL_NEV + '</b><br />' + props.DONATION.format(0, 3, ' ') + ' millió Ft'
                 : 'Mozgasd az egeret egy település fölé!');
             $('.playchart_1').remove();
+            $('.legend_subheader').text(props ? props.DONATION + ' millió Ft': '0 Ft');
             if (props) {
                 $('#playchart').show();
             }
@@ -497,7 +555,7 @@
                 for (var i = 0; i < grades.length; i++) {
                 div.innerHTML +=
                     '<i style="background:' + getColor_t(grades[i] + 1) + '"></i> ' +
-                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+                    (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
                 }
 
                 return div;
@@ -545,21 +603,43 @@
 
 
             $(document).ready(function(){
-               $('.leaflet-bottom.leaflet-left').append('<div id="playchart"> \
-                                                            <div class="legend_header"> \
-                                                                <div class="legend_header_starts">Támogatás összesen: 0 Ft</div> \
-                                                            </div> \
+               //$('.leaflet-top.leaflet-right').append('<div id="playchart"> \
+               $('.chart').append('<div id="playchart"> \
+                                                            <div class="legend_header">Támogatás összesen:</div> \
+                                                            <div class="legend_subheader"></div> \
                                                             <div class="chart_legend"> \
-                                                                <div class="legend_starts"> \
-                                                                    <div class="legend_icon"></div> \
-                                                                    <div class="legend_text">Kutatási, techn. és innov. alap</div> \
-                                                                </div> \
-                                                                <div class="legend_plays"> \
+                                                                <div class="legend_left legend_chart EU"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">EU 2007-2013 tám. program</div> \
                                                                 </div> \
+                                                                <div class="legend_right legend_chart KTIA"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Kutatási, techn. és innov. alap</div> \
+                                                                </div> \
+                                                                <div class="legend_left legend_chart USZ"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Új Széchenyi<br>Terv</div> \
+                                                                </div> \
+                                                                <div class="legend_right legend_chart SZ"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Széchenyi<br>2020</div> \
+                                                                </div> \
+                                                                <div class="legend_left legend_chart N"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Nemzeti Fej-<br>lesztési Terv</div> \
+                                                                </div> \
                                                             </div> \
                                                         </div>');
+
+
+                $('.chart').on('mouseenter', function(){
+                   chartHover === "on";
+                   //alert(chartHover);
+                });
+                $('.chart').on('mouseleave', function(){
+                   chartHover === "off";
+                });
+
             });
 
         </script>

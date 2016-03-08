@@ -19,7 +19,7 @@
         <script src="js/telepules.js"></script>
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <script type="text/javascript" src="/js/d3-tip.js"></script>
+        <script type="text/javascript" src="js/d3-tip.js"></script>
         <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
     </head>
 
@@ -514,7 +514,14 @@
                 map.fitBounds(e.target.getBounds());
             }
 
+            var polylist = []
+            var poly1 = [];
+
             function onEachFeature(feature, layer) {
+                poly1 = layer.feature.geometry.coordinates;
+                polylist.push(poly1);
+                //console.log(JSON.stringify(poly1));
+
                 layer.on({
                     mouseover: highlightFeature,
                     mouseout: resetHighlight,
@@ -581,6 +588,7 @@
             info.addTo(map);
             chart.addTo(map);
 
+
             geojson = L.geoJson(megye, {
                 style: style,
                 onEachFeature: onEachFeature
@@ -594,21 +602,105 @@
 
             legend.onAdd = function (map) {
 
-                var div = L.DomUtil.create('div', 'info legend'),
-                grades = [21, 85, 190, 399, 850, 2405, 2292164],
-                labels = [];
+                if (map.getZoom() <= 9) {
+                    if (metric === "DONATION") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 200731, 316724, 339350, 411402, 477280, 590827],
+                            labels = [];
 
-                // loop through our density intervals and generate a label with a colored square for each interval
-                for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<i style="background:' + getColor_t(grades[i] + 1, metric) + '"></i> ' +
-                    (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_m(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
+                        }
+
+                        return div;
+                    }
+                    else if (metric === "CAPITA") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 387974, 672658, 805802, 883432, 1008979, 1400640],
+                            labels = [];
+
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_m(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft');
+                        }
+
+                        return div;
+                    }
+
                 }
+                else if (map.getZoom() <= 11) {
+                    if (metric === "DONATION") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 17620, 17689, 31826, 45328, 155903, 393346],
+                            labels = [];
 
-                return div;
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_k(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
+                        }
+
+                        return div;
+                    }
+                    else if (metric === "CAPITA") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 555546, 561674, 730618, 1022784, 1214538, 3991456],
+                            labels = [];
+
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_k(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft');
+                        }
+
+                        return div;
+                    }
+
+                }
+                else {
+                    if (metric === "DONATION") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 130, 133, 592, 1828, 3316, 271551],
+                            labels = [];
+
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_t(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft');
+                        }
+
+                        return div;
+                    }
+                    else if (metric === "CAPITA") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 147594, 148955, 429965, 864218, 1635418, 10738345],
+                            labels = [];
+
+                        // loop through our density intervals and generate a label with a colored square for each interval
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor_t(grades[i] + 1, metric) + '"></i> ' +
+                            (grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft');
+                        }
+
+                        return div;
+                    }
+
+                }
             };
 
             legend.addTo(map);
+
+            //var testPoly = [[18.93937298717012,47.57551983739141],[18.939385328421086,47.575529743090456],[18.94322155843761,47.578608549187955],[18.948660360349606,47.57754301048777],[18.954801144578376,47.57777300773899],[18.96332430159804,47.57618754675917],[18.968043301226718,47.57602901817288],[18.977763786134986,47.57313909960147],[18.976804545804338,47.57480251145739],[18.98392142577062,47.58103095266432],[18.983627239478412,47.5824429374989],[18.98467644469998,47.583280015530306],[18.977654576193352,47.585227759095645],[18.983526822615833,47.5884422594341],[18.993888470270115,47.58401328003948],[18.9970375263913,47.585741677038286],[18.999818087402982,47.58359317440063],[19.001679424454068,47.5834140486644],[19.01369514052075,47.58667430385673],[19.020637326813542,47.58771630423521],[19.02125935985047,47.58780963500068],[19.02589920537307,47.588224376477235]];
+            //L.polygon(testPoly, {fill:'url(img/apples_in_stereo.png)'}).addTo(map);
 
             map.on('zoomend', function() {
                 // here's where you decided what zoom levels the layer should and should
@@ -622,7 +714,8 @@
                         style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
-
+                    map.removeControl(legend)
+                    legend.addTo(map);
                 }
                 else if (map.getZoom() <= 11) {
                     map.removeLayer(geojson);
@@ -631,6 +724,8 @@
                         style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
+                    map.removeControl(legend)
+                    legend.addTo(map);
                     // setFilter is available on L.mapbox.featureLayers only. Here
                     // we're hiding and showing the default marker layer that's attached
                     // to the map - change the reference if you want to hide or show a
@@ -647,6 +742,8 @@
                         style: style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
+                    map.removeControl(legend)
+                    legend.addTo(map);
                     //map.featureLayer.setFilter(function() { return false; });
                 }
             });
@@ -737,6 +834,8 @@
                                 onEachFeature: onEachFeature
                             }).addTo(map);
                         }
+                        map.removeControl(legend)
+                        legend.addTo(map);
                    }
                 });
 
@@ -768,6 +867,8 @@
                                 onEachFeature: onEachFeature
                             }).addTo(map);
                         }
+                        map.removeControl(legend)
+                        legend.addTo(map);
                    }
                 });
 
@@ -780,10 +881,12 @@
 
                     c.src = image;
                 }
-                imageLoader("//img/cash_active3.png", $(".hidden_reloader"));
-                imageLoader("//img/human_active.png", $(".hidden_reloader"));
+                imageLoader("/img/cash_active3.png", $(".hidden_reloader"));
+                imageLoader("/img/human_active.png", $(".hidden_reloader"));
 
-
+                /*for (var i = 0; i < polylist.length; i++) {
+                    L.polygon(polylist[i], {fill:'url(img/cash.png)'}).addTo(map);
+                }*/
             });
 
         </script>

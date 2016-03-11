@@ -14,9 +14,12 @@
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="js/megye.js"></script>
-        <script src="js/kisterseg.js"></script>
-        <script src="js/telepules.js"></script>
+
+        <script type="text/javascript" src="js/megye.js"></script>
+        <script type="text/javascript" src="js/kisterseg.js"></script>
+        <script type="text/javascript" src="js/telepules.js"></script>
+        <script type="text/javascript" src="js/autocomplete.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script type="text/javascript" src="js/d3-tip.js"></script>
@@ -56,6 +59,7 @@
             var adminUnit = "megye";
             var metric = "DONATION";
             var timeSeries = "DONATION_TIME";
+            var stripes;
 
              /**
              * Number.prototype.format(n, x, s, c)
@@ -142,7 +146,7 @@
                 var data0 =  inputData;
                 var jsonObject = JSON.stringify(data0);
                 var data2 = "SZ,KTIA,N,TrDate,EU,USZ"+"\n"+ConvertToCSV(jsonObject);
-                console.log(data2);
+                //console.log(data2);
 
                 data = d3.csv.parse(data2, function(d) {
                     return {
@@ -363,6 +367,154 @@
                 /*TRENDLINE */
             }
 
+            function render_chart2(songId, inputData) {
+
+                var margin = 20;
+
+                var margin0 = {top: 22, right: 25, bottom: 22, left: 65},
+                    w = 320,
+                    h = 300;
+
+                function barStack(seriesData) {
+                    var l = seriesData[0].length
+                    while (l--) {
+                        var posBase = 0; // positive base
+                        var negBase = 0; // negative base
+
+                        seriesData.forEach(function(d) {
+                            d = d[l]
+                            d.size = Math.abs(d.y)
+                            if (d.y < 0) {
+                                d.y0 = negBase
+                                negBase -= d.size
+                            }
+                            else {
+                                d.y0 = posBase = posBase + d.size
+                            }
+                        })
+                    }
+                    seriesData.extent = d3.extent(
+                        d3.merge(
+                            d3.merge(
+                                seriesData.map(function(e) {
+                                    return e.map(function(f) { return [f.y0,f.y0-f.size] })
+                                })
+                            )
+                        )
+                    )
+                }
+                var data = inputData;
+                var color = d3.scale.ordinal()
+                    .range(["#4D8E27", "#FF665A", "#176B86", "#777777"]);
+
+                var x = d3.scale.ordinal()
+                    .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
+                    .rangeRoundBands([margin0.left, w-margin0.right], .1)
+
+                var y = d3.scale.linear()
+                    .range([h-margin0.top,0+margin0.bottom]);
+
+                var xAxis = d3.svg.axis()
+                    .scale(x)
+                    .orient("bottom")
+                    .ticks(3, 4);
+
+                var yAxis = d3.svg.axis()
+                    .scale(y)
+                    .orient("left")
+                    .tickFormat(function(d) { return d + "%"; })
+                    .ticks(5);
+
+                barStack(data);
+                y.domain(data.extent);
+
+                svg = d3.select("#playchart")
+                    .append("svg")
+                    .attr("class", "playchart_" + songId)
+                    .attr("width", w)
+                    .attr("height", h);
+
+                svg.append("g")
+                    .attr("class", "background_group");
+
+                function make_y_axis() {
+                    return d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                        .ticks(5)
+                }
+
+                // Draw the y Grid lines
+                svg.append("g")
+                    .attr("class", "grid")
+                    .attr("transform", "translate(" + margin0.left + " 0)")
+                    .call(make_y_axis()
+                        .tickSize(-230, 0, 0)
+                        .tickFormat("")
+                    )
+
+                svg.selectAll(".series")
+                    .data(data)
+                    .enter()
+                    .append("g")
+                    .classed("series", true)
+                    .style("fill", function(d,i) { return color(i) })
+                    .selectAll("rect")
+                    .data(Object)
+                    .enter()
+                        .append("rect")
+                        .attr("x", function(d, i) { return x(x.domain()[i]) })
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) { return y(0); })
+                        .attr("height", function(d) { return y(0) - y(0); })
+                        .transition()
+                        .duration(1500)
+                        .attr("y", function(d) { return y(d.y0) })
+                        .attr("height", function(d) { return y(0) - y(d.size) })
+                        .style('stroke', '#333')
+                        .style('stroke-width', '0.5');
+                        //.on("mouseover", function() { tooltip.style("display", null); })
+                        //.on("mouseout", function() { tooltip.style("display", "none"); })
+                        /*.on("mousemove", function(d) {
+                            var xPosition = d3.mouse(this)[0] - 35;
+                            var yPosition = d3.mouse(this)[1] - 5;
+                            tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                            tooltip.select("text").text(d.y);
+                        });*/
+
+                svg.append("g")
+                    .attr("class", "axis x")
+                    .attr("transform", "translate(0 " + y(0) + ")")
+                    .call(xAxis);
+
+
+
+                svg.append("g")
+                    .attr("class", "axis y")
+                    .attr("transform", "translate(" + margin0.left + " 0)")
+                    .call(yAxis);
+
+                /* Here we add tooltips */
+
+                // Prep the tooltip bits, initial display is hidden
+                var tooltip = svg.append("g")
+                    .attr("class", "tooltip")
+                    .style("display", "none");
+
+                tooltip.append("rect")
+                    .attr("width", 30)
+                    .attr("height", 20)
+                    .attr("fill", "white")
+                    .style("opacity", 0.5);
+
+                tooltip.append("text")
+                    .attr("x", 15)
+                    .attr("dy", "1.2em")
+                    .style("text-anchor", "middle")
+                    .attr("font-size", "12px")
+                    .attr("font-weight", "bold");
+            }
+
             var mapboxAccessToken = "pk.eyJ1IjoiYmFsa2V5IiwiYSI6IkVEUHU3UVEifQ.ULJj3xCWhQvw4_jLEnHpTQ";
             //var map = L.map('map').setView([47.162494, 19.503304], 8);
 
@@ -374,10 +526,13 @@
             var geojson;
             var geojson_kisterseg
 
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+            L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
                 id: 'mapbox.streets',
-                attribution: ""
+                //id: 'balkey.pc3h3mph',
+                //id: 'balkey.6eu1n7wa',
+                attribution: "<a href='http://www.atlatszo.hu'>atlatszo.hu</a>"
             }).addTo(map);
+
 
             function getColor_m(d, metric) {
                 if (metric === "DONATION") {
@@ -456,6 +611,32 @@
                 }
             }
 
+            function getPattern(d) {
+                return d >= 2675472 ? 'url(#hash4_6)' :
+                       d >= 271551  ? 'url(#hash4_5)' :
+                       d >= 3316  ? 'url(#hash4_4)' :
+                       d >= 1828  ? 'url(#hash4_6)' :
+                       d >= 592   ? 'url(#hash4_5)' :
+                       d >= 133   ? 'url(#hash4_4)' :
+                       d >= 130   ? 'url(#hash4_6)' :
+                       d >= 1   ? 'url(#hash4_5)' :
+                       d === 0   ? 'url(#hash4_4)' :
+                       'url(#hash4_6)';
+            }
+
+            function stripes_style (feature) {
+
+                return {
+                        fillColor: getPattern(feature['properties'][metric]),
+                        fillOpacity: 0.6,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#333333',
+                        dashArray: '',
+                        className: feature['properties']['TEL_NEV']
+                    };
+            }
+
             function style(feature) {
                 if (adminUnit === "megye" ) {
                     return {
@@ -464,7 +645,8 @@
                         opacity: 0.8,
                         color: '#333333',
                         dashArray: '',
-                        fillOpacity: 0.6
+                        fillOpacity: 0.6,
+                        className: feature['properties']['TEL_NEV']
                     };
                 }
                 else if (adminUnit === "kisterseg") {
@@ -474,7 +656,9 @@
                         opacity: 0.8,
                         color: '#333333',
                         dashArray: '',
-                        fillOpacity: 0.6
+                        fillOpacity: 0.6,
+                        className: feature['properties']['TEL_NEV']
+
                     };
                 }
                 else if (adminUnit === "telepules") {
@@ -496,7 +680,8 @@
                     weight: 2,
                     color: '#000000',
                     dashArray: '',
-                    fillOpacity: 0.2
+                    fillOpacity: 0.2,
+                    //fill:"url(img/cash.png)"
                 });
 
                 if (!L.Browser.ie && !L.Browser.opera) {
@@ -514,13 +699,15 @@
                 map.fitBounds(e.target.getBounds());
             }
 
-            var polylist = []
-            var poly1 = [];
-
             function onEachFeature(feature, layer) {
-                poly1 = layer.feature.geometry.coordinates;
-                polylist.push(poly1);
-                //console.log(JSON.stringify(poly1));
+
+                layer.on('dblclick', function(e) {
+                    a = map.getZoom();
+                    map.setZoom(a + 1);
+                });
+
+                layer._polygonId = feature.properties.TEL_NEV;
+                //console.log(layer._polygonId)
 
                 layer.on({
                     mouseover: highlightFeature,
@@ -528,14 +715,6 @@
                     click: zoomToFeature
                 });
             }
-
-            /*function onEachFeature(feature, layer) {
-                layer.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight,
-                    click: zoomToFeature
-                });
-            }*/
 
             var info = L.control();
 
@@ -554,14 +733,19 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-            if (metric === "DONATION") {
+            if (timeSeries === "DEVIATION" && map.getZoom() >= 12) {
+                this._div.innerHTML = '<h4>2007-2015  országos átlagától való eltérés (%)</h4>' +  (props ?
+                    '<b>' + props.TEL_NEV + '</b><br />Átlag: ' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft / év'
+                    : 'Mozgasd az egeret egy település fölé!');
+            }
+            else if (metric === "DONATION") {
                 this._div.innerHTML = '<h4>Összes EU támogatás (millió Ft)</h4>' +  (props ?
                     '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' millió Ft'
                     : 'Mozgasd az egeret egy település fölé!');
             }
             else if (metric === "CAPITA") {
-                this._div.innerHTML = '<h4>Egy főre jutó EU támogatás (fő / Ft)</h4>' +  (props ?
-                    '<b>' + props.TEL_NEV + '</b><br />' + props[metric].format(0, 3, ' ') + ' Ft'
+                this._div.innerHTML = '<h4>Egy főre jutó EU támogatás (fő / év / Ft)</h4>' +  (props ?
+                    '<b>' + props.TEL_NEV + '</b><br />' + (props[metric]/9).format(0, 3, ' ') + ' Ft'
                     : 'Mozgasd az egeret egy település fölé!');
             }
             $('.playchart_1').remove();
@@ -575,8 +759,14 @@
             if (typeof props != "undefined") {
                 //console.log(JSON.stringify(props.DONATION_TIME));
                 if (typeof props[timeSeries] != "undefined") {
-                    render_chart("1", props[timeSeries]);
-                    $('#playchart').show();
+                    if (timeSeries == "DONATION_TIME" || timeSeries == "CAPITA_TIME") {
+                        render_chart("1", props[timeSeries]);
+                        $('#playchart').show();
+                    }
+                    else if (timeSeries == "DEVIATION") {
+                        render_chart2("1", props[timeSeries]);
+                        $('#playchart').show();
+                    }
                 }
                 else {
                     $('#playchart').hide();
@@ -589,14 +779,45 @@
             chart.addTo(map);
 
 
+            //THIS TURNS ON PATTERNS
+            /*stripes = L.geoJson(telepules, {
+                style: stripes_style,
+                onEachFeature: onEachFeature
+            }).addTo(map);*/
+
             geojson = L.geoJson(megye, {
                 style: style,
                 onEachFeature: onEachFeature
-            }).addTo(map);
+            });
 
-            /*geojson.on('dblclick', function(event){
-                map.zoomIn();
+            /*geojson.on("featureparse", function (e){
+
+                (function(layer, properties) {
+
+                    //click event that triggers the popup and centres it on the polygon
+                    layer.on("dblclick", function (e) {
+                        alert('double!');
+                        var bounds = layer.getBounds();
+                        map.fitBounds(bounds);
+                        a = map.getZoom();
+                        map.setZoom(a + 1);
+                        //var popupContent = "popup content here";
+                        //popup.setLatLng(bounds.getCenter());
+                        //popup.setContent(popupContent);
+                        //map.openPopup(popup);
+                    });
+
+                })(e.layer, e.properties);
+
+                //assign polygon id so we can reference it later
+                //e.layer._leaflet_id = 'polyindex'+polyindex+'';
+
+                //increment polyindex used for unique polygon id's
+                //polyindex++;
+                //console.log(polyindex);
             });*/
+
+            geojson.addTo(map);
 
             var legend = L.control({position: 'bottomright'});
 
@@ -699,9 +920,6 @@
 
             legend.addTo(map);
 
-            //var testPoly = [[18.93937298717012,47.57551983739141],[18.939385328421086,47.575529743090456],[18.94322155843761,47.578608549187955],[18.948660360349606,47.57754301048777],[18.954801144578376,47.57777300773899],[18.96332430159804,47.57618754675917],[18.968043301226718,47.57602901817288],[18.977763786134986,47.57313909960147],[18.976804545804338,47.57480251145739],[18.98392142577062,47.58103095266432],[18.983627239478412,47.5824429374989],[18.98467644469998,47.583280015530306],[18.977654576193352,47.585227759095645],[18.983526822615833,47.5884422594341],[18.993888470270115,47.58401328003948],[18.9970375263913,47.585741677038286],[18.999818087402982,47.58359317440063],[19.001679424454068,47.5834140486644],[19.01369514052075,47.58667430385673],[19.020637326813542,47.58771630423521],[19.02125935985047,47.58780963500068],[19.02589920537307,47.588224376477235]];
-            //L.polygon(testPoly, {fill:'url(img/apples_in_stereo.png)'}).addTo(map);
-
             map.on('zoomend', function() {
                 // here's where you decided what zoom levels the layer should and should
                 // not be available for: use javascript comparisons like < and > if
@@ -718,6 +936,7 @@
                     legend.addTo(map);
                 }
                 else if (map.getZoom() <= 11) {
+
                     map.removeLayer(geojson);
                     adminUnit = "kisterseg";
                     geojson = L.geoJson(kisterseg, {
@@ -754,7 +973,7 @@
                $('.chart').append('<div id="playchart"> \
                                                             <div class="legend_header">Támogatás összesen:</div> \
                                                             <div class="legend_subheader"></div> \
-                                                            <div class="chart_legend"> \
+                                                            <div class="chart_legend_a"> \
                                                                 <div class="legend_left legend_chart EU"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">EU 2007-2013 tám. program</div> \
@@ -776,6 +995,24 @@
                                                                     <div class="legend_text">Nemzeti Fej-<br>lesztési Terv</div> \
                                                                 </div> \
                                                             </div> \
+                                                            <div class="chart_legend_b"> \
+                                                                <div class="legend_left legend_chart REIGN"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Kormánypárti polgármester</div> \
+                                                                </div> \
+                                                                <div class="legend_right legend_chart OPP"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Ellenzéki polgármester</div> \
+                                                                </div> \
+                                                                <div class="legend_left legend_chart IND"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Független polgármester</div> \
+                                                                </div> \
+                                                                <div class="legend_right legend_chart NA"> \
+                                                                    <div class="legend_icon"></div> \
+                                                                    <div class="legend_text">Nem áll rendel-kezésre információ</div> \
+                                                                </div> \
+                                                            </div> \
                                                         </div>');
 
 
@@ -787,29 +1024,56 @@
                    chartHover === "off";
                 });
 
-                /*$(".main_search").autocomplete({
+                $(".main_search").autocomplete({
                     minlength: 8,
                     autofocus: "true",
                     //appendTo: ".search_wrapper",
                     appendTo: ".autocomplete_container",
-                    source: "http://www.balkeyplayer.com/search?time="+$.now(),
+                    source: autocompletelist,
                     focus: function( event, ui ) {
                         //$( ".main_search" ).val( ui.item.song_title + " (" + ui.item.artist + ")");
 
                         return false;
                     },
                     select: function( event, ui ) {
-                        $( ".main_search" ).val( ui.item.song_title + " (" + ui.item.artist + ")");
-                        window.location.href = ui.item.path + "?song=" + encodeURIComponent(ui.item.song_title);
+                        $( ".main_search" ).val( ui.item.value );
+                        var lista = telepules["features"];
+                        var lookup;
+
+                        for ( var i = 0, l = lista.length; i < l; i++ ) {
+                            if (lista[i]['properties']['TEL_NEV'] === ui.item.value) {
+                                lookup = lista[i];
+                                var multipolygon = L.geoJson(lookup);
+                                multipolygon.addTo(map);
+                                map.fitBounds(multipolygon.getBounds());
+
+                                multipolygon.setStyle({
+                                    weight: 5,
+                                    color: 'red',
+                                    dashArray: '3',
+                                    fillOpacity: 0,
+                                    //fill:"url(img/cash.png)"
+                                });
+                                if (!L.Browser.ie && !L.Browser.opera) {
+                                    multipolygon.bringToFront();
+                                }
+                                info.update(multipolygon['properties']);
+
+                                map.removeLayer(multipolygon);
+
+                            }
+                        }
 
                         return false;
                     }
-                });*/
+                });
 
                 $('#human_logo').on('click', function() {
-                    if(metric != "CAPITA") {
+                    if(timeSeries = "CAPITA") {
                         metric = "CAPITA";
                         timeSeries = "CAPITA_TIME";
+                        $('.chart_legend_b').hide();
+                        $('.chart_legend_a').show();
                         map.removeLayer(geojson);
                         $('.logo').each(function(){
                            $(this).removeClass('active_logo');
@@ -840,9 +1104,11 @@
                 });
 
                 $('#cash_logo').on('click', function() {
-                    if(metric != "DONATION") {
+                    if(timeSeries != "DONATION_TIME") {
                         metric = "DONATION";
                         timeSeries = "DONATION_TIME";
+                        $('.chart_legend_b').hide();
+                        $('.chart_legend_a').show();
                         map.removeLayer(geojson);
                         $('.logo').each(function(){
                            $(this).removeClass('active_logo');
@@ -872,6 +1138,21 @@
                    }
                 });
 
+                $('#bank_logo').on('click', function() {
+                    if (map.getZoom() >= 12) {
+                        if  (timeSeries != "DEVIATION") {
+                            timeSeries = "DEVIATION";
+                            $('.chart_legend_a').hide();
+                            $('.chart_legend_b').show();
+                            $('.logo').each(function(){
+                                $(this).removeClass('active_logo');
+                            });
+                            $("#bank_logo").addClass('active_logo');
+                            $('.info h4').text('2007-2015 országos átlagától vett eltérés (%)');
+                        }
+                    }
+                });
+
                 function imageLoader(image, elem) {
                     var c = new Image();
                     c.onload = function(){
@@ -883,10 +1164,33 @@
                 }
                 imageLoader("/img/cash_active3.png", $(".hidden_reloader"));
                 imageLoader("/img/human_active.png", $(".hidden_reloader"));
+                imageLoader("/img/bank_active.png", $(".hidden_reloader"));
 
-                /*for (var i = 0; i < polylist.length; i++) {
-                    L.polygon(polylist[i], {fill:'url(img/cash.png)'}).addTo(map);
-                }*/
+                //PATTERN INJECTION VIA D3
+                var svg2 = d3.select("body").append("svg").attr("id", "d3svga")
+                    .attr("width", 120)
+                    .attr("height", 120);
+
+                var pattern1 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_4", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+                    .append("rect")
+                    .attr({ width:"4", height:"8", transform:"translate(0,0)", fill:"#000000" });
+
+                var pattern2 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
+                    .append("rect")
+                    .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
+
+               var pattern3 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_6", x:"0", y:"0", width:"14", height:"25", patternUnits:"userSpaceOnUse"})
+                    .append("svg:image")
+                    .attr({ x:"0", y:"0", width:"14", height:"25"})
+                    .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
+
+
             });
 
         </script>

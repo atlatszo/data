@@ -60,6 +60,7 @@
             var metric = "DONATION";
             var timeSeries = "DONATION_TIME";
             var stripes;
+            var indexHamlet;
 
              /**
              * Number.prototype.format(n, x, s, c)
@@ -699,14 +700,18 @@
                 map.fitBounds(e.target.getBounds());
             }
 
+            var markersById = {};
+
             function onEachFeature(feature, layer) {
 
                 layer.on('dblclick', function(e) {
                     a = map.getZoom();
                     map.setZoom(a + 1);
                 });
+                markersById[feature.properties.TEL_NEV] = layer;
 
-                layer._polygonId = feature.properties.TEL_NEV;
+                //layer._leaflet_id = feature.properties.TEL_NEV;
+                //layer._polygonId = feature.properties.TEL_NEV;
                 //console.log(layer._polygonId)
 
                 layer.on({
@@ -789,6 +794,16 @@
                 style: style,
                 onEachFeature: onEachFeature
             });
+
+            indexHamlet = L.geoJson(telepules, {
+                onEachFeature: onEachFeature
+            });
+
+            indexHamlet.addTo(map);
+
+            map.removeLayer(indexHamlet);
+
+
 
             /*geojson.on("featureparse", function (e){
 
@@ -1037,7 +1052,42 @@
                     },
                     select: function( event, ui ) {
                         $( ".main_search" ).val( ui.item.value );
-                        var lista = telepules["features"];
+                        var searchHamlet = ui.item.value;
+                        var objectSearched = markersById[searchHamlet];
+                        var coordinates = objectSearched.getBounds().getCenter();
+                        var cM = [coordinates.lat, coordinates.lng];
+                        map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
+                        markersById[searchHamlet].setStyle({
+                                    weight: 5,
+                                    color: 'red',
+                                    dashArray: '10',
+                                    fill:"url(#hash4_5)",
+                                    fillOpacity: 0.2
+
+                                });
+                        //console.log(objectSearched['feature']['properties']);
+                        info.update(objectSearched['feature']['properties']);
+                        //$('#playchart').show();
+
+                        map.on('movestart', function() {
+                            //geojson.resetStyle(markersById[searchHamlet]);
+                            geojson.resetStyle(markersById[searchHamlet]);
+
+                            /*markersById[searchHamlet].setStyle({
+                                weight: 1,
+                                color: 'red',
+                                dashArray: ''
+                                //fill:"url(img/cash.png)"
+                            });*/
+                        });
+
+
+                        /*map.fitBounds(markersById[searchHamlet].getBounds());
+                        //a = map.getZoom();
+                        //map.setZoom(a + 1);
+
+                        //VARIATION TWO!!!
+                        /*var lista = telepules["features"];
                         var lookup;
 
                         for ( var i = 0, l = lista.length; i < l; i++ ) {
@@ -1062,7 +1112,7 @@
                                 map.removeLayer(multipolygon);
 
                             }
-                        }
+                        }*/
 
                         return false;
                     }

@@ -322,11 +322,12 @@
                     //.on('mouseover', tip.show)
                     //.on('mouseout', tip.hide)
                     .transition()
-                    .duration(1500)
+                    .duration(0)
                     .attr("y", function(d) { return (y(d.y1)-1); })
                     .attr("height", function(d) { return y(d.y0) - y(d.y1); })
                     .style("fill", function(d) { return color(d.name); })
                     .style('stroke', '#333')
+                    .style('opacity', '0.7')
                     .style('stroke-width', '0.5');
 
                 songId.selectAll(".g")
@@ -375,7 +376,7 @@
 
                 var margin0 = {top: 22, right: 25, bottom: 22, left: 65},
                     w = 320,
-                    h = 300;
+                    h = 280;
 
                 function barStack(seriesData) {
                     var l = seriesData[0].length
@@ -424,7 +425,7 @@
                 var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
-                    .tickFormat(function(d) { return d + "%"; })
+                    .tickFormat(function(d) { return d+100 + "%"; })
                     .ticks(5);
 
                 barStack(data);
@@ -470,11 +471,12 @@
                         .attr("y", function(d) { return y(0); })
                         .attr("height", function(d) { return y(0) - y(0); })
                         .transition()
-                        .duration(1500)
+                        .duration(0)
                         .attr("y", function(d) { return y(d.y0) })
                         .attr("height", function(d) { return y(0) - y(d.size) })
                         .style('stroke', '#333')
-                        .style('stroke-width', '0.5');
+                        .style('stroke-width', '0.5')
+                        .style('opacity', '0.7');
                         //.on("mouseover", function() { tooltip.style("display", null); })
                         //.on("mouseout", function() { tooltip.style("display", "none"); })
                         /*.on("mousemove", function(d) {
@@ -611,25 +613,30 @@
                            d === 0   ? '#D4D4D4' :
                            '#FFFFCC';
                 }
+                else if (metric === "DEVIATION_2007") {
+                    return d >= 200 ? '#ff4d4d' :
+                           d >= 175  ? '#ff4d4d' :
+                           d >= 150  ? '#ff7a7a' :
+                           d >= 125  ? '#ffa6a6' :
+                           d >= 75   ? '#fff2cc' :
+                           d >= 50   ? '#7fbfff' :
+                           d >= 25   ? '#40a0ff' :
+                           d >= 1   ? '#0080ff' :
+                           d === 0   ? '#D4D4D4' :
+                           '#D4D4D4';
+                }
             }
 
             function getPattern(d) {
-                return d >= 2675472 ? 'url(#hash4_6)' :
-                       d >= 271551  ? 'url(#hash4_5)' :
-                       d >= 3316  ? 'url(#hash4_4)' :
-                       d >= 1828  ? 'url(#hash4_6)' :
-                       d >= 592   ? 'url(#hash4_5)' :
-                       d >= 133   ? 'url(#hash4_4)' :
-                       d >= 130   ? 'url(#hash4_6)' :
-                       d >= 1   ? 'url(#hash4_5)' :
-                       d === 0   ? 'url(#hash4_4)' :
-                       'url(#hash4_6)';
+                return d === "RULER" ? 'url(#purpleStripe)' :
+                       d === "UD"  ? 'url(#hash4_5)' :
+                       'rgba(0,0,0,0)';
             }
 
             function stripes_style (feature) {
-
-                return {
-                        fillColor: getPattern(feature['properties'][metric]),
+                if (typeof feature['properties']['DEVIATION_PATTERN'] != "undefined") {
+                    return {
+                        fillColor: getPattern(feature['properties']['DEVIATION_PATTERN']['2007']),
                         fillOpacity: 0.6,
                         weight: 1,
                         opacity: 1,
@@ -637,6 +644,18 @@
                         dashArray: '',
                         className: feature['properties']['TEL_NEV']
                     };
+                }
+                else {
+                    return {
+                        fillColor: "#FFFFFF",
+                        fillOpacity: 0.6,
+                        weight: 1,
+                        opacity: 1,
+                        color: '#333333',
+                        dashArray: '',
+                        className: feature['properties']['TEL_NEV']
+                    };
+                }
             }
 
             function style(feature) {
@@ -752,13 +771,7 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-            if (timeSeries === "DEVIATION" && map.getZoom() >= 12) {
-                this._div.innerHTML = (props ?
-                '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                    '<b>' + '<h4>2007-2015  országos átlagától való eltérés (%):</h4>' + '</b><div class="info_ammount">Átlag: ' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft / év</div>'
-                    : 'Mozgasd az egeret egy település fölé!');
-            }
-            else if (metric === "DONATION") {
+            if (metric === "DONATION") {
                 this._div.innerHTML = (props ?
                 '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
                     '<b>' + '<h4>Összes EU támogatás (millió Ft):</h4>' + '</b><div class="info_ammount">' + props[metric].format(0, 3, ' ') + ' millió Ft</div>'
@@ -768,6 +781,12 @@
                 this._div.innerHTML = (props ?
                 '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
                     '<b>' + '<h4>Egy főre jutó EU támogatás (fő / év / Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div>'
+                    : 'Mozgasd az egeret egy település fölé!');
+            }
+            else if (metric === "DEVIATION_2007") {
+                this._div.innerHTML = (props ?
+                '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                    '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2007-2009):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>'
                     : 'Mozgasd az egeret egy település fölé!');
             }
             $('.playchart_1').remove();
@@ -884,6 +903,17 @@
 
                         return div;
                     }
+                    else if (metric === "DEVIATION_2007") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 25, 50, 75, 125, 150, 175],
+                            labels = [];
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]).format(0, 3, ' ') + ' %<br>' :'+ %')+'</div></div>';
+                        }
+                        return div;
+                    }
 
                 }
                 else if (map.getZoom() <= 11) {
@@ -913,6 +943,17 @@
                             '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
+                        return div;
+                    }
+                    else if (metric === "DEVIATION_2007") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 25, 50, 75, 125, 150, 175],
+                            labels = [];
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]).format(0, 3, ' ') + ' %<br>' :'+ %')+'</div></div>';
+                        }
                         return div;
                     }
 
@@ -946,7 +987,18 @@
 
                         return div;
                     }
+                    else if (metric === "DEVIATION_2007") {
+                        var div = L.DomUtil.create('div', 'info legend'),
+                            grades = [0, 25, 50, 75, 125, 150, 175],
+                            labels = [];
+                        for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]).format(0, 3, ' ') + ' %<br>' :'+ %')+'</div></div>';
+                        }
 
+                        return div;
+                    }
                 }
             };
 
@@ -957,6 +1009,13 @@
                 // not be available for: use javascript comparisons like < and > if
                 // you want something other than just one zoom level, like
                 // (map.getZoom > 10)
+                $('.playchart_1').remove();
+                $('#playchart').hide();
+                info.update();
+
+
+
+            if (metric != "DEVIATION_2007") {
                 if (map.getZoom() <= 9) {
                     map.removeLayer(geojson);
                     adminUnit = "megye";
@@ -966,9 +1025,9 @@
                     }).addTo(map);
                     map.removeControl(legend)
                     legend.addTo(map);
+
                 }
                 else if (map.getZoom() <= 11) {
-
                     map.removeLayer(geojson);
                     adminUnit = "kisterseg";
                     geojson = L.geoJson(kisterseg, {
@@ -997,6 +1056,7 @@
                     legend.addTo(map);
                     //map.featureLayer.setFilter(function() { return false; });
                 }
+            }
             });
 
                 var getUrlParameter = function getUrlParameter(sParam) {
@@ -1200,7 +1260,21 @@
                 });
 
                 $('#human_logo').on('click', function() {
-                    if(timeSeries = "CAPITA") {
+                    if (map.getZoom() <= 9) {
+                        adminUnit = "megye";
+                    }
+                    else if (map.getZoom() <= 11) {
+                        adminUnit = "kisterseg";
+                    }
+                    else {
+                        adminUnit = "telepules";
+                    }
+
+                    if (metric === "DEVIATION_2007") {
+                        map.removeLayer(stripes);
+
+                    }
+                    if(metric != "CAPITA") {
                         metric = "CAPITA";
                         timeSeries = "CAPITA_TIME";
                         $('.chart_legend_b').hide();
@@ -1235,7 +1309,19 @@
                 });
 
                 $('#cash_logo').on('click', function() {
-                    if(timeSeries != "DONATION_TIME") {
+                    if (map.getZoom() <= 9) {
+                        adminUnit = "megye";
+                    }
+                    else if (map.getZoom() <= 11) {
+                        adminUnit = "kisterseg";
+                    }
+                    else {
+                        adminUnit = "telepules";
+                    }
+                    if (metric === "DEVIATION_2007") {
+                        map.removeLayer(stripes);
+                    }
+                    if(metric != "DONATION") {
                         metric = "DONATION";
                         timeSeries = "DONATION_TIME";
                         $('.chart_legend_b').hide();
@@ -1270,9 +1356,24 @@
                 });
 
                 $('#bank_logo').on('click', function() {
-                    if (map.getZoom() >= 12) {
-                        if  (timeSeries != "DEVIATION") {
+                    if  (metric != "DEVIATION_2007") {
+                            metric = "DEVIATION_2007"
                             timeSeries = "DEVIATION";
+                            adminUnit = "telepules";
+                            map.removeLayer(geojson);
+
+                            stripes = L.geoJson(telepules, {
+                                style: stripes_style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+
+                            geojson = L.geoJson(telepules, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+
+
+
                             $('.chart_legend_a').hide();
                             $('.chart_legend_b').show();
                             $('.logo').each(function(){
@@ -1280,7 +1381,9 @@
                             });
                             $("#bank_logo").addClass('active_logo');
                             $('.info h4').text('2007-2015 országos átlagától vett eltérés (%)');
-                        }
+
+                            map.removeControl(legend)
+                            legend.addTo(map);
                     }
                 });
 
@@ -1315,17 +1418,25 @@
                     .append("rect")
                     .attr({x:"0", y: "0", width:"100%", height:"100%", fill:"url(#pattern_stripe" });
 
-            var pattern1 = svg2.append("defs")
-                .append("pattern")
-                .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-                .append("rect")
-                .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
+                var pattern1 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+                    .append("rect")
+                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
+
+                var patternPurpleStripe = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"purpleStripe", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+                    .append("rect")
+                    //.attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#876fc1" });
+                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
                 var pattern2 = svg2.append("defs")
                     .append("pattern")
                     .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
                     .append("rect")
-                    .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
+                    //.attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
+                    .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
                var pattern3 = svg2.append("defs")
                     .append("pattern")

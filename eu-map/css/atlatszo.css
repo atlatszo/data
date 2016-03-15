@@ -36,7 +36,7 @@ a {
     font-family: helvetica;
     font-size: 28px;
     font-weight: bold;
-    color: rgba(209,209,209,0.3);
+    color: rgba(251,251,251,0.2);
     padding: 12px 12px 0px 12px;
     text-shadow: 0px 1px 1px #171717;
 
@@ -189,8 +189,18 @@ a {
     box-shadow: 1px 1px 3px rgba(0,0,0, 1);
 }
 
+.info_header {
+    font-size: 18px;
+}
+
+.info_ammount {
+    color: #91BED4;
+    text-shadow: 0px 2px 3px #171717;
+
+}
+
 .info h4 {
-    margin: 0 0 5px;
+    margin: 5px 0px 0px 0px;
     font-weight: 100;
 }
 
@@ -200,7 +210,11 @@ a {
     font-size: 12px;
 }
 
-.legend i {
+.legend_elem {
+    clear: left;
+}
+
+.legend_icon {
     width: 17px;
     height: 17px;
     float: left;
@@ -209,6 +223,22 @@ a {
     box-shadow: 1px 1px 3px rgba(0,0,0, 1);
     border: 1px solid #333333;
     border-bottom: none;
+
+}
+
+.legend_text2 {
+    float: left;
+
+}
+
+.legend_featured {
+    border: 0px solid black !important;
+    background-color: rgba(255,255,255,0.2) !important;
+    width: 60%;
+    height: 17px;
+    box-shadow: 0px 1px 3px rgba(0,0,0, 1);
+    color: #91BED4;
+    text-shadow: 0px 2px 3px #171717;
 }
 
 .leaflet-top .leaflet-control-zoom,
@@ -505,3 +535,4 @@ a {
     text-decoration: none;
      color: inherit;
 }
+

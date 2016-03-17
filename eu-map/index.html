@@ -46,6 +46,13 @@
                 <img class="logo" id="human_logo"/>
                 <img class="logo" id="bank_logo" src="img/bank.png"/>
             </div>
+            <div class="party_selector_wrapper">
+                <select id="party_selector">
+                    <option value="DEVIATION_2007">2007-2009</option>
+                    <option value="DEVIATION_2010">2010-2013</option>
+                    <option value="DEVIATION_2014">2014-2015</option>
+                </select>
+            </div>
             <div class="language_change">
                 <div id="english">EN</div>
             </div>
@@ -62,6 +69,7 @@
             var timeSeries = "DONATION_TIME";
             var stripes;
             var indexHamlet;
+            var mouseEnter = false;
 
              /**
              * Number.prototype.format(n, x, s, c)
@@ -153,8 +161,8 @@
                 data = d3.csv.parse(data2, function(d) {
                     return {
                         TrDate: formatDate2(parseDate(d.TrDate)),
-                        plays:+d.EU,
-                        starts:+d.KTIA,
+                        EU:+d.EU,
+                        KTIA:+d.KTIA,
                         szechenyi: d.SZ,
                         ujszechenyi: d.USZ,
                         nemzeti: d.N
@@ -168,9 +176,9 @@
 
                 data.forEach(function(d) {
                     var y0 = 0;
-                    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], date: d["TrDate"], plays: d["plays"]}; });
+                    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], date: d["TrDate"], EU: d["EU"]}; });
                     d.total = d.ages[d.ages.length - 1].y1;
-                    d.plays = d.ages[d.ages.length - 1].plays;
+                    d.EU = d.ages[d.ages.length - 1].EU;
                 });
 
                 x.domain(data.map(function(d) { return d.TrDate; }));
@@ -410,6 +418,9 @@
                 var color = d3.scale.ordinal()
                     .range(["#4D8E27", "#FF665A", "#176B86", "#777777"]);
 
+                /*var color2 = d3.scale.ordinal()
+                    .range(["url('#purpleStripe')", "url('#hash4_5')", "", ""]);*/
+
                 var x = d3.scale.ordinal()
                     .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
                     .rangeRoundBands([margin0.left, w-margin0.right], .1)
@@ -456,12 +467,37 @@
                         .tickFormat("")
                     )
 
+                /*svg.selectAll(".series2")
+                    .data(data)
+                    .enter()
+                    .append("g")
+                    .classed("series2", true)
+                    .style("fill", function(d,i) { return color2(i) })
+                    .selectAll("rect")
+                    .data(Object)
+                    .enter()
+                        .append("rect")
+                        .attr("x", function(d, i) { return x(x.domain()[i]) })
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) { return y(0); })
+                        .attr("height", function(d) { return y(0) - y(0); })
+                        .transition()
+                        .duration(0)
+                        .attr("y", function(d) { return y(d.y0) })
+                        .attr("height", function(d) { return y(0) - y(d.size) })
+                        .style('stroke', '#333')
+                        .style('stroke-width', '0.5')
+                        .style('opacity', '1');*/
+
+
+
                 svg.selectAll(".series")
                     .data(data)
                     .enter()
                     .append("g")
                     .classed("series", true)
                     .style("fill", function(d,i) { return color(i) })
+                    //.style("fill", function(d, i) { return getColor_t(d, metric) })
                     .selectAll("rect")
                     .data(Object)
                     .enter()
@@ -522,9 +558,16 @@
             var mapboxAccessToken = "pk.eyJ1IjoiYmFsa2V5IiwiYSI6IkVEUHU3UVEifQ.ULJj3xCWhQvw4_jLEnHpTQ";
             //var map = L.map('map').setView([47.162494, 19.503304], 8);
 
+            var southWest = L.latLng(45.1423360997, 14.8645019531),
+                northEast = L.latLng(49.8370967393, 25.4333496094),
+                bounds = L.latLngBounds(southWest, northEast);
+
             var map = L.map('map', {
                 center: [47.162494, 19.503304],
                 zoom: 7,
+                maxBounds: bounds,
+                minZoom: 7,
+                maxZoom: 14
             });
 
             var geojson;
@@ -613,7 +656,7 @@
                            d === 0   ? '#D4D4D4' :
                            '#FFFFCC';
                 }
-                else if (metric === "DEVIATION_2007") {
+                else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014" ) {
                     return d >= 200 ? '#ff4d4d' :
                            d >= 175  ? '#ff4d4d' :
                            d >= 150  ? '#ff7a7a' :
@@ -628,15 +671,30 @@
             }
 
             function getPattern(d) {
-                return d === "RULER" ? 'url(#purpleStripe)' :
-                       d === "UD"  ? 'url(#hash4_5)' :
-                       'rgba(0,0,0,0)';
+                if (metric === "DEVIATION_2007") {
+                    return d["2007"] === "RULER" ? 'url(#purpleStripe)' :
+                           d["2007"] === "UD"  ? 'url(#hash4_5)' :
+                          'rgba(0,0,0,0)';
+
+                }
+                else if (metric === "DEVIATION_2010") {
+                    return d["2010"] === "RULER" ? 'url(#purpleStripe)' :
+                           d["2010"] === "UD"  ? 'url(#hash4_5)' :
+                          'rgba(0,0,0,0)';
+
+                }
+                else if (metric === "DEVIATION_2014") {
+                    return d["2014"] === "RULER" ? 'url(#purpleStripe)' :
+                           d["2014"] === "UD"  ? 'url(#hash4_5)' :
+                          'rgba(0,0,0,0)';
+
+                }
             }
 
             function stripes_style (feature) {
                 if (typeof feature['properties']['DEVIATION_PATTERN'] != "undefined") {
                     return {
-                        fillColor: getPattern(feature['properties']['DEVIATION_PATTERN']['2007']),
+                        fillColor: getPattern(feature['properties']['DEVIATION_PATTERN']),
                         fillOpacity: 0.6,
                         weight: 1,
                         opacity: 1,
@@ -730,7 +788,28 @@
             }
 
             function zoomToFeature(e) {
-                map.fitBounds(e.target.getBounds());
+
+                /*if (map.getZoom() <= 13) {
+                    var coordinates = e.target.getBounds().getCenter();
+                    var cM = [coordinates.lat, coordinates.lng];
+                    var a = map.getZoom();
+                    map.setView(new L.LatLng(cM[0], cM[1]),a+1, {animate: true});
+                }
+                else {
+                    var a = map.getZoom();
+                    map.setZoom(a + 1);
+                }*/
+
+                if (map.getZoom() >= 12 || timeSeries === "DEVIATION") {
+                    var layer = e.target;
+                    var popupContent;
+                    if (layer.properties && layer.properties.TEL_NEV) {
+                        var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='adat.atlatszo.hu/eu-shiny-app/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
+                    }
+                    pop = layer.bindPopup(popupContent);
+                    pop.openPopup();
+                }
+                //map.fitBounds(e.target.getBounds());
             }
 
             var markersById = {};
@@ -739,13 +818,29 @@
 
                 markersById[feature.properties.TEL_NEV] = layer;
                 layer.on('dblclick', function(e) {
-                    a = map.getZoom();
-                    map.setZoom(a + 1);
+
+                    if (map.getZoom() <= 13) {
+                        var coordinates = e.target.getBounds().getCenter();
+                        var cM = [coordinates.lat, coordinates.lng];
+                        var a = map.getZoom();
+                        map.setView(new L.LatLng(cM[0], cM[1]),a+1, {animate: true});
+                    }
+                    else {
+                        var a = map.getZoom();
+                        map.setZoom(a + 1);
+                    }
                 });
 
                 //layer._leaflet_id = feature.properties.TEL_NEV;
                 //layer._polygonId = feature.properties.TEL_NEV;
                 //console.log(layer._polygonId)
+
+                if (map.getZoom() >= 12 || timeSeries === "DEVIATION") {
+                    if (feature.properties && feature.properties.TEL_NEV) {
+                        var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='http://adat.atlatszo.hu/eu-shiny-app/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
+                        layer.bindPopup(content);
+                    }
+                }
 
                 layer.on({
                     mouseover: highlightFeature,
@@ -771,30 +866,71 @@
 
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
-            if (metric === "DONATION") {
-                this._div.innerHTML = (props ?
-                '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                    '<b>' + '<h4>Összes EU támogatás (millió Ft):</h4>' + '</b><div class="info_ammount">' + props[metric].format(0, 3, ' ') + ' millió Ft</div>'
-                    : 'Mozgasd az egeret egy település fölé!');
-            }
-            else if (metric === "CAPITA") {
-                this._div.innerHTML = (props ?
-                '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                    '<b>' + '<h4>Egy főre jutó EU támogatás (fő / év / Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div>'
-                    : 'Mozgasd az egeret egy település fölé!');
-            }
-            else if (metric === "DEVIATION_2007") {
-                this._div.innerHTML = (props ?
-                '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                    '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2007-2009):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>'
-                    : 'Mozgasd az egeret egy település fölé!');
-            }
-            $('.playchart_1').remove();
+
             if (props) {
                 $('#playchart').show();
             }
             else {
-                $('#playchart').hide();
+                if ($('.chart:hover').length === 0) {
+                    $('.playchart_1').remove();
+                    $('#playchart').hide();
+                }
+            }
+
+            if (metric === "DONATION") {
+                if (props) {
+                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                          '<b>' + '<h4>Összes EU támogatás (millió Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div>';
+                }
+                else {
+                    if ($('.chart:hover').length === 0) {
+                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
+                    }
+                }
+            }
+            else if (metric === "CAPITA") {
+                if (props) {
+                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                          '<b>' + '<h4>Egy főre jutó EU támogatás (fő / év / Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div>';
+                }
+                else {
+                    if ($('.chart:hover').length === 0) {
+                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
+                    }
+                }
+            }
+            else if (metric === "DEVIATION_2007") {
+                if (props) {
+                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2007-2009):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                }
+                else {
+                    if ($('.chart:hover').length === 0) {
+                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
+                    }
+                }
+            }
+            else if (metric === "DEVIATION_2010") {
+                if (props) {
+                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2010-2013):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                }
+                else {
+                    if ($('.chart:hover').length === 0) {
+                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
+                    }
+                }
+            }
+            else if (metric === "DEVIATION_2014") {
+                if (props) {
+                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2014-2015):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                }
+                else {
+                    if ($('.chart:hover').length === 0) {
+                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
+                    }
+                }
             }
 
             if (typeof props != "undefined") {
@@ -810,7 +946,9 @@
                     }
                 }
                 else {
-                    $('#playchart').hide();
+                    if ($('.chart:hover').length === 0) {
+                        $('#playchart').hide();
+                    }
                 }
             }
 
@@ -884,7 +1022,7 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
@@ -898,12 +1036,12 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
                     }
-                    else if (metric === "DEVIATION_2007") {
+                    else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
                         var div = L.DomUtil.create('div', 'info legend'),
                             grades = [0, 25, 50, 75, 125, 150, 175],
                             labels = [];
@@ -926,7 +1064,7 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
@@ -940,12 +1078,12 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
                     }
-                    else if (metric === "DEVIATION_2007") {
+                    else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
                         var div = L.DomUtil.create('div', 'info legend'),
                             grades = [0, 25, 50, 75, 125, 150, 175],
                             labels = [];
@@ -968,7 +1106,7 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
@@ -982,12 +1120,12 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+(grades[i]+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + grades[i + 1].format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
                     }
-                    else if (metric === "DEVIATION_2007") {
+                    else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
                         var div = L.DomUtil.create('div', 'info legend'),
                             grades = [0, 25, 50, 75, 125, 150, 175],
                             labels = [];
@@ -1015,7 +1153,8 @@
 
 
 
-            if (metric != "DEVIATION_2007") {
+            //if (metric != "DEVIATION_2007" || metric != "DEVIATION_2010" || metric != "DEVIATION_2014") {
+            if (timeSeries != "DEVIATION") {
                 if (map.getZoom() <= 9) {
                     map.removeLayer(geojson);
                     adminUnit = "megye";
@@ -1124,23 +1263,23 @@
                                                             <div class="legend_header">Támogatás összesen:</div> \
                                                             <div class="legend_subheader"></div> \
                                                             <div class="chart_legend_a"> \
-                                                                <div class="legend_left legend_chart EU"> \
+                                                                <div class="legend_left legend_chart EU" id="EU"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">EU 2007-2013 tám. program</div> \
                                                                 </div> \
-                                                                <div class="legend_right legend_chart KTIA"> \
+                                                                <div class="legend_right legend_chart KTIA" id="KTIA"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">Kutatási, techn. és innov. alap</div> \
                                                                 </div> \
-                                                                <div class="legend_left legend_chart USZ"> \
+                                                                <div class="legend_left legend_chart szechenyi USZ" id="szechenyi"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">Új Széchenyi<br>Terv</div> \
                                                                 </div> \
-                                                                <div class="legend_right legend_chart SZ"> \
+                                                                <div class="legend_right legend_chart ujszechenyi SZ" id="ujszechenyi"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">Széchenyi<br>2020</div> \
                                                                 </div> \
-                                                                <div class="legend_left legend_chart N"> \
+                                                                <div class="legend_left legend_chart nemzeti N" id="nemzeti"> \
                                                                     <div class="legend_icon"></div> \
                                                                     <div class="legend_text">Nemzeti Fej-<br>lesztési Terv</div> \
                                                                 </div> \
@@ -1260,6 +1399,7 @@
                 });
 
                 $('#human_logo').on('click', function() {
+                    $('.party_selector_wrapper').hide();
                     if (map.getZoom() <= 9) {
                         adminUnit = "megye";
                     }
@@ -1270,7 +1410,7 @@
                         adminUnit = "telepules";
                     }
 
-                    if (metric === "DEVIATION_2007") {
+                    if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
                         map.removeLayer(stripes);
 
                     }
@@ -1309,6 +1449,7 @@
                 });
 
                 $('#cash_logo').on('click', function() {
+                    $('.party_selector_wrapper').hide();
                     if (map.getZoom() <= 9) {
                         adminUnit = "megye";
                     }
@@ -1318,7 +1459,7 @@
                     else {
                         adminUnit = "telepules";
                     }
-                    if (metric === "DEVIATION_2007") {
+                    if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
                         map.removeLayer(stripes);
                     }
                     if(metric != "DONATION") {
@@ -1356,8 +1497,11 @@
                 });
 
                 $('#bank_logo').on('click', function() {
-                    if  (metric != "DEVIATION_2007") {
-                            metric = "DEVIATION_2007"
+                    $('.party_selector_wrapper').show();
+                    //if  (metric != "DEVIATION_2007" || metric != "DEVIATION_2010" || metric != "DEVIATION_2014") {
+                    if  (timeSeries != "DEVIATION") {
+                            var chosenParty = $("#party_selector").val();
+                            metric = chosenParty;
                             timeSeries = "DEVIATION";
                             adminUnit = "telepules";
                             map.removeLayer(geojson);
@@ -1386,6 +1530,32 @@
                             legend.addTo(map);
                     }
                 });
+
+                $('#party_selector').on("change", function(){
+                    var selectedValue = $(this).val();
+                    if (selectedValue === "DEVIATION_2007") {
+                        metric = "DEVIATION_2007";
+                    }
+                    else if (selectedValue === "DEVIATION_2010") {
+                        metric = "DEVIATION_2010";
+                    }
+                    else if (selectedValue === "DEVIATION_2014") {
+                        metric = "DEVIATION_2014";
+                    }
+                    map.removeLayer(geojson);
+                    map.removeLayer(stripes);
+
+                    stripes = L.geoJson(telepules, {
+                        style: stripes_style,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+
+                    geojson = L.geoJson(telepules, {
+                        style: style,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                });
+
 
                 function imageLoader(image, elem) {
                     var c = new Image();
@@ -1445,6 +1615,56 @@
                     .attr({ x:"0", y:"0", width:"14", height:"25"})
                     .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
 
+                $('.chart').on('mouseover', function(){
+                });
+
+                $('.chart').on('mouseleave', function(){
+                    $('.playchart_1').remove();
+                    $('#playchart').hide();
+                });
+
+                $('.legend_chart').on('mouseenter', function() {
+                    var idSelector = String($(this).attr('id'));
+                    $('.bars').each(function() {
+                        if ($(this).is('.bars.'+idSelector)) {
+                            $(this).css('opacity', 1);
+                        }
+                        else {
+                            $(this).css('opacity', 0.2);
+                        }
+                    });
+
+                    /*$('.balance_bar').each(function(){
+                        var first = $(this).children('rect').eq(0);
+                        var firstY = first.attr('y');
+                        var firstH = first.attr('height');
+                        var second = $(this).children('rect').eq(1);
+                        var secondY = second.attr('y');
+                        var secondH = second.attr('height');
+                        //first.attr('y', secondY);
+                        //second.attr('y', parseInt(secondY)+parseInt(firstH));
+                        first.hide();
+                        second.attr('height', parseInt(secondH)+parseInt(firstH));
+                    });*/
+                });
+
+                $('.legend_chart').on('mouseleave', function() {
+                    $('.bars').each(function() {
+                        $(this).css('opacity', 0.7);
+                    });
+                    /*$('.balance_bar').each(function(){
+                        var first = $(this).children('rect').eq(0);
+                        var firstY = first.attr('y');
+                        var firstH = first.attr('height');
+                        var second = $(this).children('rect').eq(1);
+                        var secondY = second.attr('y');
+                        var secondH = second.attr('height');
+                        //first.attr('y', parseInt(secondH)+parseInt(firstY));
+                        //second.attr('y', parseInt(firstY));
+                        second.attr('height', parseInt(secondH)-parseInt(firstH));
+                        first.show();
+                    });*/
+                });
 
             });
 

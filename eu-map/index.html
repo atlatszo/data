@@ -10,14 +10,14 @@
 
         <!-- add styles and scripts -->
         <link rel="icon" type="image/ico" href="http://atlatszo.hu/wp-content/themes/atlatszo/favicon.ico?v=1"/>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/atlatszo.css"/>
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.6/leaflet.css" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-        <script type="text/javascript" src="js/megye.js"></script>
-        <script type="text/javascript" src="js/kisterseg.js"></script>
-        <script type="text/javascript" src="js/telepules.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>-->
+
         <script type="text/javascript" src="js/autocomplete.js"></script>
         <script type="text/javascript" src="js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="js/leaflet.js"></script>
@@ -28,15 +28,27 @@
     </head>
 
     <body>
+        <div class="sk-cube-grid">
+            <div class="sk-cube sk-cube1"></div>
+            <div class="sk-cube sk-cube2"></div>
+            <div class="sk-cube sk-cube3"></div>
+            <div class="sk-cube sk-cube4"></div>
+            <div class="sk-cube sk-cube5"></div>
+            <div class="sk-cube sk-cube6"></div>
+            <div class="sk-cube sk-cube7"></div>
+            <div class="sk-cube sk-cube8"></div>
+            <div class="sk-cube sk-cube9"></div>
+        </div>
         <div class="hidden_preloader"></div>
-        <div id="header">
+        <a href="/atlatszo">
             <div class="logo_wrapper">
-                <a href="/atlatszo">
-                    <div class="logo_text">EU-FORRÁSOK</div>
-                    <div class="logo_text_small">MAGYARORSZÁGON</div>
-                    <img id="header_logo" src="http://atlatszo.hu/wp-content/themes/atlatszo/assets/img/sh-logos-al.png"/>
-                </a>
+                <div class="logo_text">EU-FORRÁSOK</div>
+                <div class="logo_text_small">MAGYARORSZÁGON</div>
+                <img id="header_logo" src="http://atlatszo.hu/wp-content/themes/atlatszo/assets/img/sh-logos-al.png"/>
             </div>
+        </a>
+        <div id="header">
+            <div class="divider"></div>
             <div class="search_wrapper">
                 <span class="main_search_padding_box"><input class="main_search" type="text" value="" placeholder=" Te hol költenéd el a legtöbb EU-forrást?" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="80"/></span>
                 <div class="autocomplete_container"></div>
@@ -59,17 +71,21 @@
         </div>
         <div id="map"></div>
 
+        <!--<script type="text/javascript" src="/js/megye.js"></script>
+        <script type="text/javascript" src="/js/kisterseg.js"></script>-->
+        <script type="text/javascript" src="js/telepules.js"></script>
+
         <script>
             //D3.JS CHART GENERATION FUNCTIONS
-
-            var chartHover = "off";
 
             var adminUnit = "megye";
             var metric = "DONATION";
             var timeSeries = "DONATION_TIME";
+            var geojson;
             var stripes;
             var indexHamlet;
-            var mouseEnter = false;
+
+            var loader = '<div class="spinner"></div>';
 
              /**
              * Number.prototype.format(n, x, s, c)
@@ -170,8 +186,6 @@
                     };
                 });
 
-                //console.log(JSON.stringify(data));
-
                 color.domain(d3.keys(data[0]).filter(function(key) { return key !== "TrDate"; }));
 
                 data.forEach(function(d) {
@@ -219,15 +233,12 @@
                         .tickFormat("")
                     )
 
-                //d3.format = hufFormat.numberFormat
-
                 var y_max = y.domain().slice(-1)
 
                 var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
                     .ticks(5, "s")
-                    //.tickFormat(d3.format(",.0f"));
                     .tickFormat(d3.format(','));
 
                 songId.append("g")
@@ -246,7 +257,7 @@
                 // get the x and y values for least squares
                 var xSeries = d3.range(1, xLabels.length + 1);
                 var ySeries = data.map(function(d) { return parseFloat(d.total); });
-                var ySeriesPlays = data.map(function(d) { return parseFloat(d.plays); });
+                var ySeriesPlays = data.map(function(d) { return parseFloat(d.EU); });
 
                 var leastSquaresCoeff = leastSquares(xSeries, ySeries);
                 var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
@@ -269,7 +280,13 @@
                 }
                 var x2 = xLabels[xLabels.length - 1];
                 var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
+                if (y2 < 0) {
+                    y2 = 0;
+                }
                 var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
+                if (y2Plays < 0) {
+                    y2Plays = 0;
+                }
                 var trendData = [[x1,y1,x2,y2]];
                 var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
 
@@ -307,10 +324,10 @@
 
                 /*var tip = d3.tip().attr('class', 'd3-tip').offset([25, 82]).html(function(data) {
                     if (data.name == "plays") {
-                        return '<span class="tooltip_header plays">Number of '+data.name+': </span><span>'+humanizeNumber(data.y1)+'</span><br><span class="tooltip_header plays">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
+                        return '<span class="tooltip_header plays">Number of '+data.name+': </span><span>'+data.y1+'</span><br><span class="tooltip_header plays">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
                     }
                     else {
-                        return '<span class="tooltip_header starts">Number of '+data.name+': </span><span>'+humanizeNumber(data.y1)+'</span><br><span class="tooltip_header starts">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
+                        return '<span class="tooltip_header starts">Number of '+data.name+': </span><span>'+data.y1+'</span><br><span class="tooltip_header starts">Date: </span><span>'+formatDate(parseDate2(data.date))+'</span>';
                     }
                 });
 
@@ -332,6 +349,8 @@
                     .transition()
                     .duration(0)
                     .attr("y", function(d) { return (y(d.y1)-1); })
+                    .attr("data-selected", function(d) { return (y(d.y1)-1); })
+                    .attr("data-balance", function(d) {return (y(d.y1)); })
                     .attr("height", function(d) { return y(d.y0) - y(d.y1); })
                     .style("fill", function(d) { return color(d.name); })
                     .style('stroke', '#333')
@@ -378,6 +397,46 @@
                 /*TRENDLINE */
             }
 
+            function getColor_t(d, metric) {
+                if (metric === "DONATION") {
+                    return d >= 2675472 ? '#B10026' :
+                           d >= 271551  ? '#B10026' :
+                           d >= 3316  ? '#E31A1C' :
+                           d >= 1828  ? '#FC4E2A' :
+                           d >= 592   ? '#FD8D3C' :
+                           d >= 133   ? '#FEB24C' :
+                           d >= 130   ? '#FED976' :
+                           d >= 1   ? '#FFFFB2' :
+                           d === 0   ? '#D4D4D4' :
+                           '#FFFFB2';
+                }
+                else if (metric === "CAPITA") {
+                    return d >= 44534232 ? '#0C2C84' :
+                           d >= 10738345  ? '#0C2C84' :
+                           d >= 1635418  ? '#225EA8' :
+                           d >= 864218  ? '#1D91C0' :
+                           d >= 429965   ? '#41B6C4' :
+                           d >= 148955   ? '#7FCDBB' :
+                           d >= 147594   ? '#C7E9B4' :
+                           d >= 1   ? '#FFFFCC' :
+                           d === 0   ? '#D4D4D4' :
+                           '#FFFFCC';
+                }
+                else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014" ) {
+                    //console.log(d);
+                    return d >= 200 ? '#ff4d4d' :
+                           d >= 175  ? '#ff4d4d' :
+                           d >= 150  ? '#ff7a7a' :
+                           d >= 125  ? '#ffa6a6' :
+                           d >= 75   ? '#fff2cc' :
+                           d >= 50   ? '#7fbfff' :
+                           d >= 25   ? '#40a0ff' :
+                           d >= 1   ? '#0080ff' :
+                           d === 0   ? '#D4D4D4' :
+                           '#D4D4D4';
+                }
+            }
+
             function render_chart2(songId, inputData) {
 
                 var margin = 20;
@@ -418,8 +477,8 @@
                 var color = d3.scale.ordinal()
                     .range(["#4D8E27", "#FF665A", "#176B86", "#777777"]);
 
-                /*var color2 = d3.scale.ordinal()
-                    .range(["url('#purpleStripe')", "url('#hash4_5')", "", ""]);*/
+                var color2 = d3.scale.ordinal()
+                    .range(["url('#purpleStripe')", "url('#hash4_5')", "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
 
                 var x = d3.scale.ordinal()
                     .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
@@ -451,6 +510,40 @@
                 svg.append("g")
                     .attr("class", "background_group");
 
+                // filters go in defs element
+                var defs = svg.append("defs");
+
+                // create filter with id #drop-shadow
+                // height=130% so that the shadow is not clipped
+                var filter = defs.append("filter")
+                    .attr("id", "drop-shadow")
+                    .attr("height", "130%");
+
+                // SourceAlpha refers to opacity of graphic that this filter will be applied to
+                // convolve that with a Gaussian with standard deviation 3 and store result
+                // in blur
+                filter.append("feGaussianBlur")
+                    .attr("in", "SourceAlpha")
+                    .attr("stdDeviation", 5)
+                    .attr("result", "blur");
+
+                // translate output of Gaussian blur to the right and downwards with 2px
+                // store result in offsetBlur
+                filter.append("feOffset")
+                    .attr("in", "blur")
+                    .attr("dx", 5)
+                    .attr("dy", 5)
+                    .attr("result", "offsetBlur");
+
+                // overlay original SourceGraphic over translated blurred opacity by using
+                // feMerge filter. Order of specifying inputs is important!
+                var feMerge = filter.append("feMerge");
+
+                feMerge.append("feMergeNode")
+                    .attr("in", "offsetBlur")
+                feMerge.append("feMergeNode")
+                    .attr("in", "SourceGraphic");
+
                 function make_y_axis() {
                     return d3.svg.axis()
                         .scale(y)
@@ -467,7 +560,7 @@
                         .tickFormat("")
                     )
 
-                /*svg.selectAll(".series2")
+                svg.selectAll(".series2")
                     .data(data)
                     .enter()
                     .append("g")
@@ -487,22 +580,98 @@
                         .attr("height", function(d) { return y(0) - y(d.size) })
                         .style('stroke', '#333')
                         .style('stroke-width', '0.5')
-                        .style('opacity', '1');*/
+                        .style('opacity', '1');
 
 
+                function selectYear(index) {
+                    if (index === 0) {
+                        return 2007;
+                    }
+                    else if (index === 1) {
+                        return 2008;
+                    }
+                    else if (index === 2) {
+                        return 2009;
+                    }
+                    else if (index === 3) {
+                        return 2010;
+                    }
+                    else if (index === 4) {
+                        return 2011;
+                    }
+                    else if (index === 5) {
+                        return 2012;
+                    }
+                    else if (index === 6) {
+                        return 2013;
+                    }
+                    else if (index === 7) {
+                        return 2014;
+                    }
+                    else if (index === 8) {
+                        return 2015;
+                    }
+                }
+
+                function changeOpacity(selection) {
+                    if (metric === "DEVIATION_2007") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) <= 2009) {
+                                element
+                                    .style("opacity", "0.7")
+                                    .style("filter", "url(#drop-shadow)");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) > 2009 && parseInt(element.attr('data-year')) < 2014) {
+                                element
+                                    .style("opacity", "0.7")
+                                    .style("filter", "url(#drop-shadow)");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) >= 2014) {
+                                element
+                                    .style("opacity", "0.7")
+                                    .style("filter", "url(#drop-shadow)");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                }
 
                 svg.selectAll(".series")
                     .data(data)
                     .enter()
                     .append("g")
                     .classed("series", true)
-                    .style("fill", function(d,i) { return color(i) })
-                    //.style("fill", function(d, i) { return getColor_t(d, metric) })
+                    //.style("fill", function(d,i) { return color(i) })
                     .selectAll("rect")
                     .data(Object)
                     .enter()
                         .append("rect")
+                        .attr('class', 'deviationBar')
                         .attr("x", function(d, i) { return x(x.domain()[i]) })
+                        .attr("data-year", function(d, i) { return selectYear(i) })
+                        .attr("data-value", function(d, i) { return d.y })
                         .attr("width", x.rangeBand())
                         .attr("y", function(d) { return y(0); })
                         .attr("height", function(d) { return y(0) - y(0); })
@@ -512,7 +681,8 @@
                         .attr("height", function(d) { return y(0) - y(d.size) })
                         .style('stroke', '#333')
                         .style('stroke-width', '0.5')
-                        .style('opacity', '0.7');
+                        .style("fill", function(d,i) { return getColor_t(parseInt(d.y)+100, "DEVIATION_2007") });
+                        //.style('opacity', '0.7');
                         //.on("mouseover", function() { tooltip.style("display", null); })
                         //.on("mouseout", function() { tooltip.style("display", "none"); })
                         /*.on("mousemove", function(d) {
@@ -522,12 +692,13 @@
                             tooltip.select("text").text(d.y);
                         });*/
 
+                svg.selectAll(".deviationBar")
+                    .call(changeOpacity);
+
                 svg.append("g")
                     .attr("class", "axis x")
                     .attr("transform", "translate(0 " + y(0) + ")")
                     .call(xAxis);
-
-
 
                 svg.append("g")
                     .attr("class", "axis y")
@@ -553,6 +724,27 @@
                     .style("text-anchor", "middle")
                     .attr("font-size", "12px")
                     .attr("font-weight", "bold");
+
+                /*svg.append("rect")
+                    .attr("class", "Pattern_BG")
+                    .attr("width", 20)
+                    .attr("height", 20)
+                    .attr("x", 100)
+                    .attr("y", 100)
+                    .style("opacity", 1)
+                    .style("fill", '#FFFFFF');
+
+
+                svg.append("rect")
+                    .attr("class", "Pattern1")
+                    .attr("width", 20)
+                    .attr("height", 20)
+                    .attr("x", 100)
+                    .attr("y", 100)
+                    .style("opacity", 1)
+                    .style("fill", 'url(#purpleStripe)');
+                    //.style("fill", 'url(#hash4_5)');*/
+
             }
 
             var mapboxAccessToken = "pk.eyJ1IjoiYmFsa2V5IiwiYSI6IkVEUHU3UVEifQ.ULJj3xCWhQvw4_jLEnHpTQ";
@@ -570,10 +762,7 @@
                 maxZoom: 14
             });
 
-            var geojson;
-            var geojson_kisterseg
-
-            L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
+           L.tileLayer('https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
                 id: 'mapbox.streets',
                 //id: 'balkey.pc3h3mph',
                 //id: 'balkey.6eu1n7wa',
@@ -631,63 +820,21 @@
                 }
             }
 
-            function getColor_t(d, metric) {
-                if (metric === "DONATION") {
-                    return d >= 2675472 ? '#B10026' :
-                           d >= 271551  ? '#B10026' :
-                           d >= 3316  ? '#E31A1C' :
-                           d >= 1828  ? '#FC4E2A' :
-                           d >= 592   ? '#FD8D3C' :
-                           d >= 133   ? '#FEB24C' :
-                           d >= 130   ? '#FED976' :
-                           d >= 1   ? '#FFFFB2' :
-                           d === 0   ? '#D4D4D4' :
-                           '#FFFFB2';
-                }
-                else if (metric === "CAPITA") {
-                    return d >= 44534232 ? '#0C2C84' :
-                           d >= 10738345  ? '#0C2C84' :
-                           d >= 1635418  ? '#225EA8' :
-                           d >= 864218  ? '#1D91C0' :
-                           d >= 429965   ? '#41B6C4' :
-                           d >= 148955   ? '#7FCDBB' :
-                           d >= 147594   ? '#C7E9B4' :
-                           d >= 1   ? '#FFFFCC' :
-                           d === 0   ? '#D4D4D4' :
-                           '#FFFFCC';
-                }
-                else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014" ) {
-                    return d >= 200 ? '#ff4d4d' :
-                           d >= 175  ? '#ff4d4d' :
-                           d >= 150  ? '#ff7a7a' :
-                           d >= 125  ? '#ffa6a6' :
-                           d >= 75   ? '#fff2cc' :
-                           d >= 50   ? '#7fbfff' :
-                           d >= 25   ? '#40a0ff' :
-                           d >= 1   ? '#0080ff' :
-                           d === 0   ? '#D4D4D4' :
-                           '#D4D4D4';
-                }
-            }
-
             function getPattern(d) {
                 if (metric === "DEVIATION_2007") {
                     return d["2007"] === "RULER" ? 'url(#purpleStripe)' :
                            d["2007"] === "UD"  ? 'url(#hash4_5)' :
                           'rgba(0,0,0,0)';
-
                 }
                 else if (metric === "DEVIATION_2010") {
                     return d["2010"] === "RULER" ? 'url(#purpleStripe)' :
                            d["2010"] === "UD"  ? 'url(#hash4_5)' :
                           'rgba(0,0,0,0)';
-
                 }
                 else if (metric === "DEVIATION_2014") {
                     return d["2014"] === "RULER" ? 'url(#purpleStripe)' :
                            d["2014"] === "UD"  ? 'url(#hash4_5)' :
                           'rgba(0,0,0,0)';
-
                 }
             }
 
@@ -814,26 +961,27 @@
 
             var markersById = {};
 
+            function onEachFeatureIndex(feature, layer) {
+
+                markersById[feature.properties.TEL_NEV] = layer;
+            }
+
             function onEachFeature(feature, layer) {
 
                 markersById[feature.properties.TEL_NEV] = layer;
                 layer.on('dblclick', function(e) {
 
-                    if (map.getZoom() <= 13) {
+                    if (map.getZoom() < 12 && timeSeries != "DEVIATION") {
                         var coordinates = e.target.getBounds().getCenter();
                         var cM = [coordinates.lat, coordinates.lng];
                         var a = map.getZoom();
                         map.setView(new L.LatLng(cM[0], cM[1]),a+1, {animate: true});
                     }
                     else {
-                        var a = map.getZoom();
-                        map.setZoom(a + 1);
+                        //var a = map.getZoom();
+                        //map.setZoom(a + 1);
                     }
                 });
-
-                //layer._leaflet_id = feature.properties.TEL_NEV;
-                //layer._polygonId = feature.properties.TEL_NEV;
-                //console.log(layer._polygonId)
 
                 if (map.getZoom() >= 12 || timeSeries === "DEVIATION") {
                     if (feature.properties && feature.properties.TEL_NEV) {
@@ -854,7 +1002,7 @@
             var chart = L.control();
 
             info.onAdd = function (map) {
-                this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+                this._div = L.DomUtil.create('div', 'info popup'); // create a div with a class "info"
                 this.update();
                 return this._div;
             };
@@ -867,146 +1015,122 @@
             // method that we will use to update the control based on feature properties passed
             info.update = function (props) {
 
-            if (props) {
-                $('#playchart').show();
-            }
-            else {
-                if ($('.chart:hover').length === 0) {
-                    $('.playchart_1').remove();
-                    $('#playchart').hide();
-                }
-            }
-
-            if (metric === "DONATION") {
                 if (props) {
-                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                          '<b>' + '<h4>Összes EU támogatás (millió Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div>';
+                    $('#playchart').show();
                 }
                 else {
                     if ($('.chart:hover').length === 0) {
-                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
-                    }
-                }
-            }
-            else if (metric === "CAPITA") {
-                if (props) {
-                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                          '<b>' + '<h4>Egy főre jutó EU támogatás (fő / év / Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div>';
-                }
-                else {
-                    if ($('.chart:hover').length === 0) {
-                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
-                    }
-                }
-            }
-            else if (metric === "DEVIATION_2007") {
-                if (props) {
-                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2007-2009):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
-                }
-                else {
-                    if ($('.chart:hover').length === 0) {
-                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
-                    }
-                }
-            }
-            else if (metric === "DEVIATION_2010") {
-                if (props) {
-                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2010-2013):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
-                }
-                else {
-                    if ($('.chart:hover').length === 0) {
-                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
-                    }
-                }
-            }
-            else if (metric === "DEVIATION_2014") {
-                if (props) {
-                    this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                          '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2014-2015):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
-                }
-                else {
-                    if ($('.chart:hover').length === 0) {
-                        this._div.innerHTML = 'Mozgasd az egeret egy település fölé!';
-                    }
-                }
-            }
-
-            if (typeof props != "undefined") {
-                //console.log(JSON.stringify(props.DONATION_TIME));
-                if (typeof props[timeSeries] != "undefined") {
-                    if (timeSeries == "DONATION_TIME" || timeSeries == "CAPITA_TIME") {
-                        render_chart("1", props[timeSeries]);
-                        $('#playchart').show();
-                    }
-                    else if (timeSeries == "DEVIATION") {
-                        render_chart2("1", props[timeSeries]);
-                        $('#playchart').show();
-                    }
-                }
-                else {
-                    if ($('.chart:hover').length === 0) {
+                        //UPDATE1 HERE TOOL
+                        $('.playchart_1').remove();
                         $('#playchart').hide();
                     }
                 }
-            }
+
+                if (metric === "DONATION") {
+                    if (props) {
+                        this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                              '<b>' + '<h4 class="original_info">Átlagos EU támogatás (millió Ft / év):</h4>' + '</b><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div>' +
+                                              '<b>' + '<h4 class="hidden_info" >Összes EU támogatás (millió Ft):</h4>' + '</b><div class="info_ammount hidden_info">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div>';
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            this._div.innerHTML = 'Átlagos évenkénti EU támogatás 2007-2015.';
+                        }
+                    }
+                }
+                else if (metric === "CAPITA") {
+                    if (props) {
+                        this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                              '<b>' + '<h4>Egy főre jutó EU támogatás (fő / év / Ft):</h4>' + '</b><div class="info_ammount">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div>';
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            this._div.innerHTML = 'Egy főre jutó évi EU támogatás 2007-2015.';
+                        }
+                    }
+                }
+                else if (metric === "DEVIATION_2007") {
+                    if (props) {
+                        this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                              '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2007-2009):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                        }
+                    }
+                }
+                else if (metric === "DEVIATION_2010") {
+                    if (props) {
+                        this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                              '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2010-2013):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                        }
+                    }
+                }
+                else if (metric === "DEVIATION_2014") {
+                    if (props) {
+                        this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
+                                              '<b>' + '<h4>Mo. fő / év átlagától való eltérés (2014-2015):</h4>' + '</b><div class="info_ammount">' + parseInt(props[metric]) + ' %</div>';
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                        }
+                    }
+                }
+
+                if (typeof props != "undefined") {
+                    //console.log(JSON.stringify(props.DONATION_TIME));
+                    if (typeof props[timeSeries] != "undefined") {
+                        if (timeSeries == "DONATION_TIME" || timeSeries == "CAPITA_TIME") {
+                            $('.playchart_1').remove();
+                            render_chart("1", props[timeSeries]);
+                            $('#playchart').show();
+                        }
+                        else if (timeSeries == "DEVIATION") {
+                            $('.playchart_1').remove();
+                            render_chart2("1", props[timeSeries]);
+                            $('#playchart').show();
+                        }
+                    }
+                    else {
+                        if ($('.chart:hover').length === 0) {
+                            $('#playchart').hide();
+                        }
+                    }
+                }
 
             };
 
             info.addTo(map);
             chart.addTo(map);
 
+            /*$.ajax({
+                dataType: "json",
+                async: true,
+                url: "static/js/telepules.json",
+                success: function(data) {
+                    //$(data.features).each(function(key, data) {
+                        //geojson.addData(data);
+                    //});
 
-            //THIS TURNS ON PATTERNS
-            /*stripes = L.geoJson(telepules, {
-                style: stripes_style,
-                onEachFeature: onEachFeature
-            }).addTo(map);*/
-
-            geojson = L.geoJson(megye, {
-                style: style,
-                onEachFeature: onEachFeature
-            });
-
-            indexHamlet = L.geoJson(telepules, {
-                onEachFeature: onEachFeature
-            });
-
-            indexHamlet.addTo(map);
-
-            map.removeLayer(indexHamlet);
-
-
-
-            /*geojson.on("featureparse", function (e){
-
-                (function(layer, properties) {
-
-                    //click event that triggers the popup and centres it on the polygon
-                    layer.on("dblclick", function (e) {
-                        alert('double!');
-                        var bounds = layer.getBounds();
-                        map.fitBounds(bounds);
-                        a = map.getZoom();
-                        map.setZoom(a + 1);
-                        //var popupContent = "popup content here";
-                        //popup.setLatLng(bounds.getCenter());
-                        //popup.setContent(popupContent);
-                        //map.openPopup(popup);
+                    indexHamlet = L.geoJson(data, {
+                        onEachFeature: onEachFeatureIndex
                     });
 
-                })(e.layer, e.properties);
-
-                //assign polygon id so we can reference it later
-                //e.layer._leaflet_id = 'polyindex'+polyindex+'';
-
-                //increment polyindex used for unique polygon id's
-                //polyindex++;
-                //console.log(polyindex);
+                },
+                error: function() {
+                    alert('Busted!');
+                },
+                complete: function() {
+                }
             });*/
 
-            geojson.addTo(map);
+            indexHamlet = L.geoJson(telepules, {onEachFeature: onEachFeatureIndex});
 
             var legend = L.control({position: 'bottomright'});
 
@@ -1151,111 +1275,115 @@
                 $('#playchart').hide();
                 info.update();
 
+                //if (metric != "DEVIATION_2007" || metric != "DEVIATION_2010" || metric != "DEVIATION_2014") {
+                if (timeSeries != "DEVIATION") {
+                    if (map.getZoom() <= 9) {
+                        adminUnit = "megye";
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/megye.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
 
+                                map.removeLayer(geojson);
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                        map.removeControl(legend)
+                        legend.addTo(map);
 
-            //if (metric != "DEVIATION_2007" || metric != "DEVIATION_2010" || metric != "DEVIATION_2014") {
-            if (timeSeries != "DEVIATION") {
-                if (map.getZoom() <= 9) {
-                    map.removeLayer(geojson);
-                    adminUnit = "megye";
-                    geojson = L.geoJson(megye, {
-                        style: style,
-                        onEachFeature: onEachFeature
-                    }).addTo(map);
-                    map.removeControl(legend)
-                    legend.addTo(map);
+                    }
+                    else if (map.getZoom() <= 11) {
+                        adminUnit = "kisterseg";
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/kisterseg.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
 
+                                map.removeLayer(geojson);
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                        map.removeControl(legend)
+                        legend.addTo(map);
+                        // setFilter is available on L.mapbox.featureLayers only. Here
+                        // we're hiding and showing the default marker layer that's attached
+                        // to the map - change the reference if you want to hide or show a
+                        // different featureLayer.
+                        // If you want to hide or show a different kind of layer, you can use
+                        // similar methods like .setOpacity(0) and .setOpacity(1)
+                        // to hide or show it.
+                        //map.featureLayer.setFilter(function() { return true; });
+                    }
+                    else {
+                        adminUnit = "telepules";
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/telepules.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
+
+                                map.removeLayer(geojson);
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                        map.removeControl(legend)
+                        legend.addTo(map);
+                        //map.featureLayer.setFilter(function() { return false; });
+                    }
                 }
-                else if (map.getZoom() <= 11) {
-                    map.removeLayer(geojson);
-                    adminUnit = "kisterseg";
-                    geojson = L.geoJson(kisterseg, {
-                        style: style,
-                        onEachFeature: onEachFeature
-                    }).addTo(map);
-                    map.removeControl(legend)
-                    legend.addTo(map);
-                    // setFilter is available on L.mapbox.featureLayers only. Here
-                    // we're hiding and showing the default marker layer that's attached
-                    // to the map - change the reference if you want to hide or show a
-                    // different featureLayer.
-                    // If you want to hide or show a different kind of layer, you can use
-                    // similar methods like .setOpacity(0) and .setOpacity(1)
-                    // to hide or show it.
-                    //map.featureLayer.setFilter(function() { return true; });
-                }
-                else {
-                    map.removeLayer(geojson);
-                    adminUnit = "telepules";
-                    geojson = L.geoJson(telepules, {
-                        style: style,
-                        onEachFeature: onEachFeature
-                    }).addTo(map);
-                    map.removeControl(legend)
-                    legend.addTo(map);
-                    //map.featureLayer.setFilter(function() { return false; });
-                }
-            }
             });
 
-                var getUrlParameter = function getUrlParameter(sParam) {
-                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-                        sURLVariables = sPageURL.split('&'),
-                        sParameterName,
-                        i;
-                    for (i = 0; i < sURLVariables.length; i++) {
-                        sParameterName = sURLVariables[i].split('=');
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
 
-                        if (sParameterName[0] === sParam) {
-                            return sParameterName[1] === undefined ? true : sParameterName[1];
-                        }
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
                     }
-                };
-
-                if (getUrlParameter('telepules') ) {
-                    $('title').text('EU támogatások | '+getUrlParameter('telepules'));
-                    $( ".main_search" ).val( getUrlParameter('telepules') );
-                        var searchHamlet = getUrlParameter('telepules');
-                        var objectSearched = markersById[searchHamlet];
-                        var coordinates = objectSearched.getBounds().getCenter();
-                        var cM = [coordinates.lat, coordinates.lng];
-                        map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
-                        markersById[searchHamlet].setStyle({
-                                weight: 4,
-                                color: '#4D8E27',
-                                dashArray: '10',
-                                fillColor:"url(#hash4_4)",
-                                fillOpacity: 0.2
-                            });
-
-                        setTimeout (function(){
-                            markersById[searchHamlet].setStyle({
-                                weight: 4,
-                                color: '#4D8E27',
-                                dashArray: '10',
-                                fillColor:"url(#hash4_4)",
-                                fillOpacity: 0.2
-                            });
-                            info.update(objectSearched['feature']['properties']);
-
-                        },1500);
-
-                        $('.legend_elem').each(function(){
-                            $(this).removeClass("legend_featured");
-                                if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearched['feature']['properties'][metric])) {
-                                    $(this).addClass("legend_featured");
-                                }
-                                else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
-                                    $(this).addClass("legend_featured");
-                                }
-                        });
-
-                        map.on('movestart', function() {
-                            geojson.resetStyle(markersById[searchHamlet]);
-
-                        });
                 }
-
+            };
 
             $(document).ready(function(){
                //$('.leaflet-top.leaflet-right').append('<div id="playchart"> \
@@ -1303,15 +1431,6 @@
                                                                 </div> \
                                                             </div> \
                                                         </div>');
-
-
-                $('.chart').on('mouseenter', function(){
-                   chartHover === "on";
-                   //alert(chartHover);
-                });
-                $('.chart').on('mouseleave', function(){
-                   chartHover === "off";
-                });
 
                 $(".main_search").autocomplete({
                     minlength: 8,
@@ -1398,8 +1517,41 @@
                     }
                 });
 
+                $('#human_logo').hover(function() {
+
+                    if (metric != "CAPITA") {
+                        $('.playchart_1').remove();
+                        $('#playchart').hide();
+                        $("#human_logo").addClass('hover_logo');
+                        $('.popup.leaflet-control').addClass('hover_pop');
+                        $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                        $('.popup').append(loader);
+                    }
+                },
+                function() {
+                    if (metric ==="DONATION") {
+                        $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                        $("#human_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                    else if (metric ==="CAPITA") {
+                        $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                        $("#human_logo").removeClass('hover_logo');
+                        $("#human_logo").addClass('active_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+
+                    }
+                    else {
+                        $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                        $("#human_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                });
+
                 $('#human_logo').on('click', function() {
                     $('.party_selector_wrapper').hide();
+                    //$('.popup.leaflet-control').removeClass('hover_pop');
+                    //$('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
                     if (map.getZoom() <= 9) {
                         adminUnit = "megye";
                     }
@@ -1414,42 +1566,143 @@
                         map.removeLayer(stripes);
 
                     }
-                    if(metric != "CAPITA") {
+                    if (metric != "CAPITA") {
                         metric = "CAPITA";
                         timeSeries = "CAPITA_TIME";
                         $('.chart_legend_b').hide();
                         $('.chart_legend_a').show();
-                        map.removeLayer(geojson);
+                        $('.spinner').show();
+                        //map.removeLayer(geojson);
                         $('.logo').each(function(){
                            $(this).removeClass('active_logo');
+                           $(this).removeClass('hover_logo');
                         });
                         $("#human_logo").addClass('active_logo');
                         $('.info h4').text('Egy főre jutó EU támogatás (fő / Ft)');
                         if (adminUnit === "megye") {
-                            geojson = L.geoJson(megye, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/megye.json",
+                                delay: 3,
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         else if (adminUnit === "kisterseg") {
-                            geojson = L.geoJson(kisterseg, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/kisterseg.json",
+                                delay: 3,
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         else if (adminUnit === "telepules") {
-                            geojson = L.geoJson(telepules, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/telepules.json",
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         map.removeControl(legend)
                         legend.addTo(map);
                    }
                 });
 
+                $('#cash_logo').hover(function() {
+                    if (metric != "DONATION") {
+                        $('.playchart_1').remove();
+                        $('#playchart').hide();
+                        $("#cash_logo").addClass('hover_logo');
+                        $('.popup.leaflet-control').addClass('hover_pop');
+                        $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                        $('.popup').append(loader);
+                    }
+                },
+                function() {
+                    if (metric ==="DONATION") {
+                        $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                        $("#cash_logo").removeClass('hover_logo');
+                        $("#cash_logo").addClass('active_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                    else if (metric ==="CAPITA") {
+                        $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                        $("#cash_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                    else {
+                        $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                        $("#cash_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                });
+
                 $('#cash_logo').on('click', function() {
                     $('.party_selector_wrapper').hide();
+                    //$('.popup.leaflet-control').removeClass('hover_pop');
+                    //$('.popup.leaflet-control').html('Átlagos évenkénti EU támogatás 2007-2015.');
                     if (map.getZoom() <= 9) {
                         adminUnit = "megye";
                     }
@@ -1465,63 +1718,195 @@
                     if(metric != "DONATION") {
                         metric = "DONATION";
                         timeSeries = "DONATION_TIME";
+                        $('.spinner').show();
                         $('.chart_legend_b').hide();
                         $('.chart_legend_a').show();
-                        map.removeLayer(geojson);
                         $('.logo').each(function(){
                            $(this).removeClass('active_logo');
+                           $(this).removeClass('hover_logo');
                         });
                         $("#cash_logo").addClass('active_logo');
-                        $('.info h4').text('Összes EU támogatás (millió Ft)');
+                        $('.info h4').text('Átlagos EU támogatás (millió Ft / év)');
                         if (adminUnit === "megye") {
-                            geojson = L.geoJson(megye, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/megye.json",
+                                delay: 3,
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         else if (adminUnit === "kisterseg") {
-                            geojson = L.geoJson(kisterseg, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/kisterseg.json",
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         else if (adminUnit === "telepules") {
-                            geojson = L.geoJson(telepules, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/telepules.json",
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
                         }
                         map.removeControl(legend)
                         legend.addTo(map);
                    }
                 });
 
+                $('#bank_logo').hover(function() {
+                    if (timeSeries != "DEVIATION") {
+                        $('.playchart_1').remove();
+                        $('#playchart').hide();
+                        $("#bank_logo").addClass('hover_logo');
+                        $('.popup.leaflet-control').addClass('hover_pop');
+                        $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                        $('.popup').append(loader);
+                    }
+                },
+                function() {
+                    if (metric ==="DONATION") {
+                        $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                        $("#bank_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                    else if (metric ==="CAPITA") {
+                        $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                        $("#bank_logo").removeClass('hover_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                    else {
+                        $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                        $("#bank_logo").removeClass('hover_logo');
+                        $("#bank_logo").addClass('active_logo');
+                        $('.popup.leaflet-control').removeClass('hover_pop');
+                    }
+                });
+
                 $('#bank_logo').on('click', function() {
                     $('.party_selector_wrapper').show();
+                    //$('.popup.leaflet-control').removeClass('hover_pop');
+                    //$('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                    //$('.popup').append('<div class="loader_wrapper"><img class="preloader_gif" src="img/loadertest.gif"/></div>');
                     //if  (metric != "DEVIATION_2007" || metric != "DEVIATION_2010" || metric != "DEVIATION_2014") {
                     if  (timeSeries != "DEVIATION") {
+                            $('.spinner').show();
                             var chosenParty = $("#party_selector").val();
                             metric = chosenParty;
                             timeSeries = "DEVIATION";
                             adminUnit = "telepules";
-                            map.removeLayer(geojson);
 
-                            stripes = L.geoJson(telepules, {
-                                style: stripes_style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            //stripes = L.geoJson(telepules, {
+                            //    style: stripes_style,
+                            //    onEachFeature: onEachFeature
+                            //}).addTo(map);
 
-                            geojson = L.geoJson(telepules, {
-                                style: style,
-                                onEachFeature: onEachFeature
-                            }).addTo(map);
+                            //geojson = L.geoJson(telepules, {
+                            //    style: style,
+                            //    onEachFeature: onEachFeature
+                            //}).addTo(map);
 
+                            $.ajax({
+                                dataType: "json",
+                                async: true,
+                                url: "static/js/telepules.json",
+                                success: function(data) {
+                                    //$(data.features).each(function(key, data) {
+                                        //geojson.addData(data);
+                                    //});
+
+                                    map.removeLayer(geojson);
+
+                                    stripes = L.geoJson(data, {
+                                        style: stripes_style,
+                                        onEachFeature: onEachFeature
+                                    }).addTo(map);
+
+                                    geojson = L.geoJson(data, {
+                                        style: style,
+                                        onEachFeature: onEachFeature
+                                    });
+                                    geojson.addTo(map);
+                                    //alert('Uploaded!!!');
+                                },
+                                error: function() {
+                                    alert('Busted!');
+                                },
+                                complete: function() {
+                                    $('.spinner').remove();
+                                    $('.popup.leaflet-control').removeClass('hover_pop');
+                                }
+                            });
 
 
                             $('.chart_legend_a').hide();
                             $('.chart_legend_b').show();
                             $('.logo').each(function(){
                                 $(this).removeClass('active_logo');
+                                $(this).removeClass('hover_logo');
                             });
                             $("#bank_logo").addClass('active_logo');
                             $('.info h4').text('2007-2015 országos átlagától vett eltérés (%)');
@@ -1529,31 +1914,62 @@
                             map.removeControl(legend)
                             legend.addTo(map);
                     }
+
                 });
+
+
 
                 $('#party_selector').on("change", function(){
                     var selectedValue = $(this).val();
                     if (selectedValue === "DEVIATION_2007") {
                         metric = "DEVIATION_2007";
+                        $('.popup').html('2007-2009. szerinti EU támogatás')
+                        $('.popup').append(loader);
+
                     }
                     else if (selectedValue === "DEVIATION_2010") {
                         metric = "DEVIATION_2010";
+                        $('.popup').html('2010-2013. szerinti EU támogatás')
+                        $('.popup').append(loader);
                     }
                     else if (selectedValue === "DEVIATION_2014") {
                         metric = "DEVIATION_2014";
+                        $('.popup').html('2014-2015. szerinti EU támogatás')
+                        $('.popup').append(loader);
                     }
-                    map.removeLayer(geojson);
-                    map.removeLayer(stripes);
+                    $('.popup.leaflet-control').addClass('hover_pop');
+                    $('.spinner').show();
+                    $.ajax({
+                        dataType: "json",
+                        async: true,
+                        url: "static/js/telepules.json",
+                        success: function(data) {
+                            //$(data.features).each(function(key, data) {
+                            //geojson.addData(data);
+                            //});
 
-                    stripes = L.geoJson(telepules, {
-                        style: stripes_style,
-                        onEachFeature: onEachFeature
-                    }).addTo(map);
+                            map.removeLayer(stripes);
+                            map.removeLayer(geojson);
 
-                    geojson = L.geoJson(telepules, {
-                        style: style,
-                        onEachFeature: onEachFeature
-                    }).addTo(map);
+                            stripes = L.geoJson(data, {
+                                style: stripes_style,
+                                onEachFeature: onEachFeature
+                            }).addTo(map);
+
+                            geojson = L.geoJson(data, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            });
+                            geojson.addTo(map);
+                        },
+                        error: function() {
+                            alert('Busted!');
+                        },
+                        complete: function() {
+                            $('.spinner').remove();
+                            $('.popup.leaflet-control').removeClass('hover_pop');
+                        }
+                    });
                 });
 
 
@@ -1567,8 +1983,11 @@
                     c.src = image;
                 }
                 imageLoader("/img/cash_active3.png", $(".hidden_reloader"));
+                imageLoader("/img/cash_hover.png", $(".hidden_reloader"));
                 imageLoader("/img/human_active.png", $(".hidden_reloader"));
+                imageLoader("/img/human_hover.png", $(".hidden_reloader"));
                 imageLoader("/img/bank_active.png", $(".hidden_reloader"));
+                imageLoader("/img/bank_hover.png", $(".hidden_reloader"));
 
                 //PATTERN INJECTION VIA D3
                 var svg2 = d3.select("body").append("svg").attr("id", "d3svga")
@@ -1625,47 +2044,261 @@
 
                 $('.legend_chart').on('mouseenter', function() {
                     var idSelector = String($(this).attr('id'));
+                    var totalMetric = 0;
                     $('.bars').each(function() {
                         if ($(this).is('.bars.'+idSelector)) {
-                            $(this).css('opacity', 1);
+                            $(this).show();
+                            var heightB = $(this).attr('height');
+                            $(this).attr("y", 205-heightB);
+                            if ($(this).attr("height") != "0") {
+                                var metricBar = $(this).attr('data-balance');
+                                totalMetric += parseInt(metricBar);
+                            }
                         }
                         else {
-                            $(this).css('opacity', 0.2);
+                            $(this).hide();
                         }
                     });
-
-                    /*$('.balance_bar').each(function(){
-                        var first = $(this).children('rect').eq(0);
-                        var firstY = first.attr('y');
-                        var firstH = first.attr('height');
-                        var second = $(this).children('rect').eq(1);
-                        var secondY = second.attr('y');
-                        var secondH = second.attr('height');
-                        //first.attr('y', secondY);
-                        //second.attr('y', parseInt(secondY)+parseInt(firstH));
-                        first.hide();
-                        second.attr('height', parseInt(secondH)+parseInt(firstH));
-                    });*/
+                    $('.trendline').hide();
+                    if (idSelector === "EU") {
+                        $('h4.hidden_info').html('EU 2007-2013 (millió Ft / év):');
+                    }
+                    else if (idSelector === "KTIA") {
+                        $('h4.hidden_info').html('Kut. és Techn. Innov. Alap (millió Ft / év):');
+                    }
+                    else if (idSelector === "szechenyi") {
+                        $('h4.hidden_info').html('Új Széchenyi terv (millió Ft / év):');
+                    }
+                    else if (idSelector === "ujszechenyi") {
+                        $('h4.hidden_info').html('Széchenyi 2020 (millió Ft / év):');
+                    }
+                    else if (idSelector === "nemzeti") {
+                        $('h4.hidden_info').html('Nemzeti Fejlesztési Terv (millió Ft / év):');
+                    }
+                    $('.info_ammount.hidden_info').html((totalMetric/9).format(0, 3, ' ')+" millió Ft");
+                    $('.info_ammount.original_info').hide();
+                    $('.info_ammount.hidden_info').show();
+                    $('h4.original_info').hide();
+                    $('h4.hidden_info').show();
+                    //alert(totalMetric);
                 });
 
                 $('.legend_chart').on('mouseleave', function() {
+                    var idSelector = String($(this).attr('id'));
                     $('.bars').each(function() {
-                        $(this).css('opacity', 0.7);
+                        if ($(this).is('.bars.'+idSelector)) {
+                            var newyPos = $(this).attr("data-selected");
+                            $(this).attr('y', newyPos);
+                            $(this).show();
+                        }
+                        else {
+                            $(this).show();
+                        }
                     });
-                    /*$('.balance_bar').each(function(){
-                        var first = $(this).children('rect').eq(0);
-                        var firstY = first.attr('y');
-                        var firstH = first.attr('height');
-                        var second = $(this).children('rect').eq(1);
-                        var secondY = second.attr('y');
-                        var secondH = second.attr('height');
-                        //first.attr('y', parseInt(secondH)+parseInt(firstY));
-                        //second.attr('y', parseInt(firstY));
-                        second.attr('height', parseInt(secondH)-parseInt(firstH));
-                        first.show();
-                    });*/
+                    $('.trendline').show();
+                    $('.info_ammount.hidden_info').hide();
+                    $('.info_ammount.original_info').show();
+                    $('h4.hidden_info').hide();
+                    $('h4.original_info').show();
                 });
 
+                //$('.popup').append('<div class="loader_wrapper"><img class="preloader_gif" src="img/loadertest.gif"/></div>');
+                $('.sk-cube-grid').hide();
+
+                //$('select').select2();
+
+                if (getUrlParameter('telepules') ) {
+                    $('title').text('EU támogatások | '+getUrlParameter('telepules'));
+                    $( ".main_search" ).val( getUrlParameter('telepules') );
+                        var searchHamlet = getUrlParameter('telepules');
+                        var objectSearched = markersById[searchHamlet];
+                        var coordinates = objectSearched.getBounds().getCenter();
+                        var cM = [coordinates.lat, coordinates.lng];
+                        map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
+                        markersById[searchHamlet].setStyle({
+                                weight: 4,
+                                color: '#4D8E27',
+                                dashArray: '10',
+                                fillColor:"url(#hash4_4)",
+                                fillOpacity: 0.2
+                            });
+                        setTimeout (function(){
+                            markersById[searchHamlet].setStyle({
+                                weight: 4,
+                                color: '#4D8E27',
+                                dashArray: '10',
+                                fillColor:"url(#hash4_4)",
+                                fillOpacity: 0.2
+                            });
+                            info.update(objectSearched['feature']['properties']);
+
+                        },2000);
+
+                        $('.legend_elem').each(function(){
+                            $(this).removeClass("legend_featured");
+                                if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearched['feature']['properties'][metric])) {
+                                    $(this).addClass("legend_featured");
+                                }
+                                else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
+                                    $(this).addClass("legend_featured");
+                                }
+                        });
+
+                        map.on('movestart', function() {
+                            geojson.resetStyle(markersById[searchHamlet]);
+
+                        });
+                }
+
+                if (getUrlParameter('view')) {
+                    var viewToSelect = getUrlParameter('view');
+                    if (viewToSelect === "1") {
+                        metric = "DONATION";
+                        timeSeries = "DONATION_TIME";
+                        $('.logo').each(function(){
+                           $(this).removeClass('active_logo');
+                           $(this).removeClass('hover_logo');
+                        });
+                        $("#cash_logo").addClass('active_logo');
+                        map.removeControl(legend);
+                        legend.addTo(map);
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/megye.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
+
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                    }
+                    else if (viewToSelect === "2") {
+                        metric = "CAPITA";
+                        timeSeries = "CAPITA_TIME";
+                        $('.logo').each(function(){
+                           $(this).removeClass('active_logo');
+                           $(this).removeClass('hover_logo');
+                        });
+                        $("#human_logo").addClass('active_logo');
+                        map.removeControl(legend);
+                        legend.addTo(map);
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/megye.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
+
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                    }
+                    else if (viewToSelect === "3") {
+                        if (getUrlParameter('year')) {
+                            var year = parseInt(getUrlParameter('year'));
+                            if (year < 2010) {
+                                metric = "DEVIATION_2007";
+                                $("#party_selector").val("DEVIATION_2007");
+                            }
+                            else if (year < 2014) {
+                                metric = "DEVIATION_2010";
+                                $("#party_selector").val("DEVIATION_2010");
+                            }
+                            else {
+                                metric = "DEVIATION_2014";
+                                $("#party_selector").val("DEVIATION_2014");
+                            }
+                        }
+                        else {
+                            metric = "DEVIATION_2007";
+                        }
+                        timeSeries = "DEVIATION";
+                        adminUnit = "telepules";
+                        $('.logo').each(function(){
+                           $(this).removeClass('active_logo');
+                           $(this).removeClass('hover_logo');
+                        });
+                        $("#bank_logo").addClass('active_logo');
+                        $('.party_selector_wrapper').show();
+                        map.removeControl(legend);
+                        legend.addTo(map);
+                        $.ajax({
+                            dataType: "json",
+                            async: true,
+                            url: "static/js/telepules.json",
+                            success: function(data) {
+                                //$(data.features).each(function(key, data) {
+                                    //geojson.addData(data);
+                                //});
+
+                                stripes = L.geoJson(data, {
+                                    style: stripes_style,
+                                    onEachFeature: onEachFeature
+                                }).addTo(map);
+
+                                geojson = L.geoJson(data, {
+                                    style: style,
+                                    onEachFeature: onEachFeature
+                                });
+                                geojson.addTo(map);
+                                //alert('Uploaded!!!');
+                            },
+                            error: function() {
+                                alert('Busted!');
+                            },
+                            complete: function() {
+                            }
+                        });
+                        $('.chart_legend_a').hide();
+                        $('.chart_legend_b').show();
+                    }
+                }
+                else {
+                    $.ajax({
+                        dataType: "json",
+                        async: true,
+                        url: "static/js/megye.json",
+                        success: function(data) {
+                            //$(data.features).each(function(key, data) {
+                                //geojson.addData(data);
+                            //});
+
+                            geojson = L.geoJson(data, {
+                                style: style,
+                                onEachFeature: onEachFeature
+                            });
+                            geojson.addTo(map);
+                        },
+                        error: function() {
+                            alert('Busted!');
+                        },
+                        complete: function() {
+                        }
+                    });
+                }
             });
 
         </script>

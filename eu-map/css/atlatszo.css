@@ -1,5 +1,6 @@
 body {
     background-color: rgba(51,51,51,0.2);
+    overflow: hidden;
 }
 
 .hidden_preloader {
@@ -15,7 +16,7 @@ body {
     z-index: 100;
     top: 0px;
     left: 165px;
-    width: 87.1%;
+    width: 100%;
     height: 80px;
     background-color: rgba(80, 85, 73, 0.9);
     box-shadow: -1px 1px 3px rgba(0,0,0, 1);
@@ -133,51 +134,56 @@ a {
 }
 
 .header_svg_container {
-    margin-top: 25px;
-    margin-left:255px;
-    float: left;
+    margin-top: 17px;
+    margin-right: 10px;
+    width: 322px;
+    position: absolute;
+    right: 0px;
+    z-index: 100;
 }
 
 .logo {
-    margin-left: 10px;
+    margin-right: 10px;
     cursor: pointer;
     height: 30px;
+    float: left;
 }
 
 #cash_logo {
-    content:url("/img/cash.png")
+    width: 36px;
 }
 
-#cash_logo.active_logo {
-    content:url("/img/cash_active3.png")
+#cash_logo.hover_logo > svg > #cash {
+    fill: rgba(191,192,187,1);
+
 }
 
-#cash_logo.hover_logo {
-    content:url("/img/cash_hover.png")
+#cash_logo.active_logo > svg > #cash {
+    fill: rgba(255,255,255,1);
 }
 
 #human_logo {
-    content:url("/img/human.png")
+    width: 26px;
 }
 
-#human_logo.active_logo {
-    content:url("/img/human_active.png")
+#human_logo.hover_logo > svg > #human {
+    fill: rgba(191,192,187,1);
 }
 
-#human_logo.hover_logo {
-    content:url("/img/human_hover.png")
+#human_logo.active_logo > svg > #human {
+    fill: rgba(255,255,255,1);
 }
 
 #bank_logo {
-    content:url("/img/bank.png")
+    width: 28px;
 }
 
-#bank_logo.active_logo {
-    content:url("/img/bank_active.png")
+#bank_logo.hover_logo > svg > #bank {
+    fill: rgba(191,192,187,1);
 }
 
-#bank_logo.hover_logo {
-    content:url("/img/bank_hover.png")
+#bank_logo.active_logo > svg > #bank {
+    fill: rgba(255,255,255,1);
 }
 
 .party_selector_wrapper {
@@ -186,8 +192,8 @@ a {
 }
 
 #party_selector {
-    margin-left: 25px;
-    margin-top: 20px;
+    margin-left: 10px;
+    margin-top: -5px;
     height: 40px;
     outline: none;
     font-family: helvetica;
@@ -205,8 +211,6 @@ a {
 
 .language_change {
     float: right;
-    margin-right: 10px;
-    margin-top: 23px;
     padding: 6px;
     border-radius: 4px;
     background-color: rgba(0,0,0,0.0);
@@ -419,14 +423,14 @@ a {
 
 .legend_chart.REIGN > .legend_icon {
     /*background-color: #4D8E27;*/
-    background-image: url("/img/stripes_pattern.png");
+    background-image: url("http://www.balkeyplayer.com/img/stripes_pattern.png");
     background-repeat: no-repeat;
     background-size: 20px 20px;
 }
 
 .legend_chart.OPP > .legend_icon {
     /*background-color: #FF665A;*/
-    background-image: url("/img/dots_pattern.png");
+    background-image: url("http://www.balkeyplayer.com/img/dots_pattern.png");
     background-repeat: no-repeat;
     background-size: 20px 20px;
 }

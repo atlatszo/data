@@ -53,24 +53,35 @@
                 <span class="main_search_padding_box"><input class="main_search" type="text" value="" placeholder=" Te hol költenéd el a legtöbb EU-forrást?" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="80"/></span>
                 <div class="autocomplete_container"></div>
             </div>
-            <div class="header_svg_container">
-                <img class="logo active_logo" id="cash_logo"/>
-                <img class="logo" id="human_logo"/>
-                <img class="logo" id="bank_logo" src="img/bank.png"/>
-            </div>
-            <div class="party_selector_wrapper">
-                <select id="party_selector">
-                    <option value="DEVIATION_2007">2007-2009</option>
-                    <option value="DEVIATION_2010">2010-2013</option>
-                    <option value="DEVIATION_2014">2014-2015</option>
-                </select>
-            </div>
-            <div class="language_change">
-                <div id="english">EN</div>
-            </div>
         </div>
+        <div class="header_svg_container">
+                <div class="logo active_logo" id="cash_logo">
+                    <svg style="width:36px;height:30px" viewBox="0 0 36 30">
+                        <path id="cash" fill="rgba(51,51,51,1)" d="M6.5,2 L35.75,2 L35.75,21.5 L6.5,21.5 L6.5,2 L6.5,2 Z M21.125,6.875 C23.8173882,6.875 26,9.05761184 26,11.75 C26,14.4423882 23.8173882,16.625 21.125,16.625 C18.4326118,16.625 16.25,14.4423882 16.25,11.75 C16.25,9.05761184 18.4326118,6.875 21.125,6.875 L21.125,6.875 Z M13,5.25 C13,7.04492544 11.5449254,8.5 9.75,8.5 L9.75,15 C11.5449254,15 13,16.4550746 13,18.25 L29.25,18.25 C29.25,16.4550746 30.7050746,15 32.5,15 L32.5,8.5 C30.7050746,8.5 29.25,7.04492544 29.25,5.25 L13,5.25 L13,5.25 Z M0,8.5 L3.25,8.5 L3.25,24.75 L29.25,24.75 L29.25,28 L0,28 L0,8.5 L0,8.5 Z" />
+                    </svg>
+                </div>
+                <div class="logo" id="human_logo">
+                    <svg style="width:26px;height:30px" viewBox="0 0 26 30">
+                        <path id="human" fill="rgba(51,51,51,1)" d="M5.25,0 C6.90685425,0 8.25,1.34314575 8.25,3 C8.25,4.65685425 6.90685425,6 5.25,6 C3.59314575,6 2.25,4.65685425 2.25,3 C2.25,1.34314575 3.59314575,0 5.25,0 L5.25,0 Z M3,7.5 L7.5,7.5 C9.15685425,7.5 10.5,8.84314575 10.5,10.5 L10.5,18.75 L8.25,18.75 L8.25,30 L2.25,30 L2.25,18.75 L0,18.75 L0,10.5 C0,8.84314575 1.34314575,7.5 3,7.5 L3,7.5 Z M18.75,0 C20.4068542,0 21.75,1.34314575 21.75,3 C21.75,4.65685425 20.4068542,6 18.75,6 C17.0931458,6 15.75,4.65685425 15.75,3 C15.75,1.34314575 17.0931458,0 18.75,0 L18.75,0 Z M16.5,30 L16.5,21 L12,21 L15.885,9.615 C16.26,8.385 17.4,7.5 18.75,7.5 C20.1,7.5 21.24,8.385 21.615,9.615 L25.5,21 L21,21 L21,30 L16.5,30 L16.5,30 Z" />
+                    </svg>
+                </div>
+                <div class="logo" id="bank_logo">
+                    <svg style="width:28px;height:30px" viewBox="0 0 28 30">
+                        <path id="bank" fill="rgba(51,51,51,1)" d="M13.5714286,0 L0,7.14285714 L0,10 L27.1428571,10 L27.1428571,7.14285714 L13.5714286,0 Z M20,12.8571429 L20,22.8571429 L24.2857143,22.8571429 L24.2857143,12.8571429 L20,12.8571429 Z M0,30 L27.1428571,30 L27.1428571,25.7142857 L0,25.7142857 L0,30 Z M11.4285714,12.8571429 L11.4285714,22.8571429 L15.7142857,22.8571429 L15.7142857,12.8571429 L11.4285714,12.8571429 Z M2.85714286,12.8571429 L2.85714286,22.8571429 L7.14285714,22.8571429 L7.14285714,12.8571429 L2.85714286,12.8571429 L2.85714286,12.8571429 Z"></path>
+                    </svg>
+                </div>
+                <div class="party_selector_wrapper">
+                    <select id="party_selector">
+                        <option value="DEVIATION_2007">2007-2009</option>
+                        <option value="DEVIATION_2010">2010-2013</option>
+                        <option value="DEVIATION_2014">2014-2015</option>
+                    </select>
+                </div>
+                <div class="language_change">
+                    <div id="english">EN</div>
+                </div>
+            </div>
         <div id="map"></div>
-
         <!--<script type="text/javascript" src="/js/megye.js"></script>
         <script type="text/javascript" src="/js/kisterseg.js"></script>-->
         <script type="text/javascript" src="js/telepules.js"></script>
@@ -198,9 +209,9 @@
                 x.domain(data.map(function(d) { return d.TrDate; }));
                 y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
-                var line = d3.svg.line()
-                    .x(function(d) { return x(d.TrDate); })
-                    .y(function(d) { return y(d.total); });
+		        var line = d3.svg.line()
+		            .x(function(d) { return x(d.TrDate); })
+			        .y(function(d) { return y(d.total); });
 
                 var dataMiddle = Math.round((data.length-1)/2)
 
@@ -252,66 +263,66 @@
 
                 /*TRENDLINE*/
 
-                var xLabels = data.map(function (d) { return d.TrDate; })
+		        var xLabels = data.map(function (d) { return d.TrDate; })
 
-                // get the x and y values for least squares
-                var xSeries = d3.range(1, xLabels.length + 1);
-                var ySeries = data.map(function(d) { return parseFloat(d.total); });
-                var ySeriesPlays = data.map(function(d) { return parseFloat(d.EU); });
+	            // get the x and y values for least squares
+		        var xSeries = d3.range(1, xLabels.length + 1);
+		        var ySeries = data.map(function(d) { return parseFloat(d.total); });
+		        var ySeriesPlays = data.map(function(d) { return parseFloat(d.EU); });
 
-                var leastSquaresCoeff = leastSquares(xSeries, ySeries);
-                var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
+		        var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+		        var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
 
 
-                // apply the reults of the least squares regression
+		        // apply the reults of the least squares regression
 
-                var x1 = xLabels[0];
-                var yCorr = 0;
-                var yCorrPlays = 0;
-                var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
-                if (y1 < 0) {
-                    yCorr = y1 *-1;
-                    y1 = 0;
-                }
-                var y1Plays = leastSquaresCoeffPlays[0] + leastSquaresCoeffPlays[1];
-                if (y1Plays < 0) {
-                    yCorrPlays = y1 *-1;
-                    y1Plays = 0;
-                }
-                var x2 = xLabels[xLabels.length - 1];
-                var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
-                if (y2 < 0) {
-                    y2 = 0;
-                }
-                var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
-                if (y2Plays < 0) {
-                    y2Plays = 0;
-                }
-                var trendData = [[x1,y1,x2,y2]];
-                var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
+		        var x1 = xLabels[0];
+		        var yCorr = 0;
+		        var yCorrPlays = 0;
+		        var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+		        if (y1 < 0) {
+		            yCorr = y1 *-1;
+		            y1 = 0;
+		        }
+		        var y1Plays = leastSquaresCoeffPlays[0] + leastSquaresCoeffPlays[1];
+		        if (y1Plays < 0) {
+		            yCorrPlays = y1 *-1;
+		            y1Plays = 0;
+		        }
+		        var x2 = xLabels[xLabels.length - 1];
+		        var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
+		        if (y2 < 0) {
+		            y2 = 0;
+		        }
+		        var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
+		        if (y2Plays < 0) {
+		            y2Plays = 0;
+		        }
+		        var trendData = [[x1,y1,x2,y2]];
+		        var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
 
                 // returns slope, intercept and r-square of the line
-                function leastSquares(xSeries, ySeries) {
-                    var reduceSumFunc = function(prev, cur) { return prev + cur; };
+	            function leastSquares(xSeries, ySeries) {
+	                var reduceSumFunc = function(prev, cur) { return prev + cur; };
 
-                    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
-                    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+		            var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+		            var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
 
-                    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
-                        .reduce(reduceSumFunc);
+		            var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+			            .reduce(reduceSumFunc);
 
-                    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
-                        .reduce(reduceSumFunc);
+		            var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+			            .reduce(reduceSumFunc);
 
-                    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
-                        .reduce(reduceSumFunc);
+		            var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+			            .reduce(reduceSumFunc);
 
-                    var slope = ssXY / ssXX;
-                    var intercept = yBar - (xBar * slope);
-                    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+		            var slope = ssXY / ssXX;
+		            var intercept = yBar - (xBar * slope);
+		            var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
 
-                    return [slope, intercept, rSquare];
-                }
+		            return [slope, intercept, rSquare];
+	            }
 
                 /*TRENDLINE*/
 
@@ -365,36 +376,36 @@
                 /*TRENDLINE */
 
                 var trendline = songId.selectAll(".trendline")
-                    .data(trendData);
+		            .data(trendData);
 
-                trendline.enter()
-                    .append("line")
-                    .attr("class", "trendline")
-                    .attr("x1", function(d) { return x(d[0]); })
-                    .attr("y1", function(d) { return y(d[1]); })
-                    .attr("x2", function(d) { return x(d[2]); })
-                    .attr("y2", function(d) { return y(d[3]); })
-                    .attr("stroke", "#79DCE8")
-                    .attr("stroke-width", 2)
-                    .style("stroke-dasharray", ("3, 3"))
-                    .style("stroke-opacity", 0.7);
+		        trendline.enter()
+		            .append("line")
+			        .attr("class", "trendline")
+			        .attr("x1", function(d) { return x(d[0]); })
+			        .attr("y1", function(d) { return y(d[1]); })
+			        .attr("x2", function(d) { return x(d[2]); })
+			        .attr("y2", function(d) { return y(d[3]); })
+			        .attr("stroke", "#79DCE8")
+			        .attr("stroke-width", 2)
+			        .style("stroke-dasharray", ("3, 3"))
+			        .style("stroke-opacity", 0.7);
 
-                var trendlinePlays = songId.selectAll(".trendlinePlays")
-                    .data(trendDataPlays);
+		        var trendlinePlays = songId.selectAll(".trendlinePlays")
+		            .data(trendDataPlays);
 
-                trendlinePlays.enter()
-                    .append("line")
-                    .attr("class", "trendlinePlays")
-                    .attr("x1", function(d) { return x(d[0]); })
-                    .attr("y1", function(d) { return y(d[1]); })
-                    .attr("x2", function(d) { return x(d[2]); })
-                    .attr("y2", function(d) { return y(d[3]); })
-                    .attr("stroke", "#79DCE8")
-                    .attr("stroke-width", 2)
-                    .style("stroke-dasharray", ("3, 3"))
-                    .style("stroke-opacity", 0.7);
+		        trendlinePlays.enter()
+		            .append("line")
+			        .attr("class", "trendlinePlays")
+			        .attr("x1", function(d) { return x(d[0]); })
+			        .attr("y1", function(d) { return y(d[1]); })
+			        .attr("x2", function(d) { return x(d[2]); })
+			        .attr("y2", function(d) { return y(d[3]); })
+			        .attr("stroke", "#79DCE8")
+			        .attr("stroke-width", 2)
+			        .style("stroke-dasharray", ("3, 3"))
+			        .style("stroke-opacity", 0.7);
 
-                /*TRENDLINE */
+		        /*TRENDLINE */
             }
 
             function getColor_t(d, metric) {
@@ -446,32 +457,32 @@
                     h = 280;
 
                 function barStack(seriesData) {
-                    var l = seriesData[0].length
-                    while (l--) {
-                        var posBase = 0; // positive base
-                        var negBase = 0; // negative base
+	                var l = seriesData[0].length
+	                while (l--) {
+		                var posBase = 0; // positive base
+		                var negBase = 0; // negative base
 
-                        seriesData.forEach(function(d) {
-                            d = d[l]
-                            d.size = Math.abs(d.y)
-                            if (d.y < 0) {
-                                d.y0 = negBase
-                                negBase -= d.size
-                            }
-                            else {
-                                d.y0 = posBase = posBase + d.size
-                            }
-                        })
-                    }
-                    seriesData.extent = d3.extent(
-                        d3.merge(
-                            d3.merge(
-                                seriesData.map(function(e) {
-                                    return e.map(function(f) { return [f.y0,f.y0-f.size] })
-                                })
-                            )
-                        )
-                    )
+		                seriesData.forEach(function(d) {
+			                d = d[l]
+			                d.size = Math.abs(d.y)
+			                if (d.y < 0) {
+				                d.y0 = negBase
+				                negBase -= d.size
+			                }
+			                else {
+				                d.y0 = posBase = posBase + d.size
+			                }
+		                })
+	                }
+	                seriesData.extent = d3.extent(
+		                d3.merge(
+			                d3.merge(
+				                seriesData.map(function(e) {
+					                return e.map(function(f) { return [f.y0,f.y0-f.size] })
+				                })
+			                )
+		                )
+	                )
                 }
                 var data = inputData;
                 var color = d3.scale.ordinal()
@@ -481,29 +492,29 @@
                     .range(["url('#purpleStripe')", "url('#hash4_5')", "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
 
                 var x = d3.scale.ordinal()
-                    .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
-                    .rangeRoundBands([margin0.left, w-margin0.right], .1)
+	                .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
+	                .rangeRoundBands([margin0.left, w-margin0.right], .1)
 
                 var y = d3.scale.linear()
-                    .range([h-margin0.top,0+margin0.bottom]);
+	                .range([h-margin0.top,0+margin0.bottom]);
 
                 var xAxis = d3.svg.axis()
-                    .scale(x)
-                    .orient("bottom")
-                    .ticks(3, 4);
+	                .scale(x)
+	                .orient("bottom")
+	                .ticks(3, 4);
 
                 var yAxis = d3.svg.axis()
-                    .scale(y)
-                    .orient("left")
-                    .tickFormat(function(d) { return d+100 + "%"; })
-                    .ticks(5);
+	                .scale(y)
+	                .orient("left")
+	                .tickFormat(function(d) { return d+100 + "%"; })
+	                .ticks(5);
 
                 barStack(data);
                 y.domain(data.extent);
 
                 svg = d3.select("#playchart")
-                    .append("svg")
-                    .attr("class", "playchart_" + songId)
+	                .append("svg")
+	                .attr("class", "playchart_" + songId)
                     .attr("width", w)
                     .attr("height", h);
 
@@ -561,24 +572,24 @@
                     )
 
                 svg.selectAll(".series2")
-                    .data(data)
-                    .enter()
-                    .append("g")
-                    .classed("series2", true)
-                    .style("fill", function(d,i) { return color2(i) })
-                    .selectAll("rect")
-                    .data(Object)
-                    .enter()
-                        .append("rect")
-                        .attr("x", function(d, i) { return x(x.domain()[i]) })
-                        .attr("width", x.rangeBand())
-                        .attr("y", function(d) { return y(0); })
+	                .data(data)
+	                .enter()
+	                .append("g")
+	                .classed("series2", true)
+	                .style("fill", function(d,i) { return color2(i) })
+            		.selectAll("rect")
+		            .data(Object)
+		            .enter()
+		                .append("rect")
+			            .attr("x", function(d, i) { return x(x.domain()[i]) })
+			            .attr("width", x.rangeBand())
+			            .attr("y", function(d) { return y(0); })
                         .attr("height", function(d) { return y(0) - y(0); })
-                        .transition()
+			            .transition()
                         .duration(0)
                         .attr("y", function(d) { return y(d.y0) })
-                        .attr("height", function(d) { return y(0) - y(d.size) })
-                        .style('stroke', '#333')
+			            .attr("height", function(d) { return y(0) - y(d.size) })
+			            .style('stroke', '#333')
                         .style('stroke-width', '0.5')
                         .style('opacity', '1');
 
@@ -659,51 +670,51 @@
                 }
 
                 svg.selectAll(".series")
-                    .data(data)
-                    .enter()
-                    .append("g")
-                    .classed("series", true)
-                    //.style("fill", function(d,i) { return color(i) })
-                    .selectAll("rect")
-                    .data(Object)
-                    .enter()
-                        .append("rect")
-                        .attr('class', 'deviationBar')
-                        .attr("x", function(d, i) { return x(x.domain()[i]) })
-                        .attr("data-year", function(d, i) { return selectYear(i) })
-                        .attr("data-value", function(d, i) { return d.y })
-                        .attr("width", x.rangeBand())
-                        .attr("y", function(d) { return y(0); })
+	                .data(data)
+	                .enter()
+	                .append("g")
+	                .classed("series", true)
+	                //.style("fill", function(d,i) { return color(i) })
+            		.selectAll("rect")
+		            .data(Object)
+		            .enter()
+		                .append("rect")
+		                .attr('class', 'deviationBar')
+			            .attr("x", function(d, i) { return x(x.domain()[i]) })
+			            .attr("data-year", function(d, i) { return selectYear(i) })
+			            .attr("data-value", function(d, i) { return d.y })
+			            .attr("width", x.rangeBand())
+			            .attr("y", function(d) { return y(0); })
                         .attr("height", function(d) { return y(0) - y(0); })
-                        .transition()
+			            .transition()
                         .duration(0)
                         .attr("y", function(d) { return y(d.y0) })
-                        .attr("height", function(d) { return y(0) - y(d.size) })
-                        .style('stroke', '#333')
+			            .attr("height", function(d) { return y(0) - y(d.size) })
+			            .style('stroke', '#333')
                         .style('stroke-width', '0.5')
                         .style("fill", function(d,i) { return getColor_t(parseInt(d.y)+100, "DEVIATION_2007") });
                         //.style('opacity', '0.7');
-                        //.on("mouseover", function() { tooltip.style("display", null); })
-                        //.on("mouseout", function() { tooltip.style("display", "none"); })
-                        /*.on("mousemove", function(d) {
-                            var xPosition = d3.mouse(this)[0] - 35;
-                            var yPosition = d3.mouse(this)[1] - 5;
-                            tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-                            tooltip.select("text").text(d.y);
-                        });*/
+			            //.on("mouseover", function() { tooltip.style("display", null); })
+  		                //.on("mouseout", function() { tooltip.style("display", "none"); })
+  		                /*.on("mousemove", function(d) {
+    		                var xPosition = d3.mouse(this)[0] - 35;
+    		                var yPosition = d3.mouse(this)[1] - 5;
+    		                tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+    		                tooltip.select("text").text(d.y);
+  		                });*/
 
-                svg.selectAll(".deviationBar")
+  		        svg.selectAll(".deviationBar")
                     .call(changeOpacity);
 
                 svg.append("g")
-                    .attr("class", "axis x")
-                    .attr("transform", "translate(0 " + y(0) + ")")
+	                .attr("class", "axis x")
+	                .attr("transform", "translate(0 " + y(0) + ")")
                     .call(xAxis);
 
                 svg.append("g")
-                    .attr("class", "axis y")
-                    .attr("transform", "translate(" + margin0.left + " 0)")
-                    .call(yAxis);
+	                .attr("class", "axis y")
+	                .attr("transform", "translate(" + margin0.left + " 0)")
+	                .call(yAxis);
 
                 /* Here we add tooltips */
 
@@ -1997,42 +2008,42 @@
                 var pattern_stripes = svg2.append("defs")
                     .attr({id: "striper"})
                     .append("pattern")
-                    .attr({ id:"pattern_stripe", width:"4", height:"4", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
-                    .append("rect")
-                    .attr({ width:"2", height:"4", transform:"translate(0,0)", fill:"white" });
+		            .attr({ id:"pattern_stripe", width:"4", height:"4", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
+	                .append("rect")
+		            .attr({ width:"2", height:"4", transform:"translate(0,0)", fill:"white" });
 
-                svg2.select("#striper")
-                    .append("mask")
-                    .attr({id:"mask-stripe"})
-                    .append("rect")
-                    .attr({x:"0", y: "0", width:"100%", height:"100%", fill:"url(#pattern_stripe" });
+		        svg2.select("#striper")
+		            .append("mask")
+		            .attr({id:"mask-stripe"})
+		            .append("rect")
+		            .attr({x:"0", y: "0", width:"100%", height:"100%", fill:"url(#pattern_stripe" });
 
                 var pattern1 = svg2.append("defs")
-                    .append("pattern")
-                    .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-                    .append("rect")
-                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
+	                .append("pattern")
+		            .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+	                .append("rect")
+		            .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
 
-                var patternPurpleStripe = svg2.append("defs")
-                    .append("pattern")
-                    .attr({ id:"purpleStripe", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-                    .append("rect")
-                    //.attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#876fc1" });
-                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
+		        var patternPurpleStripe = svg2.append("defs")
+	                .append("pattern")
+		            .attr({ id:"purpleStripe", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+	                .append("rect")
+		            //.attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#876fc1" });
+		            .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
-                var pattern2 = svg2.append("defs")
-                    .append("pattern")
-                    .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
-                    .append("rect")
-                    //.attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
-                    .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
+		  	    var pattern2 = svg2.append("defs")
+	                .append("pattern")
+		            .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
+	                .append("rect")
+		            //.attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
+		            .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
-               var pattern3 = svg2.append("defs")
-                    .append("pattern")
-                    .attr({ id:"hash4_6", x:"0", y:"0", width:"14", height:"25", patternUnits:"userSpaceOnUse"})
-                    .append("svg:image")
-                    .attr({ x:"0", y:"0", width:"14", height:"25"})
-                    .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
+		       var pattern3 = svg2.append("defs")
+	                .append("pattern")
+		            .attr({ id:"hash4_6", x:"0", y:"0", width:"14", height:"25", patternUnits:"userSpaceOnUse"})
+	                .append("svg:image")
+		            .attr({ x:"0", y:"0", width:"14", height:"25"})
+		            .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
 
                 $('.chart').on('mouseover', function(){
                 });

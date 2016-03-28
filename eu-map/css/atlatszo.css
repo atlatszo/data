@@ -834,3 +834,33 @@ and (orientation : portrait) {
         margin-bottom: 60px !important;
     }
 }
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 773px) {
+
+    .chart {
+        display: none;
+    }
+
+    .search_wrapper {
+         display: none;
+    }
+
+    .info {
+        width: 160px;
+    }
+
+    .language_change {
+        display: none;
+    }
+
+    .header_svg_container {
+        width: auto;
+    }
+
+    #bank_logo {
+        margin-right: 0px !important;
+    }
+
+}

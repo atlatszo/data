@@ -166,7 +166,7 @@
                     .rangeRound([height, 0]);
 
                 var color = d3.scale.ordinal()
-                    .range(["#FF665A", "#FFCA63", "#594324", "#176B86", "#4D8E27"]);
+                    .range(["#FF665A", "#FFCA63", "#ebdecc", "#176B86", "#4D8E27"]);
 
                 var songId = d3.selectAll("#playchart").append("svg")
                     .attr("class", "playchart_" + songId)
@@ -182,7 +182,7 @@
                 as json then converted to .csv and loaded into D3.js for visualisation */
                 var data0 =  inputData;
                 var jsonObject = JSON.stringify(data0);
-                var data2 = "SZ,KTIA,N,TrDate,EU,USZ"+"\n"+ConvertToCSV(jsonObject);
+                var data2 = "N,KTIA,USZ,TrDate,EU,SZ"+"\n"+ConvertToCSV(jsonObject);
                 //console.log(data2);
 
                 data = d3.csv.parse(data2, function(d) {
@@ -209,9 +209,9 @@
                 x.domain(data.map(function(d) { return d.TrDate; }));
                 y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
-		        var line = d3.svg.line()
-		            .x(function(d) { return x(d.TrDate); })
-			        .y(function(d) { return y(d.total); });
+                var line = d3.svg.line()
+                    .x(function(d) { return x(d.TrDate); })
+                    .y(function(d) { return y(d.total); });
 
                 var dataMiddle = Math.round((data.length-1)/2)
 
@@ -263,66 +263,66 @@
 
                 /*TRENDLINE*/
 
-		        var xLabels = data.map(function (d) { return d.TrDate; })
+                var xLabels = data.map(function (d) { return d.TrDate; })
 
-	            // get the x and y values for least squares
-		        var xSeries = d3.range(1, xLabels.length + 1);
-		        var ySeries = data.map(function(d) { return parseFloat(d.total); });
-		        var ySeriesPlays = data.map(function(d) { return parseFloat(d.EU); });
+                // get the x and y values for least squares
+                var xSeries = d3.range(1, xLabels.length + 1);
+                var ySeries = data.map(function(d) { return parseFloat(d.total); });
+                var ySeriesPlays = data.map(function(d) { return parseFloat(d.EU); });
 
-		        var leastSquaresCoeff = leastSquares(xSeries, ySeries);
-		        var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
+                var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+                var leastSquaresCoeffPlays = leastSquares(xSeries, ySeriesPlays);
 
 
-		        // apply the reults of the least squares regression
+                // apply the reults of the least squares regression
 
-		        var x1 = xLabels[0];
-		        var yCorr = 0;
-		        var yCorrPlays = 0;
-		        var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
-		        if (y1 < 0) {
-		            yCorr = y1 *-1;
-		            y1 = 0;
-		        }
-		        var y1Plays = leastSquaresCoeffPlays[0] + leastSquaresCoeffPlays[1];
-		        if (y1Plays < 0) {
-		            yCorrPlays = y1 *-1;
-		            y1Plays = 0;
-		        }
-		        var x2 = xLabels[xLabels.length - 1];
-		        var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
-		        if (y2 < 0) {
-		            y2 = 0;
-		        }
-		        var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
-		        if (y2Plays < 0) {
-		            y2Plays = 0;
-		        }
-		        var trendData = [[x1,y1,x2,y2]];
-		        var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
+                var x1 = xLabels[0];
+                var yCorr = 0;
+                var yCorrPlays = 0;
+                var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+                if (y1 < 0) {
+                    yCorr = y1 *-1;
+                    y1 = 0;
+                }
+                var y1Plays = leastSquaresCoeffPlays[0] + leastSquaresCoeffPlays[1];
+                if (y1Plays < 0) {
+                    yCorrPlays = y1 *-1;
+                    y1Plays = 0;
+                }
+                var x2 = xLabels[xLabels.length - 1];
+                var y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1] + yCorr;
+                if (y2 < 0) {
+                    y2 = 0;
+                }
+                var y2Plays = leastSquaresCoeffPlays[0] * xSeries.length + leastSquaresCoeffPlays[1] + yCorrPlays;
+                if (y2Plays < 0) {
+                    y2Plays = 0;
+                }
+                var trendData = [[x1,y1,x2,y2]];
+                var trendDataPlays = [[x1,y1Plays,x2,y2Plays]];
 
                 // returns slope, intercept and r-square of the line
-	            function leastSquares(xSeries, ySeries) {
-	                var reduceSumFunc = function(prev, cur) { return prev + cur; };
+                function leastSquares(xSeries, ySeries) {
+                    var reduceSumFunc = function(prev, cur) { return prev + cur; };
 
-		            var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
-		            var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+                    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+                    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
 
-		            var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
-			            .reduce(reduceSumFunc);
+                    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+                        .reduce(reduceSumFunc);
 
-		            var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
-			            .reduce(reduceSumFunc);
+                    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+                        .reduce(reduceSumFunc);
 
-		            var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
-			            .reduce(reduceSumFunc);
+                    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+                        .reduce(reduceSumFunc);
 
-		            var slope = ssXY / ssXX;
-		            var intercept = yBar - (xBar * slope);
-		            var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+                    var slope = ssXY / ssXX;
+                    var intercept = yBar - (xBar * slope);
+                    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
 
-		            return [slope, intercept, rSquare];
-	            }
+                    return [slope, intercept, rSquare];
+                }
 
                 /*TRENDLINE*/
 
@@ -376,36 +376,36 @@
                 /*TRENDLINE */
 
                 var trendline = songId.selectAll(".trendline")
-		            .data(trendData);
+                    .data(trendData);
 
-		        trendline.enter()
-		            .append("line")
-			        .attr("class", "trendline")
-			        .attr("x1", function(d) { return x(d[0]); })
-			        .attr("y1", function(d) { return y(d[1]); })
-			        .attr("x2", function(d) { return x(d[2]); })
-			        .attr("y2", function(d) { return y(d[3]); })
-			        .attr("stroke", "#79DCE8")
-			        .attr("stroke-width", 2)
-			        .style("stroke-dasharray", ("3, 3"))
-			        .style("stroke-opacity", 0.7);
+                trendline.enter()
+                    .append("line")
+                    .attr("class", "trendline")
+                    .attr("x1", function(d) { return x(d[0]); })
+                    .attr("y1", function(d) { return y(d[1]); })
+                    .attr("x2", function(d) { return x(d[2]); })
+                    .attr("y2", function(d) { return y(d[3]); })
+                    .attr("stroke", "#79DCE8")
+                    .attr("stroke-width", 2)
+                    .style("stroke-dasharray", ("3, 3"))
+                    .style("stroke-opacity", 0.7);
 
-		        var trendlinePlays = songId.selectAll(".trendlinePlays")
-		            .data(trendDataPlays);
+                var trendlinePlays = songId.selectAll(".trendlinePlays")
+                    .data(trendDataPlays);
 
-		        trendlinePlays.enter()
-		            .append("line")
-			        .attr("class", "trendlinePlays")
-			        .attr("x1", function(d) { return x(d[0]); })
-			        .attr("y1", function(d) { return y(d[1]); })
-			        .attr("x2", function(d) { return x(d[2]); })
-			        .attr("y2", function(d) { return y(d[3]); })
-			        .attr("stroke", "#79DCE8")
-			        .attr("stroke-width", 2)
-			        .style("stroke-dasharray", ("3, 3"))
-			        .style("stroke-opacity", 0.7);
+                trendlinePlays.enter()
+                    .append("line")
+                    .attr("class", "trendlinePlays")
+                    .attr("x1", function(d) { return x(d[0]); })
+                    .attr("y1", function(d) { return y(d[1]); })
+                    .attr("x2", function(d) { return x(d[2]); })
+                    .attr("y2", function(d) { return y(d[3]); })
+                    .attr("stroke", "#79DCE8")
+                    .attr("stroke-width", 2)
+                    .style("stroke-dasharray", ("3, 3"))
+                    .style("stroke-opacity", 0.7);
 
-		        /*TRENDLINE */
+                /*TRENDLINE */
             }
 
             function getColor_t(d, metric) {
@@ -415,7 +415,7 @@
                            d >= 3316  ? '#E31A1C' :
                            d >= 1828  ? '#FC4E2A' :
                            d >= 592   ? '#FD8D3C' :
-                           d >= 133   ? '#FEB24C' :
+                           d >= 361   ? '#FEB24C' :
                            d >= 130   ? '#FED976' :
                            d >= 1   ? '#FFFFB2' :
                            d === 0   ? '#D4D4D4' :
@@ -427,7 +427,7 @@
                            d >= 1635418  ? '#225EA8' :
                            d >= 864218  ? '#1D91C0' :
                            d >= 429965   ? '#41B6C4' :
-                           d >= 148955   ? '#7FCDBB' :
+                           d >= 280100   ? '#7FCDBB' :
                            d >= 147594   ? '#C7E9B4' :
                            d >= 1   ? '#FFFFCC' :
                            d === 0   ? '#D4D4D4' :
@@ -457,32 +457,32 @@
                     h = 280;
 
                 function barStack(seriesData) {
-	                var l = seriesData[0].length
-	                while (l--) {
-		                var posBase = 0; // positive base
-		                var negBase = 0; // negative base
+                    var l = seriesData[0].length
+                    while (l--) {
+                        var posBase = 0; // positive base
+                        var negBase = 0; // negative base
 
-		                seriesData.forEach(function(d) {
-			                d = d[l]
-			                d.size = Math.abs(d.y)
-			                if (d.y < 0) {
-				                d.y0 = negBase
-				                negBase -= d.size
-			                }
-			                else {
-				                d.y0 = posBase = posBase + d.size
-			                }
-		                })
-	                }
-	                seriesData.extent = d3.extent(
-		                d3.merge(
-			                d3.merge(
-				                seriesData.map(function(e) {
-					                return e.map(function(f) { return [f.y0,f.y0-f.size] })
-				                })
-			                )
-		                )
-	                )
+                        seriesData.forEach(function(d) {
+                            d = d[l]
+                            d.size = Math.abs(d.y)
+                            if (d.y < 0) {
+                                d.y0 = negBase
+                                negBase -= d.size
+                            }
+                            else {
+                                d.y0 = posBase = posBase + d.size
+                            }
+                        })
+                    }
+                    seriesData.extent = d3.extent(
+                        d3.merge(
+                            d3.merge(
+                                seriesData.map(function(e) {
+                                    return e.map(function(f) { return [f.y0,f.y0-f.size] })
+                                })
+                            )
+                        )
+                    )
                 }
                 var data = inputData;
                 var color = d3.scale.ordinal()
@@ -492,29 +492,29 @@
                     .range(["url('#purpleStripe')", "url('#hash4_5')", "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
 
                 var x = d3.scale.ordinal()
-	                .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
-	                .rangeRoundBands([margin0.left, w-margin0.right], .1)
+                    .domain([2007, " ", "  ", "   ", 2011, "    ", "     ", "        ", 2015])
+                    .rangeRoundBands([margin0.left, w-margin0.right], .1)
 
                 var y = d3.scale.linear()
-	                .range([h-margin0.top,0+margin0.bottom]);
+                    .range([h-margin0.top,0+margin0.bottom]);
 
                 var xAxis = d3.svg.axis()
-	                .scale(x)
-	                .orient("bottom")
-	                .ticks(3, 4);
+                    .scale(x)
+                    .orient("bottom")
+                    .ticks(3, 4);
 
                 var yAxis = d3.svg.axis()
-	                .scale(y)
-	                .orient("left")
-	                .tickFormat(function(d) { return d+100 + "%"; })
-	                .ticks(5);
+                    .scale(y)
+                    .orient("left")
+                    .tickFormat(function(d) { return d+100 + "%"; })
+                    .ticks(5);
 
                 barStack(data);
                 y.domain(data.extent);
 
                 svg = d3.select("#playchart")
-	                .append("svg")
-	                .attr("class", "playchart_" + songId)
+                    .append("svg")
+                    .attr("class", "playchart_" + songId)
                     .attr("width", w)
                     .attr("height", h);
 
@@ -570,29 +570,6 @@
                         .tickSize(-230, 0, 0)
                         .tickFormat("")
                     )
-
-                svg.selectAll(".series2")
-	                .data(data)
-	                .enter()
-	                .append("g")
-	                .classed("series2", true)
-	                .style("fill", function(d,i) { return color2(i) })
-            		.selectAll("rect")
-		            .data(Object)
-		            .enter()
-		                .append("rect")
-			            .attr("x", function(d, i) { return x(x.domain()[i]) })
-			            .attr("width", x.rangeBand())
-			            .attr("y", function(d) { return y(0); })
-                        .attr("height", function(d) { return y(0) - y(0); })
-			            .transition()
-                        .duration(0)
-                        .attr("y", function(d) { return y(d.y0) })
-			            .attr("height", function(d) { return y(0) - y(d.size) })
-			            .style('stroke', '#333')
-                        .style('stroke-width', '0.5')
-                        .style('opacity', '1');
-
 
                 function selectYear(index) {
                     if (index === 0) {
@@ -669,52 +646,120 @@
                     }
                 }
 
+                function changeOpacityPattern(selection) {
+                    if (metric === "DEVIATION_2007") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) <= 2009) {
+                                element
+                                    .style("opacity", "0.7");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) > 2009 && parseInt(element.attr('data-year')) < 2014) {
+                                element
+                                    .style("opacity", "0.7");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        selection.each(function(){
+                            var element = d3.select(this);
+                            if (parseInt(element.attr('data-year')) >= 2014) {
+                                element
+                                    .style("opacity", "0.7");
+                            }
+                            else {
+                                element
+                                    .style("opacity", "0.3");
+                            }
+                        });
+                    }
+                }
+
                 svg.selectAll(".series")
-	                .data(data)
-	                .enter()
-	                .append("g")
-	                .classed("series", true)
-	                //.style("fill", function(d,i) { return color(i) })
-            		.selectAll("rect")
-		            .data(Object)
-		            .enter()
-		                .append("rect")
-		                .attr('class', 'deviationBar')
-			            .attr("x", function(d, i) { return x(x.domain()[i]) })
-			            .attr("data-year", function(d, i) { return selectYear(i) })
-			            .attr("data-value", function(d, i) { return d.y })
-			            .attr("width", x.rangeBand())
-			            .attr("y", function(d) { return y(0); })
+                    .data(data)
+                    .enter()
+                    .append("g")
+                    .classed("series", true)
+                    //.style("fill", function(d,i) { return color(i) })
+                    .selectAll("rect")
+                    .data(Object)
+                    .enter()
+                        .append("rect")
+                        .attr('class', 'deviationBar')
+                        .attr("x", function(d, i) { return x(x.domain()[i]) })
+                        .attr("data-year", function(d, i) { return selectYear(i) })
+                        .attr("data-value", function(d, i) { return d.y })
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) { return y(0); })
                         .attr("height", function(d) { return y(0) - y(0); })
-			            .transition()
+                        .transition()
                         .duration(0)
                         .attr("y", function(d) { return y(d.y0) })
-			            .attr("height", function(d) { return y(0) - y(d.size) })
-			            .style('stroke', '#333')
+                        .attr("height", function(d) { return y(0) - y(d.size) })
+                        .style('stroke', '#333')
                         .style('stroke-width', '0.5')
                         .style("fill", function(d,i) { return getColor_t(parseInt(d.y)+100, "DEVIATION_2007") });
                         //.style('opacity', '0.7');
-			            //.on("mouseover", function() { tooltip.style("display", null); })
-  		                //.on("mouseout", function() { tooltip.style("display", "none"); })
-  		                /*.on("mousemove", function(d) {
-    		                var xPosition = d3.mouse(this)[0] - 35;
-    		                var yPosition = d3.mouse(this)[1] - 5;
-    		                tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-    		                tooltip.select("text").text(d.y);
-  		                });*/
+                        //.on("mouseover", function() { tooltip.style("display", null); })
+                        //.on("mouseout", function() { tooltip.style("display", "none"); })
+                        /*.on("mousemove", function(d) {
+                            var xPosition = d3.mouse(this)[0] - 35;
+                            var yPosition = d3.mouse(this)[1] - 5;
+                            tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+                            tooltip.select("text").text(d.y);
+                        });*/
 
-  		        svg.selectAll(".deviationBar")
+                svg.selectAll(".series2")
+                    .data(data)
+                    .enter()
+                    .append("g")
+                    .classed("series2", true)
+                    .style("fill", function(d,i) { return color2(i) })
+                    .selectAll("rect")
+                    .data(Object)
+                    .enter()
+                        .append("rect")
+                        .attr("class", "patternBar")
+                        .attr("data-year", function(d, i) { return selectYear(i) })
+                        .attr("x", function(d, i) { return x(x.domain()[i]) })
+                        .attr("width", x.rangeBand())
+                        .attr("y", function(d) { return y(0); })
+                        .attr("height", function(d) { return y(0) - y(0); })
+                        .transition()
+                        .duration(0)
+                        .attr("y", function(d) { return y(d.y0) })
+                        .attr("height", function(d) { return y(0) - y(d.size) })
+                        .style('stroke', '#333')
+                        .style('stroke-width', '0.5');
+
+                svg.selectAll(".deviationBar")
                     .call(changeOpacity);
 
+                svg.selectAll(".patternBar")
+                    .call(changeOpacityPattern);
+
                 svg.append("g")
-	                .attr("class", "axis x")
-	                .attr("transform", "translate(0 " + y(0) + ")")
+                    .attr("class", "axis x")
+                    .attr("transform", "translate(0 " + y(0) + ")")
                     .call(xAxis);
 
                 svg.append("g")
-	                .attr("class", "axis y")
-	                .attr("transform", "translate(" + margin0.left + " 0)")
-	                .call(yAxis);
+                    .attr("class", "axis y")
+                    .attr("transform", "translate(" + margin0.left + " 0)")
+                    .call(yAxis);
 
                 /* Here we add tooltips */
 
@@ -813,7 +858,7 @@
                            d >= 155903  ? '#E31A1C' :
                            d >= 45328  ? '#FC4E2A' :
                            d >= 31826  ? '#FD8D3C' :
-                           d >= 17689   ? '#FEB24C' :
+                           d >= 24723   ? '#FEB24C' :
                            d >= 17620   ? '#FED976' :
                            d >= 1   ? '#FFFFB2' :
                            '#FFFFB2';
@@ -825,7 +870,7 @@
                            d >= 1022784  ? '#1D91C0' :
                            d >= 730618  ? '#41B6C4' :
                            d >= 561674   ? '#7FCDBB' :
-                           d >= 555546   ? '#C7E9B4' :
+                           d >= 280573   ? '#C7E9B4' :
                            d >= 1   ? '#FFFFCC' :
                            '#FFFFCC';
                 }
@@ -1157,7 +1202,7 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
@@ -1171,7 +1216,7 @@
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
@@ -1192,28 +1237,29 @@
                 else if (map.getZoom() <= 11) {
                     if (metric === "DONATION") {
                         var div = L.DomUtil.create('div', 'info legend'),
-                            grades = [0, 17620, 17689, 31826, 45328, 155903, 393346],
+                            //grades = [0, 17620, 17689, 31826, 45328, 155903, 393346],
+                            grades = [0, 17620, 24723, 31826, 45328, 155903, 393346],
                             labels = [];
 
                         // loop through our density intervals and generate a label with a colored square for each interval
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
                     }
                     else if (metric === "CAPITA") {
                         var div = L.DomUtil.create('div', 'info legend'),
-                            grades = [0, 555546, 561674, 730618, 1022784, 1214538, 3991456],
+                            grades = [0, 280575, 561674, 730618, 1022784, 1214538, 3991456],
                             labels = [];
 
                         // loop through our density intervals and generate a label with a colored square for each interval
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
@@ -1234,28 +1280,30 @@
                 else {
                     if (metric === "DONATION") {
                         var div = L.DomUtil.create('div', 'info legend'),
-                            grades = [0, 130, 133, 592, 1828, 3316, 271551],
+                            //grades = [0, 130, 133, 592, 1828, 3316, 271551],
+                            grades = [0, 130, 361, 592, 1828, 3316, 271551],
                             labels = [];
 
                         // loop through our density intervals and generate a label with a colored square for each interval
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
                         }
 
                         return div;
                     }
                     else if (metric === "CAPITA") {
                         var div = L.DomUtil.create('div', 'info legend'),
-                            grades = [0, 147594, 148955, 429965, 864218, 1635418, 10738345],
+                            //grades = [0, 147594, 148955, 429965, 864218, 1635418, 10738345],
+                            grades = [0, 147594, 280175, 429965, 864218, 1635418, 10738345],
                             labels = [];
 
                         // loop through our density intervals and generate a label with a colored square for each interval
                         for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                            '<div class="legend_text2">'+((grades[i]+1)/9).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+                            '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
                         }
 
                         return div;
@@ -1993,12 +2041,6 @@
 
                     c.src = image;
                 }
-                imageLoader("/img/cash_active3.png", $(".hidden_reloader"));
-                imageLoader("/img/cash_hover.png", $(".hidden_reloader"));
-                imageLoader("/img/human_active.png", $(".hidden_reloader"));
-                imageLoader("/img/human_hover.png", $(".hidden_reloader"));
-                imageLoader("/img/bank_active.png", $(".hidden_reloader"));
-                imageLoader("/img/bank_hover.png", $(".hidden_reloader"));
 
                 //PATTERN INJECTION VIA D3
                 var svg2 = d3.select("body").append("svg").attr("id", "d3svga")
@@ -2008,42 +2050,42 @@
                 var pattern_stripes = svg2.append("defs")
                     .attr({id: "striper"})
                     .append("pattern")
-		            .attr({ id:"pattern_stripe", width:"4", height:"4", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
-	                .append("rect")
-		            .attr({ width:"2", height:"4", transform:"translate(0,0)", fill:"white" });
+                    .attr({ id:"pattern_stripe", width:"4", height:"4", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
+                    .append("rect")
+                    .attr({ width:"2", height:"4", transform:"translate(0,0)", fill:"white" });
 
-		        svg2.select("#striper")
-		            .append("mask")
-		            .attr({id:"mask-stripe"})
-		            .append("rect")
-		            .attr({x:"0", y: "0", width:"100%", height:"100%", fill:"url(#pattern_stripe" });
+                svg2.select("#striper")
+                    .append("mask")
+                    .attr({id:"mask-stripe"})
+                    .append("rect")
+                    .attr({x:"0", y: "0", width:"100%", height:"100%", fill:"url(#pattern_stripe" });
 
                 var pattern1 = svg2.append("defs")
-	                .append("pattern")
-		            .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-	                .append("rect")
-		            .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
+                    .append("pattern")
+                    .attr({ id:"hash4_4", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+                    .append("rect")
+                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#4D8E27" });
 
-		        var patternPurpleStripe = svg2.append("defs")
-	                .append("pattern")
-		            .attr({ id:"purpleStripe", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-	                .append("rect")
-		            //.attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#876fc1" });
-		            .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
+                var patternPurpleStripe = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"purpleStripe", width:"10", height:"10", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+                    .append("rect")
+                    //.attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"#876fc1" });
+                    .attr({ width:"2", height:"10", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
-		  	    var pattern2 = svg2.append("defs")
-	                .append("pattern")
-		            .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
-	                .append("rect")
-		            //.attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
-		            .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
+                var pattern2 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_5", x:"6", y:"6", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(45)"})
+                    .append("rect")
+                    //.attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"#876fc1" });
+                    .attr({ x:"4", y:"4", width:"4", height:"4", transform:"translate(0,0)", fill:"rgba(51,51,51,0.9" });
 
-		       var pattern3 = svg2.append("defs")
-	                .append("pattern")
-		            .attr({ id:"hash4_6", x:"0", y:"0", width:"14", height:"25", patternUnits:"userSpaceOnUse"})
-	                .append("svg:image")
-		            .attr({ x:"0", y:"0", width:"14", height:"25"})
-		            .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
+               var pattern3 = svg2.append("defs")
+                    .append("pattern")
+                    .attr({ id:"hash4_6", x:"0", y:"0", width:"14", height:"25", patternUnits:"userSpaceOnUse"})
+                    .append("svg:image")
+                    .attr({ x:"0", y:"0", width:"14", height:"25"})
+                    .attr("xlink:href","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
 
                 $('.chart').on('mouseover', function(){
                 });
@@ -2071,7 +2113,7 @@
                         }
                     });
                     $('.trendline').hide();
-                    if (idSelector === "EU") {
+                    /*if (idSelector === "EU") {
                         $('h4.hidden_info').html('EU 2007-2013 (millió Ft / év):');
                     }
                     else if (idSelector === "KTIA") {
@@ -2090,7 +2132,7 @@
                     $('.info_ammount.original_info').hide();
                     $('.info_ammount.hidden_info').show();
                     $('h4.original_info').hide();
-                    $('h4.hidden_info').show();
+                    $('h4.hidden_info').show();*/
                     //alert(totalMetric);
                 });
 

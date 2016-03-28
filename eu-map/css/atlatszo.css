@@ -1,6 +1,6 @@
 body {
     background-color: rgba(51,51,51,0.2);
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .hidden_preloader {
@@ -17,6 +17,7 @@ body {
     top: 0px;
     left: 165px;
     width: 100%;
+    width: calc(100% - 165px);
     height: 80px;
     background-color: rgba(80, 85, 73, 0.9);
     box-shadow: -1px 1px 3px rgba(0,0,0, 1);
@@ -73,10 +74,9 @@ a {
 
 #header_logo {
     width: 145px;
-    height: 60px;
     position: absolute;
     z-index: 110;
-    top:10px;
+    top:15px;
     left: 10px;
 }
 
@@ -103,6 +103,7 @@ a {
 
 .main_search {
     height: 26px;
+    line-height: 28px;
     width: 100%;
     outline: none;
     border: 1px solid #333;
@@ -153,8 +154,15 @@ a {
     width: 36px;
 }
 
+#cash {
+    fill: rgba(51,51,51,1);
+}
+
 #cash_logo.hover_logo > svg > #cash {
     fill: rgba(191,192,187,1);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 
 }
 
@@ -168,6 +176,9 @@ a {
 
 #human_logo.hover_logo > svg > #human {
     fill: rgba(191,192,187,1);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 #human_logo.active_logo > svg > #human {
@@ -180,6 +191,9 @@ a {
 
 #bank_logo.hover_logo > svg > #bank {
     fill: rgba(191,192,187,1);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 #bank_logo.active_logo > svg > #bank {
@@ -411,6 +425,7 @@ a {
 
 .legend_chart.USZ > .legend_icon {
     background-color: #594324;
+    background-color: #ebdecc;
 }
 
 .legend_chart.SZ > .legend_icon {
@@ -643,12 +658,19 @@ a {
     padding: 5px;
 }
 
+.popup {
+}
+
 .popup.leaflet-control.hover_pop {
     background: rgba(255,255,255,0.7);
     border-radius: 5px;
     color: rgba(51,51,51,0.9);
     border: 1px solid rgba(51,51,51,0.7)
     padding: 4px;
+}
+
+.leaflet-popup {
+    z-index: 200;
 }
 
 /*++++++++++++++++PRELOADER SPINNER+++++++++++++*/
@@ -754,8 +776,61 @@ a {
   }
 }
 
-/*select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}*/
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+
+    .chart {
+        display: none;
+    }
+
+    .search_wrapper {
+         display: none;
+    }
+
+    .info {
+        width: 160px;
+    }
+
+    .language_change {
+        display: none;
+    }
+
+    .header_svg_container {
+        width: auto;
+    }
+
+    #bank_logo {
+        margin-right: 0px !important;
+    }
+
+}
+
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+
+    #header {
+        width: calc(100% - 63px);
+        left: 63px;
+    }
+
+    .logo_wrapper {
+        width: 65px;
+    }
+
+    #header_logo {
+        width:55px;
+        top: 36px;
+        left: 5px;
+    }
+
+    .logo {
+        margin-right: 5px;
+    }
+
+    .info.legend {
+        margin-bottom: 60px !important;
+    }
+}

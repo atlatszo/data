@@ -13,7 +13,7 @@ body {
 
 #header {
     position: absolute;
-    z-index: 100;
+    z-index: 1001;
     top: 0px;
     left: 165px;
     width: 100%;
@@ -141,7 +141,7 @@ a {
     width: auto;
     position: absolute;
     right: 0px;
-    z-index: 100;
+    z-index: 1002;
 }
 
 .logo {
@@ -312,7 +312,7 @@ a {
 .legend_featured {
     border: 0px solid black !important;
     background-color: rgba(255,255,255,0.2) !important;
-    width: 60%;
+    width: 180px;
     height: 17px;
     box-shadow: 0px 1px 3px rgba(0,0,0, 1);
     color: #91BED4;
@@ -327,7 +327,7 @@ a {
 #playchart {
     background: rgba(80,85,73,0.8);
     display: none;
-    z-index: 2000;
+    z-index: 999;
     height: 360px;
     width: 320px;
     margin-top: 0px;
@@ -364,7 +364,7 @@ a {
     text-shadow: 0px 2px 3px #171717;
     font-family: helvetica;
     font-size: 18px;
-    z-index: 2003;
+    z-index: 1000;
     display: none;
 }
 
@@ -379,7 +379,7 @@ a {
     font-family: helvetica;
     font-style: bold;
     font-size: 18px;
-    z-index: 2003;
+    z-index: 1000;
     display: none;
 }
 
@@ -676,6 +676,24 @@ a {
     z-index: 200;
 }
 
+#fullview {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(51,51,51,0.6);
+    color: #FFFFFF;
+    font-family: helvetica;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 5px;
+    display: none;
+}
+
+#fullview:hover {
+    background-color: rgba(51,51,51,0.9);
+    text-decoration: underline;
+}
+
 /*++++++++++++++++PRELOADER SPINNER+++++++++++++*/
 
 .sk-cube-grid {
@@ -792,7 +810,7 @@ and (max-device-width : 568px) {
     }
 
     .info {
-        width: 160px;
+        width: 200px;
     }
 
     .language_change {
@@ -851,7 +869,7 @@ and (max-device-width : 773px) {
     }
 
     .info {
-        width: 160px;
+        width: 200px;
     }
 
     .language_change {

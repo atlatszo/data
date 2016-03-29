@@ -50,7 +50,7 @@
         <div id="header">
             <div class="divider"></div>
             <div class="search_wrapper">
-                <span class="main_search_padding_box"><input class="main_search" type="text" value="" placeholder=" Te hol költenéd el a legtöbb EU-forrást?" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="80"/></span>
+                <span class="main_search_padding_box"><input class="main_search" type="text" value="" placeholder=" Keress településre!" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="80"/></span>
                 <div class="autocomplete_container"></div>
             </div>
         </div>
@@ -1341,7 +1341,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/megye.json",
+                            url: "js/megye.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -1355,7 +1355,7 @@
                                 geojson.addTo(map);
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -1369,7 +1369,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/kisterseg.json",
+                            url: "js/kisterseg.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -1383,7 +1383,7 @@
                                 geojson.addTo(map);
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -1404,7 +1404,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/telepules.json",
+                            url: "js/telepules.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -1418,7 +1418,7 @@
                                 geojson.addTo(map);
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -1642,7 +1642,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/megye.json",
+                                url: "js/megye.json",
                                 delay: 3,
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
@@ -1659,7 +1659,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1671,7 +1671,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/kisterseg.json",
+                                url: "js/kisterseg.json",
                                 delay: 3,
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
@@ -1688,7 +1688,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1700,7 +1700,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/telepules.json",
+                                url: "js/telepules.json",
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
                                         //geojson.addData(data);
@@ -1716,7 +1716,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1790,7 +1790,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/megye.json",
+                                url: "js/megye.json",
                                 delay: 3,
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
@@ -1807,7 +1807,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1819,7 +1819,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/kisterseg.json",
+                                url: "js/kisterseg.json",
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
                                         //geojson.addData(data);
@@ -1835,7 +1835,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1847,7 +1847,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/telepules.json",
+                                url: "js/telepules.json",
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
                                         //geojson.addData(data);
@@ -1863,7 +1863,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -1931,7 +1931,7 @@
                             $.ajax({
                                 dataType: "json",
                                 async: true,
-                                url: "static/js/telepules.json",
+                                url: "js/telepules.json",
                                 success: function(data) {
                                     //$(data.features).each(function(key, data) {
                                         //geojson.addData(data);
@@ -1952,7 +1952,7 @@
                                     //alert('Uploaded!!!');
                                 },
                                 error: function() {
-                                    alert('Busted!');
+                                    //alert('Busted!');
                                 },
                                 complete: function() {
                                     $('.spinner').remove();
@@ -2001,7 +2001,7 @@
                     $.ajax({
                         dataType: "json",
                         async: true,
-                        url: "static/js/telepules.json",
+                        url: "js/telepules.json",
                         success: function(data) {
                             //$(data.features).each(function(key, data) {
                             //geojson.addData(data);
@@ -2022,7 +2022,7 @@
                             geojson.addTo(map);
                         },
                         error: function() {
-                            alert('Busted!');
+                            //alert('Busted!');
                         },
                         complete: function() {
                             $('.spinner').remove();
@@ -2218,7 +2218,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/megye.json",
+                            url: "js/megye.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -2231,7 +2231,7 @@
                                 geojson.addTo(map);
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -2250,7 +2250,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/megye.json",
+                            url: "js/megye.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -2263,7 +2263,7 @@
                                 geojson.addTo(map);
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -2301,7 +2301,7 @@
                         $.ajax({
                             dataType: "json",
                             async: true,
-                            url: "static/js/telepules.json",
+                            url: "js/telepules.json",
                             success: function(data) {
                                 //$(data.features).each(function(key, data) {
                                     //geojson.addData(data);
@@ -2320,7 +2320,7 @@
                                 //alert('Uploaded!!!');
                             },
                             error: function() {
-                                alert('Busted!');
+                                //alert('Busted!');
                             },
                             complete: function() {
                             }
@@ -2333,7 +2333,7 @@
                     $.ajax({
                         dataType: "json",
                         async: true,
-                        url: "static/js/megye.json",
+                        url: "js/megye.json",
                         success: function(data) {
                             //$(data.features).each(function(key, data) {
                                 //geojson.addData(data);
@@ -2346,7 +2346,7 @@
                             geojson.addTo(map);
                         },
                         error: function() {
-                            alert('Busted!');
+                            //alert('Busted!');
                         },
                         complete: function() {
                         }

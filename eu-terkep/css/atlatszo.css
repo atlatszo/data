@@ -111,7 +111,7 @@ a {
     font-size: 16px;
     font-family: helvetica;
     background-color: #e0e0e0;
-    background-image:url(//www.balkeyplayer.com/img/search_icon2.png);
+    background-image:url("//adat.atlatszo.hu/eu-terkep/img/search_icon2.png");
     background-repeat: no-repeat;
     background-size: 16px 16px;
     background-position: right 5px center;
@@ -441,14 +441,14 @@ a {
 
 .legend_chart.REIGN > .legend_icon {
     /*background-color: #4D8E27;*/
-    background-image: url("//www.balkeyplayer.com/img/stripes_pattern.png");
+    background-image: url("//adat.atlatszo.hu/eu-terkep/img/stripes_pattern.png");
     background-repeat: no-repeat;
     background-size: 20px 20px;
 }
 
 .legend_chart.OPP > .legend_icon {
     /*background-color: #FF665A;*/
-    background-image: url("//www.balkeyplayer.com/img/dots_pattern.png");
+    background-image: url("//adat.atlatszo.hu/eu-terkep/img/dots_pattern.png");
     background-repeat: no-repeat;
     background-size: 20px 20px;
 }

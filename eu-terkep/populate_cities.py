@@ -20,7 +20,7 @@ writer = ix.writer()
 #db.create_all(bind=['city'])
 db.create_all()
 
-json_file='/static/resources/categories.json'
+json_file='static/resources/categories.json'
 json_data=open(json_file).read().decode('utf-8')
 data = json.loads(json_data)
 

@@ -1,5 +1,23 @@
 # EU tamogatasok terkepen
 
+How to:
+
+1. Provide the following variables in the config.py:
+    username
+    password
+    database
+
+2. Provide a secure secret_key in application.py:
+    app.secret_key
+
+3. Check if file route is ok in populate_cities.py:
+    json_file
+
+4. Check if file route is ok in views.py at def categoryfind2():
+    json_file
+
+5. Run populate_cities.py
+
 Working demo:
 
 http://adat.atlatszo.hu/eu-terkep

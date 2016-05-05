@@ -1,3 +1,4 @@
+from application import app
 from flask import render_template, request, redirect, url_for, Response, jsonify
 
 import os

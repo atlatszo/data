@@ -148,7 +148,7 @@ for city in data:
     county = data[city][-1]
 
 
-    u1 = models_atlatszo.Cities(city = json.dumps(city),
+    u1 = models.Cities(city = json.dumps(city),
                                 piedata = json.dumps(answer_final),
                                 population = json.dumps(population_final),
                                 tourism = json.dumps(tourism_final),

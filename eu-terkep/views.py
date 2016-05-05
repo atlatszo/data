@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from application import app
 from flask import render_template, request, redirect, url_for, Response, jsonify
 

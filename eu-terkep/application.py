@@ -11,7 +11,7 @@ from werkzeug.serving import WSGIRequestHandler
 app = Flask(__name__, static_folder='static', static_url_path='')
 #Compress(app)
 app.config.from_object('config')
-app.secret_key = 'Surfinusa'
+app.secret_key = 'your_secret_key'
 
 #WSGIRequestHandler.protocol_version = "HTTP/1.1"
 

@@ -13,7 +13,7 @@ app = Flask(__name__, static_folder='static', static_url_path='')
 app.config.from_object('config')
 app.secret_key = 'Surfinusa'
 
-WSGIRequestHandler.protocol_version = "HTTP/1.1"
+#WSGIRequestHandler.protocol_version = "HTTP/1.1"
 
 db = SQLAlchemy(app)
 

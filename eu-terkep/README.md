@@ -3,12 +3,12 @@
 How to:
 
 1. Provide the following variables in the config.py:<br/>
-    username <br/>
-    password <br/>
-    database
+    username = "your_MySQL_username"<br/>
+    password = "your_MySQL_password"<br/>
+    database = "localhost/yourdatabasename"
 
 2. Provide a secure secret_key in application.py:<br/>
-    app.secret_key
+    app.secret_key ="your_secret_key"
 
 3. Run populate_cities.py
 

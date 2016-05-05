@@ -1761,7 +1761,7 @@ function render_chart(songId, inputData) {
 
     var margin = {top: 22, right: 25, bottom: 22, left: 65},
         width = 320 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom;
+        height = 240 - margin.top - margin.bottom;
 
     var parseDate = d3.time.format("%Y").parse
     var parseDate2 = d3.time.format("%Y").parse

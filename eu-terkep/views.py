@@ -103,6 +103,7 @@ def categoryfind2():
                        area = result1.city_area,
                        ranking_country = json.loads(result1.ranking_country),
                        deviation = json.loads(result1.deviation),
+                       deviation_sum = json.loads(result1.deviation_sum),
                        county = result1.county)
 
 @app.route('/searchcity', methods=['GET'])

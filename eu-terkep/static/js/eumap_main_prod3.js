@@ -48,7 +48,8 @@ var population,
     aid_country,
     aid_county;
 
-var deviation;
+var deviation,
+    deviation_sum;
 
 var detailedAll,
     detailedSum;
@@ -78,6 +79,27 @@ var timeSeries_detailed;
 var defaultChart = "default";
 
 var coords;
+
+var categories = { "Vállalkozásfejlesztés": 9672.63866662,
+                  "Ipar": 2685.04420263,
+                  "Energetikai fejlesztések": 3591.09151724,
+                  "Ár- és belvízvédelem": 3890.49797028,
+                  "Önkormányzati fejlesztések": 3797.85724832,
+                  "Kultúra": 671.012180251,
+                  "Ivóvíz, szennyvíz, csatornázás": 9923.65443737,
+                  "Mezőgazdasági fejlesztések": 125.040196724,
+                  "Munkahelyteremtés, foglalkoztatás": 2068.40826998,
+                  "Tudomány, kutatás": 4134.26776162,
+                  "Oktatás, továbbképzés": 10754.8079567,
+                  "Kategorizálatlan": 13766.4388735,
+                  "Turizmus és vidékfejlesztés": 5817.76504059,
+                  "Egyéb infrastruktúra fejlesztése": 2438.78632043,
+                  "Egészségügy": 5189.63429823,
+                  "Szociális támogatások": 6636.42536663,
+                  "Közlekedés, úthálózat": 15269.0460311,
+                  "Környezetvédelem": 3613.17993143,
+                  "Summa": 104045.59627
+}
 
 var loader = '<div class="spinner"></div>';
 
@@ -205,13 +227,15 @@ function openDetailedLayer () {
             area = (parseInt(data["area"])/100).toFixed(2);
             timeSeries_detailed = data["timeSeries"];
             deviation = data['deviation'];
+            deviation_sum = data['deviation_sum'];
+            //console.log(deviation_sum);
 
             detailedAll = JSON.parse(JSON.stringify(pieData));
             detailedSum = 0;
             for(var i in detailedAll) {
                     detailedSum += parseFloat(detailedAll[i].value);
             }
-            //alert(detailedSum);
+            //console.log(detailedSum);
 
             $(".county_svg").attr("class", "county_svg");
             if (cityToFind != "Budapest") {
@@ -228,6 +252,10 @@ function openDetailedLayer () {
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][1])));
                 }
                 else if (metric === "CAPITA") {
+                    $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
+                    $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
+                }
+                else {
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
                 }
@@ -339,13 +367,25 @@ function openDetailedLayer () {
             $('#close_overlay').show(300);
             $('.left_container').show(300);
             $('.middle_container').show(300);
-            $('#playchart').show();
+            var chart = $('#playchart').clone();
+            var description = $('.leaflet-top.leaflet-right').children('.info').clone();
+            $("#playchart").remove();
+            $('.chart').hide();
+            $('.leaflet-top.leaflet-right').hide();
+            $(".description_container").html(description);
+            $(".barchart_container").html(chart);
+            $('.right_container').show();
+            //$('#playchart').show();
         },
         error: function() {
         },
         complete: function() {
             $( ".tutorial_button" ).effect( "shake", {times: 5, distance: 10}, 600);
             if ($('#detailed_overlay').is(':visible')) {
+                //var chart = $('#playchart').clone();
+                //$("#playchart").remove();
+                //$('.chart').hide();
+                //$(".right_container").html(chart);
                 info.update(markersById[cityToFind]['feature']['properties']);
             }
         }
@@ -355,6 +395,17 @@ function openDetailedLayer () {
 //PIECHART START
 function renderPie (dataToRender) {
     $('#pie_container').empty()
+
+    var responsiveWidth = $('#pie_container').width();
+    var responsiveHeight = $('#pie_container').height();
+
+    /*var width = 325,
+        height = 220,
+        radius = Math.min(width, height) / 2;*/
+
+    var width = responsiveWidth / 2,
+        height = responsiveHeight - 30,
+        radius = Math.min(width, height) / 2;
 
     var svg = d3.select("#pie_container")
        .append("svg")
@@ -370,9 +421,7 @@ function renderPie (dataToRender) {
     svg.append("g")
         .attr("class", "lines");
 
-    var width = 325,
-        height = 220,
-        radius = Math.min(width, height) / 2;
+    svg.attr("transform", "translate(" + width  + "," + height / 2  + ")");
 
     var pie = d3.layout.pie()
         .sort(null)
@@ -459,8 +508,6 @@ function renderPie (dataToRender) {
         .attr("operator", "over")
         .attr("in", "shadow")
         .attr("in2", "SourceGraphic");
-
-    svg.attr("transform", "translate(" + width  + "," + height / 2  + ")");
 
     var key = function(d){ return d.data.label; };
 
@@ -572,6 +619,27 @@ function renderPie (dataToRender) {
                         //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " Ft");
                     }
+                    else if (metric === "DEVIATION_2007") {
+                        $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][3])));
+                        $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][2])));
+                        var value = deviation_sum[metricPie]["2007"]
+                        //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][3])));
+                        $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][2])));
+                        var value = deviation_sum[metricPie]["2010"]
+                        //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][3])));
+                        $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][2])));
+                        var value = deviation_sum[metricPie]["2014"]
+                        //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
                     detailsHighlight();
 
                     d3.select(this)
@@ -596,12 +664,28 @@ function renderPie (dataToRender) {
                     else if (metric === "CAPITA") {
                         $('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
                     }
+                    else if (metric === "DEVIATION_2007") {
+                        var value = parseInt(deviation_sum['Summa']["2007"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        var value = parseInt(deviation_sum['Summa']["2010"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        var value = parseInt(deviation_sum['Summa']["2014"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
                     if (ranking_country) {
                         if (metric === "DONATION") {
                             $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][0])));
                             $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][1])));
                         }
                         else if (metric === "CAPITA") {
+                            $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
+                            $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
+                        }
+                        else {
                             $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
                             $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
                         }
@@ -730,9 +814,12 @@ function renderPie (dataToRender) {
 function renderAreaChart(data, colorcode) {
     $('.areachart1').remove();
 
+    var responsiveHeight = $('.areachart_wrapper').height();
+    var responsiveWidth = $('.areachart_wrapper').width();
+
     var margin = {top: 20, right: 20, bottom: 20, left: 70},
-        width = 650 - margin.left - margin.right,
-        height = 220 - margin.top - margin.bottom;
+        width = responsiveWidth - margin.left - margin.right,
+        height = (responsiveHeight -60) - margin.top - margin.bottom;
 
     var parseDate = d3.time.format("%Y").parse;
 
@@ -898,9 +985,12 @@ function renderAreaChart(data, colorcode) {
 function renderAreaChartCapita(data, data2, data3, colorcode) {
     $('.areachart1').remove();
 
+    var responsiveHeight = $('.areachart_wrapper').height();
+    var responsiveWidth = $('.areachart_wrapper').width();
+
     var margin = {top: 20, right: 20, bottom: 20, left: 70},
-        width = 650 - margin.left - margin.right,
-        height = 200 - margin.top - margin.bottom;
+        width = responsiveWidth - margin.left - margin.right,
+        height = (responsiveHeight-80) - margin.top - margin.bottom;
 
     var parseDate = d3.time.format("%Y").parse;
 
@@ -918,7 +1008,8 @@ function renderAreaChartCapita(data, data2, data3, colorcode) {
         .scale(y)
         .orient("left")
         .ticks(5)
-        .tickFormat(d3.format(','));
+        .tickFormat(d3.format(".4f"));
+        //.tickFormat(d3.format(','));
 
     var area = d3.svg.area()
         .x(function(d) { return x(d.date); })
@@ -1190,6 +1281,17 @@ function renderRankChart (data) {
             d.name = d.name;
         });
     }
+    else {
+        data.forEach(function(d) {
+            if (overlayState === "plain") {
+                d.value = +((d.capita/9) / categories['Summa'])*100;
+            }
+            else {
+                d.value = +((d.capita/9) / categories[metricPie])*100;
+            }
+            d.name = d.name;
+        });
+    }
 
     data.sort(function(a, b) {
         return b.value - a.value;
@@ -1260,6 +1362,9 @@ function renderRankChart (data) {
             }
             else if (metric === "CAPITA") {
                 return format(d.value) + " Ft";
+            }
+            else {
+                return format(d.value) + " %";
             }
         });
 
@@ -1759,9 +1864,12 @@ function render_chart(songId, inputData) {
 
     $('.playchart_1').remove();
 
+    var responsiveHeight = $('#playchart').height();
+    var responsivewidth = $('#playchart').width();
+
     var margin = {top: 22, right: 25, bottom: 22, left: 65},
-        width = 320 - margin.left - margin.right,
-        height = 240 - margin.top - margin.bottom;
+        width = responsivewidth - margin.left - margin.right,
+        height = (responsiveHeight-110) - margin.top - margin.bottom;
 
     var parseDate = d3.time.format("%Y").parse
     var parseDate2 = d3.time.format("%Y").parse
@@ -2036,10 +2144,12 @@ function render_chart(songId, inputData) {
 function render_chart2(songId, inputData) {
 
     var margin = 20;
+    var responsiveHeight = $('#playchart').height();
+    var responsivewidth = $('#playchart').width();
 
     var margin0 = {top: 22, right: 25, bottom: 22, left: 65},
-        w = 320,
-        h = 280;
+        w = responsivewidth,
+        h = responsiveHeight-70;
 
     function barStack(seriesData) {
         var l = seriesData[0].length;
@@ -2441,7 +2551,7 @@ function getColor_t(d, metric) {
                d >= 75   ? '#fff2cc' :
                d >= 50   ? '#7fbfff' :
                d >= 25   ? '#40a0ff' :
-               d >= 1   ? '#0080ff' :
+               d > 0   ? '#0080ff' :
                d === 0   ? '#D4D4D4' :
                '#D4D4D4';
     }
@@ -2748,7 +2858,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagától való eltérés <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -2762,7 +2872,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagától való eltérés <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -2776,7 +2886,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagától való eltérés <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -3053,7 +3163,7 @@ $(document).ready(function(){
                                 </div> \
                                 <div class="legend_right legend_chart KTIA" id="KTIA"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Kutatási, techn. és innov. alap</div> \
+                                    <div class="legend_text">Kutatási, techn.<br>és innov. alap</div> \
                                 </div> \
                                 <div class="legend_left legend_chart szechenyi USZ" id="szechenyi"> \
                                     <div class="legend_icon"></div> \
@@ -3140,8 +3250,6 @@ $(document).ready(function(){
                 openDetailedLayer();
                 //TO DO: population does not get updated until info.update is called...
                 //info.update(objectSearched['feature']['properties']);
-            }
-            else {
                 info.update(objectSearchedTest['feature']['properties']);
             }
             var coordinates = objectSearchedTest.getBounds().getCenter();
@@ -3672,17 +3780,38 @@ $(document).ready(function(){
                     detailsHighlight();
                     $('.playchart_1').remove();
                     render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
-                    //$('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][3])));
-                    //$('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][2])));
-                    //var selectedValue = $('.info_ammount.original_info').text();
-                    //$('.info_ammount.original_info').text(((((pieSelected*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                    if (metric === "DEVIATION_2007") {
+                        var value = parseInt(deviation_sum[metricPie]["2007"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        var value = parseInt(deviation_sum[metricPie]["2010"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        var value = parseInt(deviation_sum[metricPie]["2014"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][3])));
+                    $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][2])));
                 }
                 else {
                     $('.playchart_1').remove();
                     render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
-                    //$('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
-                    //$('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
-                    //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                    $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
+                    $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
+                    if (metric === "DEVIATION_2007") {
+                        var value = parseInt(deviation_sum['Summa']["2007"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        var value = parseInt(deviation_sum['Summa']["2010"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        var value = parseInt(deviation_sum['Summa']["2014"])
+                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
+                    }
                 }
             }
 
@@ -3719,7 +3848,15 @@ $(document).ready(function(){
                 $(this).removeClass('hover_logo');
             });
             $("#bank_logo").addClass('active_logo');
-            $('.info h4').text('2007-2015 országos átlagától vett eltérés (%)');
+            if (metric === "DEVIATION_2007") {
+                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+            }
+            else if (metric === "DEVIATION_ 2010") {
+                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+            }
+            else if (metric === "DEVIATION_2014") {
+                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+            }
 
             map.removeControl(legend)
             legend.addTo(map);
@@ -3739,9 +3876,13 @@ $(document).ready(function(){
                 $('.deviation_years').text("(2007-2009)");
                 if (overlayState != "plain") {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
+                    var value = parseInt(deviation_sum[metricPie]["2007"])
+                $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
                 else {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    var value = parseInt(deviation_sum['Summa']["2007"])
+                    $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
             }
         }
@@ -3756,9 +3897,13 @@ $(document).ready(function(){
                 $('.deviation_years').text("(2010-2013)");
                 if (overlayState != "plain") {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
+                    var value = parseInt(deviation_sum[metricPie]["2010"])
+                    $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
                 else {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    var value = parseInt(deviation_sum['Summa']["2010"])
+                    $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
             }
         }
@@ -3773,9 +3918,13 @@ $(document).ready(function(){
                 $('.deviation_years').text("(2014-2015)");
                 if (overlayState != "plain") {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
+                    var value = parseInt(deviation_sum[metricPie]["2014"])
+                    $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
                 else {
                     render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    var value = parseInt(deviation_sum['Summa']["2014"])
+                    $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                 }
             }
         }
@@ -3851,14 +4000,14 @@ $(document).ready(function(){
         }
     });
 
-    $('.legend_chart').on('mouseenter', function() {
+    $(document).on('mouseenter', '.legend_chart', function() {
         var idSelector = String($(this).attr('id'));
         var totalMetric = 0;
         $('.bars').each(function() {
             if ($(this).is('.bars.'+idSelector)) {
                 $(this).show();
                 var heightB = $(this).attr('height');
-                $(this).attr("y", 205-heightB);
+                $(this).attr("y", 195-heightB);
                 if ($(this).attr("height") != "0") {
                     var metricBar = $(this).attr('data-balance');
                     totalMetric += parseInt(metricBar);
@@ -3871,7 +4020,7 @@ $(document).ready(function(){
         $('.trendline').hide();
     });
 
-    $('.legend_chart').on('mouseleave', function() {
+    $(document).on('mouseleave', '.legend_chart', function() {
         var idSelector = String($(this).attr('id'));
         $('.bars').each(function() {
             if ($(this).is('.bars.'+idSelector)) {
@@ -4070,12 +4219,26 @@ $(document).ready(function(){
         }
     }
 
+    if (getUrlParameter('details')) {
+        var viewToSelect = getUrlParameter('details');
+        if (viewToSelect === "1") {
+            var city_url = getUrlParameter('telepules');
+            map.closePopup();
+            cityToFind = city_url;
+            $('#detailed_overlay').fadeIn(300);
+            $('.sk-cube-grid').show();
+            $('.main_search').val(cityToFind);
+            coords = toGeoJSON(objectSearched);
+            openDetailedLayer();
+        }
+    }
+
     $(window).on("resize", function() {
         var windowSize = $(this).width();
         if (windowSize < 440) {
             $('.chart').hide();
             $('.search_wrapper').hide();
-            $('.info').css('width', '200px');
+            //$('.info').css('width', '200px');
             $('#bank_logo').css('margin-right', '0px');
             $('#header').css({'width': 'calc(100% - 63px)', 'left': '63px'});
             $('.logo_wrapper').css('width', '65px');
@@ -4084,7 +4247,7 @@ $(document).ready(function(){
         else if (windowSize < 700) {
             $('.search_wrapper').hide();
             $('.chart').show();
-            $('.info').css('width', '304px');
+            //$('.info').css('width', '304px');
             $('#bank_logo').css('margin-right', '5px');
             $('#header').css({'width': 'calc(100% - 165px)', 'left': '165px'});
             $('.logo_wrapper').css('width', '167px');
@@ -4093,11 +4256,191 @@ $(document).ready(function(){
         else {
             $('.search_wrapper').show();
             $('.chart').show();
-            $('.info').css('width', '304px');
+            //$('.info').css('width', '304px');
             $('#bank_logo').css('margin-right', '5px');
             $('#header').css({'width': 'calc(100% - 165px)', 'left': '165px'});
             $('.logo_wrapper').css('width', '167px');
             $('#header_logo').css({'width': '145px', 'top': '15px', 'left': '10px'});
+        }
+
+        if (windowSize > 674 && windowSize < 1279) {
+            var middle = $('.middle_container').clone();
+            $('.middle_container').remove();
+            $('.center_holder').append(middle);
+
+            $('.left_container').removeClass('small');
+            $('.left_container').addClass('medium');
+
+            $('.middle_container').removeClass('small');
+            $('.middle_container').addClass('medium');
+
+            $('#playchart').removeClass('small');
+            $('#playchart').addClass('medium');
+
+            $('#pie_container').removeClass('small');
+            $('#pie_container').addClass('medium');
+
+            $('.areachart_wrapper').removeClass('small');
+            $('.areachart_wrapper').addClass('medium');
+
+            $('.right_container').removeClass('small');
+            $('.right_container').addClass('medium');
+            $('.description_container').removeClass('small');
+            $('.info').addClass('medium');
+
+            $('.chartheader').removeClass('small');
+            $('.areaheader').removeClass('small');
+            $('.rankheader').removeClass('small');
+
+            $('.pos_wrapper').addClass('medium');
+            $('.help_icon_container').addClass('medium');
+
+            $('.tutorial_button').addClass('medium');
+
+            $('.center_holder').addClass('medium');
+
+            $('.leaflet-right').removeClass('small');
+
+            if ($('#detailed_overlay').is(':visible')) {
+                detailsResetHighlight ();
+                if (metric === "DONATION") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+                else if (metric === "CAPITA") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+
+                }
+                else {
+                    $('.playchart_1').remove();
+                    render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+            }
+
+        }
+        else if (windowSize <= 674) {
+            var middle = $('.middle_container').clone();
+            $('.middle_container').remove();
+            $('.center_holder').append(middle);
+
+            $('.left_container').removeClass('medium');
+            $('.left_container').addClass('small');
+
+            $('.middle_container').removeClass('medium');
+            $('.middle_container').addClass('small');
+
+            $('.right_container').addClass('small');
+            $('.description_container').addClass('small');
+            $('.info').removeClass('medium');
+            $('#playchart').removeClass('medium');
+
+            $('#pie_container').removeClass('medium');
+            $('#pie_container').addClass('small');
+
+            $('.areachart_wrapper').removeClass('medium');
+            $('.areachart_wrapper').addClass('small');
+
+            $('.chartheader').addClass('small');
+            $('.areaheader').addClass('small');
+            $('.rankheader').addClass('small');
+
+            $('.pos_wrapper').addClass('medium');
+            $('.help_icon_container').addClass('medium');
+
+            $('.tutorial_button').addClass('medium');
+
+            $('.center_holder').addClass('medium');
+
+            $('.leaflet-right').addClass('small');
+
+            if ($('#detailed_overlay').is(':visible')) {
+                detailsResetHighlight ();
+                if (metric === "DONATION") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+                else if (metric === "CAPITA") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+
+                }
+                else {
+                    $('.playchart_1').remove();
+                    render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+            }
+        }
+        else {
+            var right = $('.right_container').clone();
+            $('.right_container').remove();
+            $('.center_holder').append(right);
+
+            $('.left_container').removeClass('medium');
+            $('.left_container').removeClass('small');
+
+            $('.middle_container').removeClass('medium');
+            $('.middle_container').removeClass('small');
+
+            $('.right_container').removeClass('small');
+            $('.right_container').removeClass('medium');
+            $('.description_container').removeClass('small');
+
+            $('#pie_container').removeClass('medium');
+            $('#pie_container').removeClass('small');
+
+            $('.areachart_wrapper').removeClass('medium');
+            $('.areachart_wrapper').removeClass('small');
+            $('.info').removeClass('medium');
+            $('#playchart').removeClass('medium');
+
+            $('.chartheader').removeClass('small');
+            $('.areaheader').removeClass('small');
+            $('.rankheader').removeClass('small');
+
+            $('.pos_wrapper').removeClass('medium');
+            $('.help_icon_container').removeClass('medium');
+
+            $('.tutorial_button').removeClass('medium');
+
+            $('.center_holder').removeClass('medium');
+
+            $('.leaflet-right').removeClass('small');
+
+            if ($('#detailed_overlay').is(':visible')) {
+                detailsResetHighlight ();
+                if (metric === "DONATION") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+                else if (metric === "CAPITA") {
+                    $('.playchart_1').remove();
+                    render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+
+                }
+                else {
+                    $('.playchart_1').remove();
+                    render_chart2("1", JSON.parse(JSON.stringify(deviation['Summa'])));
+                    renderPie(pieData);
+                    renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
+                }
+            }
         }
     });
 
@@ -4105,7 +4448,7 @@ $(document).ready(function(){
     if (windowSize < 440) {
         $('.chart').hide();
         $('.search_wrapper').hide();
-        $('.info').css('width', '200px');
+        //$('.info').css('width', '200px');
         $('.legend_featured').css('width', '80%');
         $('#bank_logo').css('margin-right', '0px');
         $('#header').css({'width': 'calc(100% - 63px)', 'left': '63px'});
@@ -4115,7 +4458,7 @@ $(document).ready(function(){
     else if (windowSize < 700) {
         $('.search_wrapper').hide();
         $('.chart').show();
-        $('.info').css('width', '304px');
+        //$('.info').css('width', '304px');
         $('#bank_logo').css('margin-right', '5px');
         $('#header').css({'width': 'calc(100% - 165px)', 'left': '165px'});
         $('.logo_wrapper').css('width', '167px');
@@ -4124,11 +4467,111 @@ $(document).ready(function(){
     else {
         $('.search_wrapper').show();
         $('.chart').show();
-        $('.info').css('width', '304px');
+        //$('.info').css('width', '304px');
         $('#bank_logo').css('margin-right', '5px');
         $('#header').css({'width': 'calc(100% - 165px)', 'left': '165px'});
         $('.logo_wrapper').css('width', '167px');
         $('#header_logo').css({'width': '145px', 'top': '15px', 'left': '10px'});
+    }
+
+    if (windowSize > 674 && windowSize < 1279) {
+        var middle = $('.middle_container').clone();
+        $('.middle_container').remove();
+        $('.center_holder').append(middle);
+
+        $('.left_container').removeClass('small');
+        $('.left_container').addClass('medium');
+
+        $('.middle_container').removeClass('small');
+        $('.middle_container').addClass('medium');
+
+        $('#playchart').removeClass('small');
+        $('#playchart').addClass('medium');
+
+        $('#pie_container').removeClass('small');
+        $('#pie_container').addClass('medium');
+
+        $('.areachart_wrapper').removeClass('small');
+        $('.areachart_wrapper').addClass('medium');
+
+        $('.right_container').removeClass('small');
+        $('.right_container').addClass('medium');
+        $('.info').addClass('medium');
+        $('.description_container').removeClass('small');
+
+        $('.pos_wrapper').addClass('medium');
+        $('.help_icon_container').addClass('medium');
+
+        $('.tutorial_button').addClass('medium');
+
+        $('.center_holder').addClass('medium');
+
+        $('.leaflet-right').removeClass('small');
+
+    }
+    else if (windowSize <= 674) {
+
+        var middle = $('.middle_container').clone();
+        $('.middle_container').remove();
+        $('.center_holder').append(middle);
+
+        $('.left_container').removeClass('medium');
+        $('.left_container').addClass('small');
+
+        $('.middle_container').removeClass('medium');
+        $('.middle_container').addClass('small');
+
+        $('.right_container').addClass('small');
+        $('.description_container').addClass('small');
+
+        $('#pie_container').removeClass('medium');
+        $('#pie_container').addClass('small');
+
+        $('.areachart_wrapper').removeClass('medium');
+        $('.areachart_wrapper').addClass('small');
+
+        $('.chartheader').addClass('small');
+        $('.areaheader').addClass('small');
+        $('.rankheader').addClass('small');
+
+        $('.pos_wrapper').addClass('medium');
+        $('.help_icon_container').addClass('medium');
+
+        $('.tutorial_button').addClass('medium');
+
+        $('.center_holder').addClass('medium');
+
+        $('.leaflet-right').addClass('small');
+    }
+    else {
+        var right = $('.right_container').clone();
+        $('.right_container').remove();
+        $('.center_holder').append(right);
+
+        $('.left_container').removeClass('medium');
+        $('.left_container').removeClass('small');
+
+        $('.middle_container').removeClass('medium');
+        $('.middle_container').removeClass('small');
+
+        $('.right_container').removeClass('small');
+        $('.description_container').removeClass('small');
+
+        $('#pie_container').removeClass('medium');
+        $('#pie_container').removeClass('small');
+
+        $('.areachart_wrapper').removeClass('medium');
+        $('.areachart_wrapper').removeClass('small');
+
+        $('.pos_wrapper').addClass('medium');
+        $('.help_icon_container').addClass('medium');
+
+        $('.tutorial_button').removeClass('medium');
+
+        $('.center_holder').removeClass('medium');
+
+        $('.leaflet-right').removeClass('small');
+
     }
 
     $('#close_overlay').on('click', function(){
@@ -4144,6 +4587,8 @@ $(document).ready(function(){
         $('#percentage').html('');
         overlayState = "plain";
         hoverState = "off";
+        $('.chart').html($('#playchart').clone());
+        $('.chart').show();
     });
 
     $(document).on('mouseover', '.leaflet-popup', function(){
@@ -4181,7 +4626,7 @@ $(document).ready(function(){
     $('.pos_wrapper').on('click', function() {
         if ($(this).hasClass('county_pos')) {
             rankView = "county";
-            if (metric === "DONATION" || metric === "CAPITA") {
+            //if (metric === "DONATION" || metric === "CAPITA") {
 
                 if (overlayState != "plain") {
 
@@ -4198,19 +4643,11 @@ $(document).ready(function(){
 
                     renderRankChart (countyRank);
                 }
-            }
-            else if (metric === "DEVIATION_2007") {
-
-                alert("Not implemented");
-            }
-            else if (metric === "DEVIATION_2014") {
-
-                alert("Not implemented");
-            }
+            //}
         }
         else {
             rankView = "country";
-            if (metric === "DONATION" || metric === "CAPITA") {
+            //if (metric === "DONATION" || metric === "CAPITA") {
 
                 if (overlayState != "plain") {
                     renderRankChart (JSON.parse(JSON.stringify(ranking2["total"][overlayState])));
@@ -4218,19 +4655,7 @@ $(document).ready(function(){
                 else {
                     renderRankChart (JSON.parse(JSON.stringify(ranking2["total"]["Summa"])));
                 }
-            }
-            else if (metric === "DEVIATION_2007") {
-
-                alert("Not implemented");
-            }
-            else if (metric === "DEVIATION_2010") {
-
-                alert("Not implemented");
-            }
-            else if (metric === "DEVIATION_2014") {
-
-                alert("Not implemented");
-            }
+            //}
         }
         if (overlayState != "plain") {
             $('#rankheader_category').text(overlayState);
@@ -4239,6 +4664,9 @@ $(document).ready(function(){
             }
             else if (metric === "CAPITA") {
                 $("#rankingmetric").text("Ft / fő / év");
+            }
+            else {
+                $("#rankingmetric").text("országos átlaghoz mérve, 2007-2015, %");
             }
         }
         else {
@@ -4249,10 +4677,14 @@ $(document).ready(function(){
             else if (metric === "CAPITA") {
                 $("#rankingmetric").text("Ft / fő / év");
             }
+            else {
+                $("#rankingmetric").text("országos átlaghoz mérve, 2007-2015, %");
+            }
         }
 
         $('.middle_container').hide(300);
         $('.leaflet-top.leaflet-right').hide(300);
+        $('.right_container').hide();
         $('.ranking_container').show(300);
         $('.left_button').hide();
         $('.left_button.back').show();
@@ -4280,7 +4712,8 @@ $(document).ready(function(){
     $('.left_button.back').on('click', function() {
         $('.ranking_container').hide(300);
         $('.middle_container').show(300);
-        $('.leaflet-top.leaflet-right').show(300);
+        $('.right_container').show();
+        //$('.leaflet-top.leaflet-right').show(300);
         $('.left_button').show();
         $('.left_button.back').hide();
     });
@@ -4395,5 +4828,4 @@ $(document).ready(function(){
             $('.area_cap.county').show();
         }, this),100);
     });
-
 });

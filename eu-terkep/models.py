@@ -27,6 +27,7 @@ class Cities(db.Model):
     city_area = db.Column(db.String(10))
     ranking_country = db.Column(db.Text())
     deviation = db.Column(db.Text())
+    deviation_sum = db.Column(db.Text())
     county = db.Column(db.String(80))
 
     def __repr__(self):

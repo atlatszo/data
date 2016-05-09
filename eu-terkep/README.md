@@ -17,7 +17,7 @@ Working demo:
 http://adat.atlatszo.hu/eu-terkep
 
 You can query cities like so:
-http://adat.atlatszo.hu/eu-terkep?telepules=Szeged&view=3&year=2008
+http://adat.atlatszo.hu/eu-terkep?telepules=Szeged&view=3&year=2008&details=1
 
 
 license:

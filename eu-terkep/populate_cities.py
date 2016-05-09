@@ -145,6 +145,7 @@ for city in data:
     city_area = data[city][16]
     ranking_country = data[city][17]
     deviation = data[city][18]
+    deviation_sum = data[city][19]
     county = data[city][-1]
 
 
@@ -168,6 +169,7 @@ for city in data:
                                 city_area = city_area,
                                 ranking_country = json.dumps(ranking_country),
                                 deviation = json.dumps(deviation),
+                                deviation_sum = json.dumps(deviation_sum),
                                 county = county.encode('utf8', 'replace'))
     writer.add_document(city_name=city, city_name_n=city)
 

@@ -367,6 +367,12 @@ function openDetailedLayer () {
             $('#close_overlay').show(300);
             $('.left_container').show(300);
             $('.middle_container').show(300);
+            //$('#playchart').show();
+        },
+        error: function() {
+        },
+        complete: function() {
+
             var chart = $('#playchart').clone();
             var description = $('.leaflet-top.leaflet-right').children('.info').clone();
             $("#playchart").remove();
@@ -375,11 +381,8 @@ function openDetailedLayer () {
             $(".description_container").html(description);
             $(".barchart_container").html(chart);
             $('.right_container').show();
-            //$('#playchart').show();
-        },
-        error: function() {
-        },
-        complete: function() {
+
+
             $( ".tutorial_button" ).effect( "shake", {times: 5, distance: 10}, 600);
             if ($('#detailed_overlay').is(':visible')) {
                 //var chart = $('#playchart').clone();

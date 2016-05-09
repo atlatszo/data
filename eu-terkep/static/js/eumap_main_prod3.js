@@ -4229,6 +4229,7 @@ $(document).ready(function(){
             $('.sk-cube-grid').show();
             $('.main_search').val(cityToFind);
             coords = toGeoJSON(objectSearched);
+            info.update(objectSearched['feature']['properties']);
             openDetailedLayer();
         }
     }
@@ -4563,8 +4564,8 @@ $(document).ready(function(){
         $('.areachart_wrapper').removeClass('medium');
         $('.areachart_wrapper').removeClass('small');
 
-        $('.pos_wrapper').addClass('medium');
-        $('.help_icon_container').addClass('medium');
+        $('.pos_wrapper').removeClass('medium');
+        $('.help_icon_container').removeClass('medium');
 
         $('.tutorial_button').removeClass('medium');
 

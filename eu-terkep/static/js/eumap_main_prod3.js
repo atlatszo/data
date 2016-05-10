@@ -4625,7 +4625,7 @@ $(document).ready(function(){
         $('.sk-cube-grid').show();
         cityToFind = $(this).attr('data-uid');
         $('.main_search').val(cityToFind);
-
+        geojson.resetStyle(markersById[cityToFind]);
         openDetailedLayer();
     });
 

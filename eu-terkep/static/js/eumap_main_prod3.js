@@ -1,3 +1,5 @@
+var telepules;
+
 var adminUnit = "megye",
     metric = "DONATION",
     timeSeries = "DONATION_TIME",
@@ -383,7 +385,7 @@ function openDetailedLayer () {
             $('.right_container').show();
 
 
-            $( ".tutorial_button" ).effect( "shake", {times: 5, distance: 10}, 600);
+            $( ".tutorial_button" ).effect( "shake", {times: 3, distance: 5}, 300);
             if ($('#detailed_overlay').is(':visible')) {
                 //var chart = $('#playchart').clone();
                 //$("#playchart").remove();
@@ -2932,8 +2934,6 @@ info.update = function (props) {
 info.addTo(map);
 chart.addTo(map);
 
-indexHamlet = L.geoJson(telepules, {onEachFeature: onEachFeatureIndex});
-
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -3228,45 +3228,109 @@ $(document).ready(function(){
         },
         select: function( event, ui ) {
             $( ".main_search" ).val( ui.item.song_title );
-            var searchHamlet = ui.item.song_title;
-            //$( ".main_search" ).val( ui.item.value );
-            //var searchHamlet = ui.item.value;
+            if (!telepules) {
+                $.ajax({
+                    dataType: "json",
+                    async: true,
+                    url: "resources/telepules_index.json",
+                    success: function(data) {
+                        telepules = data;
+                        indexHamlet = L.geoJson(telepules, {onEachFeature: onEachFeatureIndex});
+                    },
+                    error: function() {
+                        //alert('Busted!');
+                    },
+                    complete: function() {
+                        var searchHamlet = ui.item.song_title;
+                        objectSearchedTest = markersById[searchHamlet];
 
+                        if ($('#detailed_overlay').is(':visible')) {
+                            coords = toGeoJSON(objectSearchedTest);
+                            cityToFind = searchHamlet;
+                            $('.left_container').hide();
+                            $('.middle_container').hide();
+                            $('.ranking_container').hide();
+                            $('.leaflet-top.leaflet-right').show();
+                            $('.left_button').show();
+                            $('.left_button.back').hide();
+                            $('.sk-cube-grid').show();
+                            overlayState = "plain";
+                            hoverState = "off";
+                            $('.city_legend').html(cityToFind + "<br>statisztikája");
+                            $('#area_legend').hide();
+                            $('#percentage').html('');
+                            openDetailedLayer();
+                            //TO DO: population does not get updated until info.update is called...
+                            //info.update(objectSearched['feature']['properties']);
+                            //info.update(objectSearchedTest['feature']['properties']);
+                        }
+                        var coordinates = objectSearchedTest.getBounds().getCenter();
+                        var cM = [coordinates.lat, coordinates.lng];
+                        map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
+                        markersById[searchHamlet].setStyle({
+                            weight: 4,
+                            color: '#4D8E27',
+                            dashArray: '10',
+                            fillColor:"url(#hash4_4)",
+                            fillOpacity: 0.2
+                        });
 
-            objectSearchedTest = markersById[searchHamlet];
+                        setTimeout (function(){
+                            markersById[searchHamlet].setStyle({
+                                weight: 4,
+                                color: '#4D8E27',
+                                dashArray: '10',
+                                fillColor:"url(#hash4_4)",
+                                fillOpacity: 0.2
+                            });
+                        },1000);
 
-            if ($('#detailed_overlay').is(':visible')) {
-                coords = toGeoJSON(objectSearchedTest);
-                cityToFind = searchHamlet;
-                $('.left_container').hide();
-                $('.middle_container').hide();
-                $('.ranking_container').hide();
-                $('.leaflet-top.leaflet-right').show();
-                $('.left_button').show();
-                $('.left_button.back').hide();
-                $('.sk-cube-grid').show();
-                overlayState = "plain";
-                hoverState = "off";
-                $('.city_legend').html(cityToFind + "<br>statisztikája");
-                $('#area_legend').hide();
-                $('#percentage').html('');
-                openDetailedLayer();
-                //TO DO: population does not get updated until info.update is called...
-                //info.update(objectSearched['feature']['properties']);
-                info.update(objectSearchedTest['feature']['properties']);
+                        $('.legend_elem').each(function(){
+                            $(this).removeClass("legend_featured");
+                            if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearchedTest['feature']['properties'][metric])) {
+                                $(this).addClass("legend_featured");
+                            }
+                            else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
+                                $(this).addClass("legend_featured");
+                            }
+                        });
+
+                        map.on('movestart', function() {
+                            geojson.resetStyle(markersById[searchHamlet]);
+                        });
+                        info.update(objectSearchedTest['feature']['properties']);
+                    }
+                });
             }
-            var coordinates = objectSearchedTest.getBounds().getCenter();
-            var cM = [coordinates.lat, coordinates.lng];
-            map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
-            markersById[searchHamlet].setStyle({
-                weight: 4,
-                color: '#4D8E27',
-                dashArray: '10',
-                fillColor:"url(#hash4_4)",
-                fillOpacity: 0.2
-            });
+            else {
+                $( ".main_search" ).val( ui.item.song_title );
+                var searchHamlet = ui.item.song_title;
 
-            setTimeout (function(){
+                objectSearchedTest = markersById[searchHamlet];
+
+                if ($('#detailed_overlay').is(':visible')) {
+                    coords = toGeoJSON(objectSearchedTest);
+                    cityToFind = searchHamlet;
+                    $('.left_container').hide();
+                    $('.middle_container').hide();
+                    $('.ranking_container').hide();
+                    $('.leaflet-top.leaflet-right').show();
+                    $('.left_button').show();
+                    $('.left_button.back').hide();
+                    $('.sk-cube-grid').show();
+                    overlayState = "plain";
+                    hoverState = "off";
+                    $('.city_legend').html(cityToFind + "<br>statisztikája");
+                    $('#area_legend').hide();
+                    $('#percentage').html('');
+                    openDetailedLayer();
+                    //TO DO: population does not get updated until info.update is called...
+                    //info.update(objectSearched['feature']['properties']);
+                }
+                info.update(objectSearchedTest['feature']['properties']);
+                var coordinates = objectSearchedTest.getBounds().getCenter();
+                var cM = [coordinates.lat, coordinates.lng];
+                map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
                 markersById[searchHamlet].setStyle({
                     weight: 4,
                     color: '#4D8E27',
@@ -3274,22 +3338,32 @@ $(document).ready(function(){
                     fillColor:"url(#hash4_4)",
                     fillOpacity: 0.2
                 });
-            },1000);
 
-            $('.legend_elem').each(function(){
-                $(this).removeClass("legend_featured");
-                if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearchedTest['feature']['properties'][metric])) {
-                    $(this).addClass("legend_featured");
-                }
-                else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
-                    $(this).addClass("legend_featured");
-                }
-            });
+                setTimeout (function(){
+                    markersById[searchHamlet].setStyle({
+                        weight: 4,
+                        color: '#4D8E27',
+                        dashArray: '10',
+                        fillColor:"url(#hash4_4)",
+                        fillOpacity: 0.2
+                    });
+                },1000);
 
-            map.on('movestart', function() {
-                geojson.resetStyle(markersById[searchHamlet]);
-            });
+                $('.legend_elem').each(function(){
+                    $(this).removeClass("legend_featured");
+                    if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearchedTest['feature']['properties'][metric])) {
+                        $(this).addClass("legend_featured");
+                    }
+                    else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearchedTest['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
+                        $(this).addClass("legend_featured");
+                    }
+                });
 
+                map.on('movestart', function() {
+                    geojson.resetStyle(markersById[searchHamlet]);
+                });
+
+            }
             return false;
         }
     });
@@ -4047,21 +4121,83 @@ $(document).ready(function(){
     $('.sk-cube-grid').hide();
 
     if (getUrlParameter('telepules') ) {
-        $('title').text('EU támogatások | '+getUrlParameter('telepules'));
-        $( ".main_search" ).val( getUrlParameter('telepules'));
-        var searchHamlet = getUrlParameter('telepules');
-        var objectSearched = markersById[searchHamlet];
-        var coordinates = objectSearched.getBounds().getCenter();
-        var cM = [coordinates.lat, coordinates.lng];
-        map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
-        markersById[searchHamlet].setStyle({
-            weight: 4,
-            color: '#4D8E27',
-            dashArray: '10',
-            fillColor:"url(#hash4_4)",
-            fillOpacity: 0.2
-        });
-        setTimeout (function(){
+        if (!telepules) {
+            $.ajax({
+                dataType: "json",
+                async: true,
+                url: "resources/telepules_index.json",
+                success: function(data) {
+                    telepules = data;
+                    indexHamlet = L.geoJson(telepules, {onEachFeature: onEachFeatureIndex});
+                },
+                error: function() {
+                    //alert('Busted!');
+                },
+                complete: function() {
+                    $('title').text('EU támogatások | '+getUrlParameter('telepules'));
+                    $( ".main_search" ).val( getUrlParameter('telepules'));
+                    var searchHamlet = getUrlParameter('telepules');
+                    var objectSearched = markersById[searchHamlet];
+                    var coordinates = objectSearched.getBounds().getCenter();
+                    var cM = [coordinates.lat, coordinates.lng];
+                    map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
+                    markersById[searchHamlet].setStyle({
+                        weight: 4,
+                        color: '#4D8E27',
+                        dashArray: '10',
+                        fillColor:"url(#hash4_4)",
+                        fillOpacity: 0.2
+                    });
+                    setTimeout (function(){
+                        markersById[searchHamlet].setStyle({
+                            weight: 4,
+                            color: '#4D8E27',
+                            dashArray: '10',
+                            fillColor:"url(#hash4_4)",
+                            fillOpacity: 0.2
+                        });
+                        info.update(objectSearched['feature']['properties']);
+                    },2000);
+
+                    $('.legend_elem').each(function(){
+                        $(this).removeClass("legend_featured");
+                        if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearched['feature']['properties'][metric])) {
+                            $(this).addClass("legend_featured");
+                        }
+                        else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
+                            $(this).addClass("legend_featured");
+                        }
+                    });
+
+                    map.on('movestart', function() {
+                        geojson.resetStyle(markersById[searchHamlet]);
+                    });
+
+                    if (getUrlParameter('details')) {
+                        var viewToSelect = getUrlParameter('details');
+                        if (viewToSelect === "1") {
+                            var city_url = getUrlParameter('telepules');
+                            map.closePopup();
+                            cityToFind = city_url;
+                            $('#detailed_overlay').fadeIn(300);
+                            $('.sk-cube-grid').show();
+                            $('.main_search').val(cityToFind);
+                            coords = toGeoJSON(objectSearched);
+                            info.update(objectSearched['feature']['properties']);
+                            openDetailedLayer();
+                        }
+                    }
+                }
+            });
+        }
+        else {
+            $('title').text('EU támogatások | '+getUrlParameter('telepules'));
+            $( ".main_search" ).val( getUrlParameter('telepules'));
+            var searchHamlet = getUrlParameter('telepules');
+            var objectSearched = markersById[searchHamlet];
+            var coordinates = objectSearched.getBounds().getCenter();
+            var cM = [coordinates.lat, coordinates.lng];
+            map.setView(new L.LatLng(cM[0], cM[1]),12, {animate: true});
             markersById[searchHamlet].setStyle({
                 weight: 4,
                 color: '#4D8E27',
@@ -4069,22 +4205,46 @@ $(document).ready(function(){
                 fillColor:"url(#hash4_4)",
                 fillOpacity: 0.2
             });
-            info.update(objectSearched['feature']['properties']);
-        },2000);
+            setTimeout (function(){
+                markersById[searchHamlet].setStyle({
+                    weight: 4,
+                    color: '#4D8E27',
+                    dashArray: '10',
+                    fillColor:"url(#hash4_4)",
+                    fillOpacity: 0.2
+                });
+                info.update(objectSearched['feature']['properties']);
+            },2000);
 
-        $('.legend_elem').each(function(){
-            $(this).removeClass("legend_featured");
-            if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearched['feature']['properties'][metric])) {
-                $(this).addClass("legend_featured");
-            }
-            else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
-                $(this).addClass("legend_featured");
-            }
-        });
+            $('.legend_elem').each(function(){
+                $(this).removeClass("legend_featured");
+                if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && parseInt($(this).attr('data-range_end')) >= parseInt(objectSearched['feature']['properties'][metric])) {
+                    $(this).addClass("legend_featured");
+                }
+                else if (parseInt($(this).attr('data-range_start')) <= parseInt(objectSearched['feature']['properties'][metric]) && $(this).attr('data-range_end') === "undefined") {
+                    $(this).addClass("legend_featured");
+                }
+            });
 
-        map.on('movestart', function() {
-            geojson.resetStyle(markersById[searchHamlet]);
-        });
+            map.on('movestart', function() {
+                geojson.resetStyle(markersById[searchHamlet]);
+            });
+
+            if (getUrlParameter('details')) {
+                var viewToSelect = getUrlParameter('details');
+                if (viewToSelect === "1") {
+                    var city_url = getUrlParameter('telepules');
+                    map.closePopup();
+                    cityToFind = city_url;
+                    $('#detailed_overlay').fadeIn(300);
+                    $('.sk-cube-grid').show();
+                    $('.main_search').val(cityToFind);
+                    coords = toGeoJSON(objectSearched);
+                    info.update(objectSearched['feature']['properties']);
+                    openDetailedLayer();
+                }
+            }
+        }
     }
 
     if (getUrlParameter('view')) {
@@ -4221,21 +4381,6 @@ $(document).ready(function(){
         if (viewToSelect === "true") {
             $('#fullview').show();
             map.scrollWheelZoom.disable();
-        }
-    }
-
-    if (getUrlParameter('details')) {
-        var viewToSelect = getUrlParameter('details');
-        if (viewToSelect === "1") {
-            var city_url = getUrlParameter('telepules');
-            map.closePopup();
-            cityToFind = city_url;
-            $('#detailed_overlay').fadeIn(300);
-            $('.sk-cube-grid').show();
-            $('.main_search').val(cityToFind);
-            coords = toGeoJSON(objectSearched);
-            info.update(objectSearched['feature']['properties']);
-            openDetailedLayer();
         }
     }
 
@@ -4619,7 +4764,7 @@ $(document).ready(function(){
         $(this).children('.header').removeClass("hover_state");
     });
 
-    $(document).on('click', '.popupButton', function(){
+    $(document).on('click touchstart', '.popupButton', function(){
         map.closePopup();
         $('#detailed_overlay').fadeIn(300);
         $('.sk-cube-grid').show();

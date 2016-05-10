@@ -4010,7 +4010,9 @@ $(document).ready(function(){
             if ($(this).is('.bars.'+idSelector)) {
                 $(this).show();
                 var heightB = $(this).attr('height');
-                $(this).attr("y", 195-heightB);
+                var chartHeight = $("#playchart").height();
+                //$(this).attr("y", 195-heightB);
+                $(this).attr("y", (chartHeight-155)-heightB);
                 if ($(this).attr("height") != "0") {
                     var metricBar = $(this).attr('data-balance');
                     totalMetric += parseInt(metricBar);

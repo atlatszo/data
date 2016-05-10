@@ -364,9 +364,9 @@ function openDetailedLayer () {
             renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
             $('.city_population').html(parseInt(population.slice(-1)[0]['value']).format(0, 3, ' ').toString() + " fő")
             $('.sk-cube-grid').hide();
-            $('#close_overlay').show(300);
-            $('.left_container').show(300);
-            $('.middle_container').show(300);
+            $('#close_overlay').show();
+            $('.left_container').show();
+            $('.middle_container').show();
             //$('#playchart').show();
         },
         error: function() {
@@ -380,7 +380,7 @@ function openDetailedLayer () {
             $('.leaflet-top.leaflet-right').hide();
             $(".description_container").html(description);
             $(".barchart_container").html(chart);
-            $('.right_container').show(300);
+            $('.right_container').show();
 
 
             $( ".tutorial_button" ).effect( "shake", {times: 5, distance: 10}, 600);

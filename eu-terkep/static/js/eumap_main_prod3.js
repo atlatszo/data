@@ -380,7 +380,7 @@ function openDetailedLayer () {
             $('.leaflet-top.leaflet-right').hide();
             $(".description_container").html(description);
             $(".barchart_container").html(chart);
-            $('.right_container').show();
+            $('.right_container').show(300);
 
 
             $( ".tutorial_button" ).effect( "shake", {times: 5, distance: 10}, 600);

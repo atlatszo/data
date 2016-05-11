@@ -131,6 +131,6 @@ def searchcity():
     else:
         return json.dumps("")
 
-@application.route('/embedtest', methods=['GET'])
+@app.route('/embedtest', methods=['GET'])
 def embedtest():
     return render_template('embedtest.html')

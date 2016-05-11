@@ -130,3 +130,7 @@ def searchcity():
             return json.dumps(results5)
     else:
         return json.dumps("")
+
+@application.route('/embedtest', methods=['GET'])
+def embedtest():
+    return render_template('embedtest.html')

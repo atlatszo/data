@@ -2820,6 +2820,12 @@ chart.onAdd = function (map) {
 
 info.update = function (props) {
     if (props) {
+        if ($('#playchart').hasClass('medium')) {
+            $('.info.legend').hide();
+        }
+        if ($(window).height() <= 650) {
+            $('.info.legend').hide();
+        }
         $('#playchart').show();
     }
     else {
@@ -2829,6 +2835,7 @@ info.update = function (props) {
             $('.playchart_1').remove();
             $('#playchart').hide();
         }
+        $('.info.legend').show();
     }
 
     if (metric === "DONATION") {
@@ -2863,7 +2870,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -2877,7 +2884,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -2891,7 +2898,7 @@ info.update = function (props) {
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4>Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
                                   '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
@@ -3378,13 +3385,16 @@ $(document).ready(function(){
                 $('.popup.leaflet-control').addClass('hover_pop');
                 $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
                 $('.popup').append(loader);
+                $('#playchart').hide();
             }
         }
     },
     function() {
         $("#human_logo").removeClass('hover_logo');
         if (!$('#detailed_overlay').is(':visible') ) {
-            $('.popup.leaflet-control').removeClass('hover_pop');
+            if (!$('body').hasClass('busy')) {
+                $('.popup.leaflet-control').removeClass('hover_pop');
+            }
 
             if (metric ==="DONATION") {
                 $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
@@ -3393,8 +3403,17 @@ $(document).ready(function(){
                 $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
                 $("#human_logo").addClass('active_logo');
             }
-            else {
-            $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+            else if (metric === "DEVIATION_2007") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+            }
+            else if (metric === "DEVIATION_2010") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+            }
+            else if (metric === "DEVIATION_2014") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
             }
         }
         else if (metric === "CAPITA") {
@@ -3597,6 +3616,7 @@ $(document).ready(function(){
                 $('.popup.leaflet-control').addClass('hover_pop');
                 $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
                 $('.popup').append(loader);
+                $('#playchart').hide();
             }
         }
     },
@@ -3604,7 +3624,10 @@ $(document).ready(function(){
         $("#cash_logo").removeClass('hover_logo');
 
         if (!$('#detailed_overlay').is(':visible') ) {
-            $('.popup.leaflet-control').removeClass('hover_pop');
+
+            if (!$('body').hasClass('busy')) {
+                $('.popup.leaflet-control').removeClass('hover_pop');
+            }
 
             if (metric ==="DONATION") {
                 $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
@@ -3613,8 +3636,17 @@ $(document).ready(function(){
             else if (metric ==="CAPITA") {
                 $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
             }
-            else {
-                $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+            else if (metric === "DEVIATION_2007") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+            }
+            else if (metric === "DEVIATION_2010") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+            }
+            else if (metric === "DEVIATION_2014") {
+                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
             }
         }
         else {
@@ -3815,6 +3847,7 @@ $(document).ready(function(){
                 $('.popup.leaflet-control').addClass('hover_pop');
                 $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
                 $('.popup').append(loader);
+                $('#playchart').hide();
             }
         }
     },
@@ -3822,7 +3855,9 @@ $(document).ready(function(){
         $("#bank_logo").removeClass('hover_logo');
 
         if (!$('#detailed_overlay').is(':visible') ) {
-            $('.popup.leaflet-control').removeClass('hover_pop');
+            if (!$('body').hasClass('busy')) {
+                $('.popup.leaflet-control').removeClass('hover_pop');
+            }
 
             if (metric ==="DONATION") {
                 $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
@@ -3831,7 +3866,20 @@ $(document).ready(function(){
                 $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
             }
             else {
-                $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                if (!$('body').hasClass('busy')) {
+                    if (metric === "DEVIATION_2007") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                    }
+                }
                 $("#bank_logo").addClass('active_logo');
             }
         }
@@ -3915,6 +3963,18 @@ $(document).ready(function(){
                     $('.spinner').remove();
                     $('.popup.leaflet-control').removeClass('hover_pop');
                     $('body').removeClass('busy');
+                    if (metric === "DEVIATION_2007") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                    }
+                    else if (metric === "DEVIATION_2010") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                    }
+                    else if (metric === "DEVIATION_2014") {
+                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                    }
                 }
             });
 
@@ -3925,15 +3985,6 @@ $(document).ready(function(){
                 $(this).removeClass('hover_logo');
             });
             $("#bank_logo").addClass('active_logo');
-            if (metric === "DEVIATION_2007") {
-                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
-            }
-            else if (metric === "DEVIATION_ 2010") {
-                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
-            }
-            else if (metric === "DEVIATION_2014") {
-                $('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
-            }
 
             map.removeControl(legend)
             legend.addTo(map);
@@ -4035,6 +4086,18 @@ $(document).ready(function(){
                 $('.spinner').remove();
                 $('.popup.leaflet-control').removeClass('hover_pop');
                 $('body').removeClass('busy');
+                if (metric === "DEVIATION_2007") {
+                    $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                    //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                }
+                else if (metric === "DEVIATION_2010") {
+                    $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                    //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                }
+                else if (metric === "DEVIATION_2014") {
+                    $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                    //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                }
             }
         });
     });
@@ -4414,7 +4477,7 @@ $(document).ready(function(){
             $('#header_logo').css({'width': '145px', 'top': '15px', 'left': '10px'});
         }
 
-        if (windowSize > 674 && windowSize < 1279) {
+        if (windowSize > 680 && windowSize < 1279) {
             var middle = $('.middle_container').clone();
             $('.middle_container').remove();
             $('.center_holder').append(middle);
@@ -4476,7 +4539,7 @@ $(document).ready(function(){
             }
 
         }
-        else if (windowSize <= 674) {
+        else if (windowSize <= 680) {
             var middle = $('.middle_container').clone();
             $('.middle_container').remove();
             $('.center_holder').append(middle);
@@ -4625,7 +4688,7 @@ $(document).ready(function(){
         $('#header_logo').css({'width': '145px', 'top': '15px', 'left': '10px'});
     }
 
-    if (windowSize > 674 && windowSize < 1279) {
+    if (windowSize > 680 && windowSize < 1279) {
         var middle = $('.middle_container').clone();
         $('.middle_container').remove();
         $('.center_holder').append(middle);
@@ -4660,7 +4723,7 @@ $(document).ready(function(){
         $('.leaflet-right').removeClass('small');
 
     }
-    else if (windowSize <= 674) {
+    else if (windowSize <= 680) {
 
         var middle = $('.middle_container').clone();
         $('.middle_container').remove();
@@ -4725,7 +4788,7 @@ $(document).ready(function(){
 
     }
 
-    $('#close_overlay').on('click', function(){
+    $('#close_overlay').on('click touchstart', function(){
         $('#detailed_overlay').fadeOut(300);
         $('#close_overlay').hide(300);
         $('.left_container').hide(300);

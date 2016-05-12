@@ -3963,17 +3963,19 @@ $(document).ready(function(){
                     $('.spinner').remove();
                     $('.popup.leaflet-control').removeClass('hover_pop');
                     $('body').removeClass('busy');
-                    if (metric === "DEVIATION_2007") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
-                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
-                    }
-                    else if (metric === "DEVIATION_2010") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
-                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
-                    }
-                    else if (metric === "DEVIATION_2014") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
-                        //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                    if (!$('#detailed_overlay').is(':visible')) {
+                        if (metric === "DEVIATION_2007") {
+                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                            //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                        }
+                        else if (metric === "DEVIATION_2010") {
+                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                            //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                        }
+                        else if (metric === "DEVIATION_2014") {
+                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                            //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                        }
                     }
                 }
             });

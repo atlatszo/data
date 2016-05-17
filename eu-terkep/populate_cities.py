@@ -170,7 +170,7 @@ for city in data:
                                 ranking_country = json.dumps(ranking_country),
                                 deviation = json.dumps(deviation),
                                 deviation_sum = json.dumps(deviation_sum),
-                                county = county.encode('utf8', 'replace'))
+                                county = json.dumps(county))
     writer.add_document(city_name=city, city_name_n=city)
 
     db.session.add(u1)

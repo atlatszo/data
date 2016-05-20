@@ -3177,11 +3177,11 @@ $(document).ready(function(){
                                 </div> \
                                 <div class="legend_left legend_chart szechenyi USZ" id="szechenyi"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Új Széchenyi<br>Terv</div> \
+                                    <div class="legend_text">Széchenyi<br>2020</div> \
                                 </div> \
                                 <div class="legend_right legend_chart ujszechenyi SZ" id="ujszechenyi"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Széchenyi<br>2020</div> \
+                                    <div class="legend_text">Új Széchenyi<br>Terv</div> \
                                 </div> \
                                 <div class="legend_left legend_chart nemzeti N" id="nemzeti"> \
                                     <div class="legend_icon"></div> \

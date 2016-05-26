@@ -108,7 +108,8 @@ def categoryfind2():
 
 @app.route('/searchcity', methods=['GET'])
 def searchcity():
-    query = request.args.get('term').strip()
+    query0 = request.args.get('term').strip()
+    query = query0[:1].upper() + query0[1:].lower()
     if len(query) >= 2:
         ix = open_dir('cities_index')
         qp = qparser.MultifieldParser(["city_name", "city_name_n"], schema=ix.schema)

@@ -2650,9 +2650,9 @@ function highlightFeature(e) {
         fillOpacity: 0.2,
     });
 
-    if (!L.Browser.ie && !L.Browser.opera) {
+    /*if (!L.Browser.ie && !L.Browser.opera) {
         layer.bringToFront();
-    }
+    }*/
 
     info.update(layer.feature.properties);
 
@@ -2773,6 +2773,7 @@ var markersById = {};
 
 function onEachFeatureIndex(feature, layer) {
     markersById[feature.properties.TEL_NEV] = layer;
+
 }
 
 function onEachFeature(feature, layer) {
@@ -2839,7 +2840,6 @@ info.update = function (props) {
     }
 
     if (metric === "DONATION") {
-
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
                                   '<b>' + '<h4 class="original_info">Átlagos EU támogatás (millió Ft / év)</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div></div>' +
@@ -2867,6 +2867,8 @@ info.update = function (props) {
         }
     }
     else if (metric === "DEVIATION_2007") {
+
+        //console.log(props);
 
         if (props) {
             this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
@@ -3147,6 +3149,31 @@ map.on('zoomend', function() {
             legend.addTo(map);
         }
     }
+    else {
+        adminUnit = "telepules";
+        $('body').addClass('busy');
+        $.ajax({
+            dataType: "json",
+            async: true,
+            url: "resources/telepules.json",
+            success: function(data) {
+                map.removeLayer(geojson);
+                geojson = L.geoJson(data, {
+                    style: style,
+                    onEachFeature: onEachFeature
+                });
+                geojson.addTo(map);
+            },
+            error: function() {
+                //alert('Busted!');
+            },
+            complete: function() {
+                $('body').removeClass('busy');
+            }
+        });
+        map.removeControl(legend)
+        legend.addTo(map);
+    }
 });
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -3250,7 +3277,6 @@ $(document).ready(function(){
                     complete: function() {
                         var searchHamlet = ui.item.song_title;
                         objectSearchedTest = markersById[searchHamlet];
-
                         if ($('#detailed_overlay').is(':visible')) {
                             coords = toGeoJSON(objectSearchedTest);
                             cityToFind = searchHamlet;
@@ -3939,14 +3965,13 @@ $(document).ready(function(){
                     }
                 }
             }
-
             $.ajax({
                 dataType: "json",
                 async: true,
                 url: "resources/telepules.json",
                 success: function(data) {
                     map.removeLayer(geojson);
-                        stripes = L.geoJson(data, {
+                    stripes = L.geoJson(data, {
                         style: stripes_style,
                         onEachFeature: onEachFeature
                     }).addTo(map);
@@ -4813,6 +4838,7 @@ $(document).ready(function(){
         var city = $('.popupButton').attr('data-uid');
         var layer = markersById[city];
         layer.fireEvent('mouseover');
+        //console.log(markersById[city].feature.properties);
     });
 
     $(document).on('mouseout', '.leaflet-popup', function(){

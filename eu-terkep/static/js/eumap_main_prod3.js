@@ -105,6 +105,8 @@ var categories = { "Vállalkozásfejlesztés": 9672.63866662,
 
 var loader = '<div class="spinner"></div>';
 
+var searching = false;
+
 /**
 * Number.prototype.format(n, x, s, c)
 *
@@ -3150,29 +3152,32 @@ map.on('zoomend', function() {
         }
     }
     else {
-        adminUnit = "telepules";
-        $('body').addClass('busy');
-        $.ajax({
-            dataType: "json",
-            async: true,
-            url: "resources/telepules.json",
-            success: function(data) {
-                map.removeLayer(geojson);
-                geojson = L.geoJson(data, {
-                    style: style,
-                    onEachFeature: onEachFeature
-                });
-                geojson.addTo(map);
-            },
-            error: function() {
-                //alert('Busted!');
-            },
-            complete: function() {
-                $('body').removeClass('busy');
-            }
-        });
-        map.removeControl(legend)
-        legend.addTo(map);
+        if (searching === true) {
+            adminUnit = "telepules";
+            $('body').addClass('busy');
+            $.ajax({
+                dataType: "json",
+                async: true,
+                url: "resources/telepules.json",
+                success: function(data) {
+                    map.removeLayer(geojson);
+                    geojson = L.geoJson(data, {
+                        style: style,
+                        onEachFeature: onEachFeature
+                    });
+                    geojson.addTo(map);
+                },
+                error: function() {
+                    //alert('Busted!');
+                },
+                complete: function() {
+                    $('body').removeClass('busy');
+                }
+            });
+            map.removeControl(legend)
+            legend.addTo(map);
+        }
+        searching = false;
     }
 });
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -3261,6 +3266,7 @@ $(document).ready(function(){
             return false;
         },
         select: function( event, ui ) {
+            searching = true;
             $( ".main_search" ).val( ui.item.song_title );
             if (!telepules) {
                 $.ajax({
@@ -3397,6 +3403,7 @@ $(document).ready(function(){
                 });
 
             }
+            //searching = false;
             return false;
         }
     });
@@ -3973,14 +3980,13 @@ $(document).ready(function(){
                     map.removeLayer(geojson);
                     stripes = L.geoJson(data, {
                         style: stripes_style,
-                        onEachFeature: onEachFeature
+                        //onEachFeature: onEachFeature
                     }).addTo(map);
 
                     geojson = L.geoJson(data, {
                         style: style,
                         onEachFeature: onEachFeature
-                    });
-                    geojson.addTo(map);
+                    }).addTo(map);
                 },
                 error: function() {
                 },

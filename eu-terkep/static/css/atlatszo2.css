@@ -218,6 +218,7 @@ a {
 
 #party_selector {
     margin-left: 10px;
+    margin-right: 10px;
     margin-top: -5px;
     height: 40px;
     outline: none;
@@ -233,20 +234,19 @@ a {
     padding: 20px;
 }
 
-
 .language_change {
-    float: right;
+    float: left;
     padding: 6px;
+    margin-left: 5px;
     border-radius: 4px;
     background-color: rgba(0,0,0,0.0);
     box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     cursor: pointer;
-    display: none;
 }
 
-#english {
+#language {
     color: #FFFFFF;
-    font-size: 18px;
+    font-size: 16px;
     text-shadow: 0px 2px 3px #171717;
     font-family: helvetica;
     font-style: bold;
@@ -341,7 +341,7 @@ a {
 .legend_featured {
     border: 0px solid black !important;
     background-color: rgba(255,255,255,0.2) !important;
-    width: 180px;
+    width: 200px;
     height: 17px;
     box-shadow: 0px 1px 3px rgba(0,0,0, 1);
     color: #91BED4;
@@ -378,7 +378,7 @@ a {
 
 #playchart.medium {
     width: 320px;
-    height: 500px;
+    height: 501px;
     margin-bottom: 12px;
 
 }
@@ -471,7 +471,6 @@ a {
 }
 
 .legend_chart.USZ > .legend_icon {
-    background-color: #594324;
     background-color: #ebdecc;
 }
 
@@ -850,7 +849,7 @@ a {
 
 .left_container.medium {
     width: 320px;
-    height: 500px;
+    height: calc(86.3vh - 120px);
     margin-right: 12px;
     margin-bottom: 12px;
 }
@@ -955,10 +954,20 @@ a {
     top: -4px;
 }
 
+.english.help_icon_container.help_county:hover:after {
+    content: "Click for county rankings!";
+    right: -140px;
+}
+
 .help_icon_container.help_country:hover:after {
     content: "Kattints az országos rangsorért!";
     right: -170px;
     top: -4px;
+}
+
+.english.help_icon_container.help_country:hover:after {
+    content: "Click for national rankings!";
+    right: -150px;
 }
 
 .help_icon {

@@ -1,3 +1,4 @@
+var language;
 var telepules;
 
 var adminUnit = "megye",
@@ -103,6 +104,435 @@ var categories = { "Vállalkozásfejlesztés": 9672.63866662,
                   "Summa": 104045.59627
 }
 
+var localization = {
+    "searchPlaceholder": {
+        "HU": "Keress településre",
+        "EN": "Search for municipalities"
+    },
+    "currency": {
+        "HU": "Ft",
+        "EN": "€"
+    },
+    "cashIconDefault": {
+        "HU": "Átlagos évenkénti EU-támogatás 2007-2015",
+        "EN": "Average yearly EU-subsidy 2007-2015"
+    },
+    "humanIconDefault": {
+        "HU": "Egy főre jutó évi EU-támogatás 2007-2015",
+        "EN": "Yearly EU-subsidy per capita 2007-2015"
+    },
+    "bankIconDefault": {
+        "HU": "Választási ciklus szerinti EU-támogatás",
+        "EN": "EU-subsidy by political affiliation"
+    },
+    "cashIconSecondary": {
+        "HU": "Átlagos EU-támogatás (millió Ft / év)",
+        "EN": "Average EU-subsidy (€ / year)"
+    },
+    "humanIconSecondary": {
+        "HU": "Egy főre jutó EU-támogatás (Ft / fő / év)",
+        "EN": "EU-subsidy per capita (€ / year)"
+    },
+    "bankIconSecondary": {
+        "HU": "Mo. fő / év átlagához mérve ",
+        "EN": "Comp. to nat. avg. / year / capita "
+    },
+    "popupLoader": {
+        "HU": "szerinti EU-támogatás",
+        "EN": "EU-subsidies"
+    },
+    "legendEU": {
+        "HU": "EU 2007-2013 tám. program",
+        "EN": "EU 2007-2013 sub. program"
+    },
+    "legendKTIA": {
+        "HU": "Kutatási, techn. és innov. alap",
+        "EN": "Research, tech. and innov. fund"
+    },
+    "legendUJSZEC": {
+        "HU": "Új Széchenyi<br>Terv",
+        "EN": "New Széchenyi Plan"
+    },
+    "legendSZEC2020": {
+        "HU": "Széchenyi<br>2020",
+        "EN": "Széchenyi<br>2020"
+    },
+    "legendNEMZ": {
+        "HU": "Nemzeti Fejlesztési Terv",
+        "EN": "National Development Plan"
+    },
+    "legendOPP": {
+        "HU": "Ellenzéki<br>polgármester",
+        "EN": "Mayor in<br>opposition"
+    },
+    "legendREIGN": {
+        "HU": "Kormánypárti<br>polgármester",
+        "EN": "Mayor in<br>governing party"
+    },
+    "popUpButton": {
+        "HU": "részletek",
+        "EN": "details"
+    },
+    "county": {
+        "HU": "megye",
+        "EN": "county"
+    },
+    "region": {
+        "HU": "kistérség",
+        "EN": "region"
+    },
+    "population": {
+        "HU": "Népesség (2014)",
+        "EN": "Population (2014)"
+    },
+    "capita": {
+        "HU": "fő",
+        "EN": "capita"
+    },
+    "capitaCAP": {
+        "HU": "fő / lakos",
+        "EN": "capita / resident"
+    },
+    "area": {
+        "HU": "Terület",
+        "EN": "Area"
+    },
+    "density": {
+        "HU": "Népsűrűség",
+        "EN": "Population density"
+    },
+    "densityMetric": {
+        "HU": "fő / km<sup class='sup_header_small'>2</sup>",
+        "EN": "capita / km<sup class='sup_header_small'>2</sup>"
+    },
+    "countyRank": {
+        "HU": "Megyei rangsor (2007-2015)",
+        "EN": "County ranking (2007-2015)"
+    },
+    "countryRank": {
+        "HU": "Országos rangsor (2007-2015)",
+        "EN": "National ranking (2007-2015)"
+    },
+    "listTenders": {
+        "HU": "Nyertes pályázatok listázása",
+        "EN": "List all winning tenders"
+    },
+    "backToDetails": {
+        "HU": "Vissza a részletekhez",
+        "EN": "Back to details"
+    },
+    "toolTipCounty": {
+        "HU": "Kattints a megyei rangsorért",
+        "EN": "Click for county ranking"
+    },
+    "toolTipCountry": {
+        "HU": "Kattints az országos rangsorért",
+        "EN": "Click for national ranking"
+    },
+    "pieHeader": {
+        "HU": "Támogatások felhasználási terület szerint",
+        "EN": "Subsidies by categories"
+    },
+    "Közlekedés, úthálózat": {
+        "HU": "Közlekedés, úthálózat",
+        "EN": "Transportation, roads"
+    },
+    "Kategorizálatlan": {
+        "HU": "Kategorizálatlan",
+        "EN": "Uncategorized"
+    },
+    "Oktatás, továbbképzés": {
+        "HU": "Oktatás, továbbképzés",
+        "EN": "Schooling, education"
+    },
+    "Ivóvíz, szennyvíz, csatornázás": {
+        "HU": "Ivóvíz, szennyvíz, csatornázás",
+        "EN": "Water, sewage"
+    },
+    "Vállalkozásfejlesztés": {
+        "HU": "Vállalkozásfejlesztés",
+        "EN": "Business development"
+    },
+    "Szociális támogatások": {
+        "HU": "Szociális támogatások",
+        "EN": "Social aids"
+    },
+    "Turizmus és vidékfejlesztés": {
+        "HU": "Turizmus és vidékfejlesztés",
+        "EN": "Tourism, country development"
+    },
+    "Egészségügy": {
+        "HU": "Egészségügy",
+        "EN": "Healthcare"
+    },
+    "Tudomány, kutatás": {
+        "HU": "Tudomány, kutatás",
+        "EN": "Science, research"
+    },
+    "Ár- és belvízvédelem": {
+        "HU": "Ár- és belvízvédelem",
+        "EN": "Flood protection",
+    },
+    "Önkormányzati fejlesztések": {
+        "HU": "Önkormányzati fejlesztések",
+        "EN": "Government, administration"
+    },
+    "Környezetvédelem": {
+        "HU": "Környezetvédelem",
+        "EN": "Environmental protection"
+    },
+    "Energetikai fejlesztések": {
+        "HU": "Energetikai fejlesztések",
+        "EN": "Energy management"
+    },
+    "Ipar": {
+        "HU": "Ipar",
+        "EN": "Industrial development"
+    },
+    "Egyéb infrastruktúra fejlesztése": {
+        "HU": "Egyéb infrastruktúra fejlesztése",
+        "EN": "Other infrastructural development"
+    },
+    "Munkahelyteremtés, foglalkoztatás": {
+        "HU": "Munkahelyteremtés, foglalkoztatás",
+        "EN": "Job creation, employment"
+    },
+    "Kultúra": {
+        "HU": "Kultúra",
+        "EN": "Culture"
+    },
+    "Mezőgazdasági fejlesztések": {
+        "HU": "Mezőgazdasági fejlesztések",
+        "EN": "Agricultural development"
+    },
+    "Summa": {
+        "HU": "",
+        "EN": ""
+    },
+    "areaCapita": {
+        "HU": "Népesség",
+        "EN": "Population"
+    },
+    "areaHealth": {
+        "HU": "Háziorvosi ellátásban megjelentek és meglátogatottak száma",
+        "EN": "Number of cases provided with health attendence by GP's"
+    },
+    "case": {
+        "HU": "eset",
+        "EN": "case"
+    },
+    "caseCAP": {
+        "HU": "eset / lakos",
+        "EN": "case / capita"
+    },
+    "areaEnergy": {
+        "HU": "Háztartások részére szolgáltatott gáz mennyisége",
+        "EN": "Residential gas consumption"
+    },
+    "energMetric": {
+        "HU": "ezer m<sup class='sup_header'>3</sup>",
+        "EN": "thousand m<sup class='sup_header'>3</sup>"
+    },
+    "energMetricCAP": {
+        "HU": "ezer m<sup class='sup_header'>3</sup> / lakos",
+        "EN": "thousand m<sup class='sup_header'>3</sup> / capita"
+    },
+    "areaWork": {
+        "HU": "Regisztrált munkanélküliek száma összesen",
+        "EN": "Number of officially unemployed"
+    },
+    "workMetric": {
+        "HU": "fő / lakos",
+        "EN": "people / capita"
+    },
+    "areaRoad": {
+        "HU": "Kiépített út és köztér hossza",
+        "EN": "Length of paved road"
+    },
+    "roadMetric": {
+        "HU": "km",
+        "EN": "km"
+    },
+    "roadMetricCAP": {
+        "HU": "km / lakos",
+        "EN": "km / capita"
+    },
+    "areaEnvironment": {
+        "HU": "Szelektív hulladékgyűjtésben elszállított lak. szilárd hulladék",
+        "EN": "Residential selective waste collected"
+    },
+    "areaBusiness": {
+        "HU": "Regisztrált gazdasági szervezetek száma",
+        "EN": "Number of registered companies"
+    },
+    "businessMetric": {
+        "HU": "db",
+        "EN": "nr."
+    },
+    "businessMetricCAP": {
+        "HU": "db / lakos",
+        "EN": "nr. / capita"
+    },
+    "areaAid": {
+        "HU": "Átmeneti segélyre felhasznált összeg",
+        "EN": "Emergency aid paid"
+    },
+    "areaCulture": {
+        "HU": "Kulturális rendezvényeken résztvevők száma",
+        "EN": "Number of people attending cultural events"
+    },
+    "aidMetric": {
+        "HU": "millió Ft",
+        "EN": "€",
+    },
+    "aidMetricCAP": {
+        "HU": "millió Ft / lakos",
+        "EN": "€ / capita",
+    },
+    "moneyMetric": {
+        "HU": "millió Ft",
+        "EN": "million Ft"
+    },
+    "moneyMetricCAP": {
+        "HU": "millió Ft / lakos",
+        "EN": "million Ft / resident"
+    },
+    "areaTourism": {
+        "HU": "Vendégéjszakák száma a kereskedelmi szálláshelyeken",
+        "EN": "Number of nights registered in commercial tourism"
+    },
+    "areaSchooling": {
+        "HU": "Általános iskolában tanulók száma",
+        "EN": "Number of children in elementary schooling"
+    },
+    "areaWater": {
+        "HU": "Szolgáltatott víz mennyisége",
+        "EN": "Residential water consumption"
+    },
+    "areaGov": {
+        "HU": "Önkormányzat rendelkezésére álló források",
+        "EN": "Capital resources available for the council"
+    },
+    "areaAgri": {
+        "HU": "Regisztrált őstermelők száma",
+        "EN": "Number of registered primary producers"
+    },
+    "legendCounty": {
+        "HU": "Megyei<br>statisztika",
+        "EN": "County<br>statistics"
+    },
+    "legendCountry": {
+        "HU": "Országos<br>statisztika",
+        "EN": "National<br>statistics"
+    },
+    "legendCity": {
+        "HU": "statisztikája",
+        "EN": "statistics"
+    },
+    "source": {
+        "HU": "Forrás",
+        "EN": "Source"
+    },
+    "tutorialOne": {
+        "HU": "<div class='numbers'>1.</div>Válassz mérőszámot!",
+        "EN": "<div class='numbers'>1.</div>Choose a metric!"
+    },
+    "tutorialTwo": {
+        "HU": "<div class='numbers'>2.</div>Keress ki egy települést!",
+        "EN": "<div class='numbers'>2.</div>Look up a municipality!"
+    },
+    "tutorialThree": {
+        "HU": "<div class='numbers'>3.</div>Az egyes kategóriákra szűréshez kattints a <span class='trial'>kördiagram</span> elemeire!",
+        "EN": "<div class='numbers'>3.</div>For filtering, click on the slices of the piechart!"
+    },
+    "tutorialFour": {
+        "HU": "<div class='numbers'>4.</div>A település megyei vagy országos sorrendjét és a nyertes pályázatok részleteit erre keresd!",
+        "EN": "<div class='numbers'>4.</div>Click here for the national and county-ranking of the municipality, or the tenders won by it!"
+    },
+    "rankingMetric": {
+        "HU": "millió Ft / év",
+        "EN": "€ / year"
+    },
+    "rankingMetricCAP": {
+        "HU": "millió Ft / fő / év",
+        "EN": "€ / capita / year"
+    },
+    "rankingMetricPER": {
+        "HU": "országos átlaghoz mérve, 2007-2015, %",
+        "EN": "compared to national avg., 2007-2015, %"
+    },
+    "rankingSuffix": {
+        "HU": "szerint vett sorrend",
+        "EN": "Ranking according to"
+    },
+    "rankingAll": {
+        "HU": "Összes támogatás",
+        "EN": "All subsidies"
+    }
+};
+
+var EURHUF = 312;
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+if (getUrlParameter('lan')) {
+    var viewToSelect = getUrlParameter('lan');
+    if (viewToSelect === "en") {
+        language = "EN";
+        $("#language").text("HU");
+        $('.main_search').attr('placeholder', localization["searchPlaceholder"]["EN"]);
+        $(".help_icon_container.help_county").addClass("english");
+        $(".help_icon_container.help_country").addClass("english");
+        var defaultURL = $('.defaultURL').attr('href') + "?lan=en";
+        $('.defaultURL').attr('href', defaultURL);
+    }
+    else {
+        language = "HU";
+        $("#language").text("EN");
+        $('.main_search').attr('placeholder', localization["searchPlaceholder"]["HU"]);
+        $(".help_icon_container.help_county").removeClass("english");
+        $(".help_icon_container.help_country").removeClass("english");
+        var defaultURL = $('.defaultURL').attr('href') + "?lan=hu";
+        $('.defaultURL').attr('href', defaultURL);
+    }
+    $('.chartheader.pie').text(localization["pieHeader"][language]);
+    $('.areaheader').html(localization["areaCapita"][language]+ " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
+    $('.left_button').html(localization["listTenders"][language]);
+    $('.left_button.back').html(localization["backToDetails"][language]);
+    $('.city_population_header').html(localization["population"][language]);
+    $('.city_area_header').html(localization["area"][language]);
+    $('.city_density_header').html(localization["density"][language]);
+    $('.city_county_pos_header').html(localization["countyRank"][language]);
+    $('.city_country_pos_header').html(localization["countryRank"][language]);
+    $('.source_trans').html(localization["source"][language]);
+    $('.country.legend_text').html(localization["legendCountry"][language]);
+    $('.county.legend_text').html(localization["legendCounty"][language]);
+    $('.header_svg_container').attr('data-intro', localization["tutorialOne"][language]);
+    $('.search_tutorial').attr('data-intro', localization["tutorialTwo"][language]);
+    $('#piechart_tutorial').attr('data-intro', localization["tutorialThree"][language]);
+    $('#pos_container').attr('data-intro', localization["tutorialFour"][language]);
+
+
+
+
+}
+else {
+    language = "HU";
+    $("#language").text("EN");
+}
+
 var loader = '<div class="spinner"></div>';
 
 var searching = false;
@@ -137,7 +567,9 @@ var hufFormat = d3.locale({
     "shortMonths": ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Sze", "Okt", "Nov", "Dec"]
 });
 
-d3.format = hufFormat.numberFormat;
+if (language === "HU") {
+    d3.format = hufFormat.numberFormat;
+}
 
 function ConvertToCSV(objArray) {
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
@@ -243,13 +675,18 @@ function openDetailedLayer () {
 
             $(".county_svg").attr("class", "county_svg");
             if (cityToFind != "Budapest") {
-                $(".city_name").html(cityToFind + " | <span class='thin'>" + county + " megye</span>");
+                $(".city_name").html(cityToFind + " | <span class='thin'>" + county +" "+localization["county"][language]+"</span>");
             }
             else {
                 $(".city_name").html(cityToFind);
             }
             $(".city_area").html(area.toString() + " km<sup class='sup_header_small'>2</sup>");
-            $(".city_density").html(parseInt((parseInt(population.slice(-1)[0]['value'])).toFixed(2) / area).format(0, 3, ' ').toString() + " fő / km<sup class='sup_header_small'>2</sup>");
+            if (language === "HU") {
+                $(".city_density").html(parseInt((parseInt(population.slice(-1)[0]['value'])).toFixed(2) / area).format(0, 3, ' ').toString() + " " + localization["densityMetric"][language]);
+            }
+            else if (language === "EN") {
+                $(".city_density").html(parseInt((parseInt(population.slice(-1)[0]['value'])).toFixed(2) / area).format(0, 3, ',').toString() + " " + localization["densityMetric"][language]);
+            }
             if ('Summa' in ranking_country) {
                 if (metric === "DONATION") {
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][0])));
@@ -366,7 +803,12 @@ function openDetailedLayer () {
                 .attr("id","city_added");
 
             renderAreaChart(JSON.parse(JSON.stringify(population)), "#FFFFFF");
-            $('.city_population').html(parseInt(population.slice(-1)[0]['value']).format(0, 3, ' ').toString() + " fő")
+            if (language === "HU") {
+                $('.city_population').html(parseInt(population.slice(-1)[0]['value']).format(0, 3, ' ').toString() + " " + localization["capita"][language]);
+            }
+            else if (language === "EN") {
+                $('.city_population').html(parseInt(population.slice(-1)[0]['value']).format(0, 3, ',').toString() + " " + localization["capita"][language]);
+            }
             $('.sk-cube-grid').hide();
             $('#close_overlay').show();
             $('.left_container').show();
@@ -616,15 +1058,27 @@ function renderPie (dataToRender) {
                     if (metric === "DONATION") {
                         $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][0])));
                         $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][1])));
-                        var value = parseFloat($(this).attr('data-value'))/9;
-                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " millió Ft");
+                        if (language == "HU") {
+                            var value = parseFloat($(this).attr('data-value'))/9;
+                            $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " " + localization["aidMetric"][language]);
+                        }
+                        else if (language == "EN") {
+                            var value = parseFloat(($(this).attr('data-value')*1000000)/EURHUF)/9;
+                            $('.info_ammount.original_info').text(localization["aidMetric"][language] + (value.format(0, 3, ",")).toString());
+                        }
                     }
                     else if (metric === "CAPITA") {
                         $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][3])));
                         $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][2])));
-                        var value = ((parseFloat($(this).attr('data-value'))*1000000)/9)/population.slice(-1)[0]['value'];
                         //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
-                        $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " Ft");
+                        if (language === "HU") {
+                            var value = ((parseFloat($(this).attr('data-value'))*1000000)/9)/population.slice(-1)[0]['value'];
+                            $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " " + localization["currency"][language]);
+                        }
+                        else if (language === "EN") {
+                            var value = (((parseFloat($(this).attr('data-value'))*1000000)/9)/EURHUF)/population.slice(-1)[0]['value'];
+                            $('.info_ammount.original_info').text(localization["currency"][language] + (value.format(0, 3, ",")).toString());
+                        }
                     }
                     else if (metric === "DEVIATION_2007") {
                         $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][3])));
@@ -666,10 +1120,21 @@ function renderPie (dataToRender) {
                     $('.source').removeClass('source_capita');
                     detailsResetHighlight ();
                     if (metric === "DONATION") {
-                        $('.info_ammount.original_info').text((detailedSum/9).format(0, 3, " ").toString() + " millió Ft");
+                        if (language === "HU") {
+                            $('.info_ammount.original_info').text((detailedSum/9).format(0, 3, " ").toString() +  " " + localization["aidMetric"][language]);
+                        }
+                        else if (language === "EN") {
+                            $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/9)*1000000)/EURHUF).format(0, 3, ",").toString());
+                        }
                     }
                     else if (metric === "CAPITA") {
-                        $('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                        if (language === "HU") {
+                            $('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " " + localization["currency"][language]);
+                        }
+                        else if (language === "EN") {
+                            $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/9)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+
+                        }
                     }
                     else if (metric === "DEVIATION_2007") {
                         var value = parseInt(deviation_sum['Summa']["2007"])
@@ -754,7 +1219,15 @@ function renderPie (dataToRender) {
             .attr("data-perc", function(d) {return (d.value / tots); })
             .attr("data-visibility", function(d) {return visibilityChoose(d.value / tots); })
             .text(function(d) {
-                return d.data.label;
+                if (localization[d.data.label]) {
+                    var textLoc = localization[d.data.label][language];
+                    return textLoc;
+                }
+                else {
+                    console.log(d.data.label);
+                    return d.data.label;
+                }
+                //return localization['"'+d.data.label+'"'][language];
             })
             .style('opacity', function(d) {return opacityChoose(d.value / tots, "1"); });
 
@@ -1275,18 +1748,36 @@ function renderRankChart (data) {
     $(".chart_wrapper").empty();
     $(".table_wrapper").empty();
     if (metric === "DONATION") {
-        data.forEach(function(d) {
-            //d.value = +d.capita*1000000/9;
-            d.value = +d.value/9;
-            d.name = d.name;
-        });
+        if (language === "HU") {
+            data.forEach(function(d) {
+                //d.value = +d.capita*1000000/9;
+                d.value = +d.value/9;
+                d.name = d.name;
+            });
+        }
+        else if (language === "EN") {
+            data.forEach(function(d) {
+                //d.value = +d.capita*1000000/9;
+                d.value = +((d.value/9)*1000000)/EURHUF;
+                d.name = d.name;
+            });
+        }
     }
     else if (metric === "CAPITA") {
-        data.forEach(function(d) {
-            //d.value = +d.capita*1000000/9;
-            d.value = +d.capita/9;
-            d.name = d.name;
-        });
+        if (language === "HU") {
+            data.forEach(function(d) {
+                //d.value = +d.capita*1000000/9;
+                d.value = +d.capita/9;
+                d.name = d.name;
+            });
+        }
+        else if (language === "EN") {
+            data.forEach(function(d) {
+                //d.value = +d.capita*1000000/9;
+                d.value = +(d.capita/9)/EURHUF;
+                d.name = d.name;
+            });
+        }
     }
     else {
         data.forEach(function(d) {
@@ -1365,10 +1856,20 @@ function renderRankChart (data) {
         .style("fill", '#FFFFFF')
         .text(function(d) {
             if (metric === "DONATION") {
-                return format(d.value) + " millió Ft";
+                if (language === "HU") {
+                    return format(d.value) +  " " + localization["aidMetric"][language];
+                }
+                else if (language === "EN") {
+                    return localization["aidMetric"][language] + format(d.value);
+                }
             }
             else if (metric === "CAPITA") {
-                return format(d.value) + " Ft";
+                if (language === "HU") {
+                    return format(d.value) + " " + localization["currency"][language];
+                }
+                else if (language === "EN") {
+                    return localization["currency"][language] + format(d.value);
+                }
             }
             else {
                 return format(d.value) + " %";
@@ -1410,13 +1911,14 @@ function detailsHighlight () {
         $(this).css('opacity', '1');
     });
 
-    $('.city_legend').html(cityToFind + "<br>statisztikája");
+    $('.city_legend').html(cityToFind + "<br>"+localization["legendCity"][language]);
 
     if (metricPie === "Közlekedés, úthálózat") {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(road)), colorArea);
-            $('.areaheader').html("Kiépített út és köztér hossza (<span id='areametric'>km</span>)");
+            $('.areaheader').html(localization["areaRoad"][language] + " (<span id='areametric'>"+localization["roadMetric"][language]+"</span>)");
+            //$('.areaheader').html("Kiépített út és köztér hossza (<span id='areametric'>km</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1424,7 +1926,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(road)), JSON.parse(JSON.stringify(road_country)), JSON.parse(JSON.stringify(road_county)), colorArea);
-            $('.areaheader').html("Kiépített út és köztér hossza (<span id='areametric'>km / lakos</span>)");
+            $('.areaheader').html(localization["areaRoad"][language] + " (<span id='areametric'>"+localization["roadMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1433,7 +1935,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(road)), JSON.parse(JSON.stringify(road_country)), JSON.parse(JSON.stringify(road_county)), colorArea);
-            $('.areaheader').html("Kiépített út és köztér hossza (<span id='areametric'>km / lakos</span>)");
+            $('.areaheader').html(localization["areaRoad"][language] + " (<span id='areametric'>"+localization["roadMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1445,7 +1947,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(tourism)), colorArea);
-            $('.areaheader').html("Vendégéjszakák száma a kereskedelmi szálláshelyeken (<span id='areametric'>db</span>)");
+            $('.areaheader').html(localization["areaTourism"][language] + " (<span id='areametric'>"+localization["businessMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1453,7 +1955,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(tourism)), JSON.parse(JSON.stringify(tourism_country)), JSON.parse(JSON.stringify(tourism_county)), colorArea);
-            $('.areaheader').html("Vendégéjszakák száma a kereskedelmi szálláshelyeken (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaTourism"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1462,7 +1964,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(tourism)), JSON.parse(JSON.stringify(tourism_country)), JSON.parse(JSON.stringify(tourism_county)), colorArea);
-            $('.areaheader').html("Vendégéjszakák száma a kereskedelmi szálláshelyeken (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaTourism"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1474,7 +1976,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(unemployment)), colorArea);
-            $('.areaheader').html("Regisztrált munkanélküliek száma összesen (<span id='areametric'>fő</span>)");
+            $('.areaheader').html(localization["areaWork"][language] + " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1482,7 +1984,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(unemployment)), JSON.parse(JSON.stringify(unemployment_country)), JSON.parse(JSON.stringify(unemployment_county)), colorArea);
-            $('.areaheader').html("Regisztrált munkanélküliek száma összesen (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaWork"][language] + " (<span id='areametric'>"+localization["workMetric"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1491,7 +1993,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(unemployment)), JSON.parse(JSON.stringify(unemployment_country)), JSON.parse(JSON.stringify(unemployment_county)), colorArea);
-            $('.areaheader').html("Regisztrált munkanélküliek száma összesen (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaWork"][language] + " (<span id='areametric'>"+localization["workMetric"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1503,7 +2005,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(health)), colorArea);
-            $('.areaheader').html("Háziorvosi ellátásban megjelentek és meglátogatottak száma (<span id='areametric'>eset</span>)");
+            $('.areaheader').html(localization["areaHealth"][language] + " (<span id='areametric'>"+localization["case"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1511,7 +2013,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(health)), JSON.parse(JSON.stringify(health_country)), JSON.parse(JSON.stringify(health_county)), colorArea);
-            $('.areaheader').html("Háziorvosi ellátásban megjelentek és meglátogatottak száma (<span id='areametric'>eset / lakos</span>)");
+            $('.areaheader').html(localization["areaHealth"][language] + " (<span id='areametric'>"+localization["caseCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1520,7 +2022,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(health)), JSON.parse(JSON.stringify(health_country)), JSON.parse(JSON.stringify(health_county)), colorArea);
-            $('.areaheader').html("Háziorvosi ellátásban megjelentek és meglátogatottak száma (<span id='areametric'>eset / lakos</span>)");
+            $('.areaheader').html(localization["areaHealth"][language] + " (<span id='areametric'>"+localization["caseCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1532,7 +2034,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(government)), colorArea);
-            $('.areaheader').html("Önkormányzat rendelkezésére álló források (<span id='areametric'>millió Ft</span>)");
+            $('.areaheader').html(localization["areaGov"][language] + " (<span id='areametric'>"+localization["moneyMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1540,7 +2042,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(government)), JSON.parse(JSON.stringify(government_country)), JSON.parse(JSON.stringify(government_county)), colorArea);
-            $('.areaheader').html("Önkormányzat rendelkezésére álló források (<span id='areametric'>millió Ft / lakos</span>)");
+            $('.areaheader').html(localization["areaGov"][language] + " (<span id='areametric'>"+localization["moneyMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1549,7 +2051,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(government)), JSON.parse(JSON.stringify(government_country)), JSON.parse(JSON.stringify(government_county)), colorArea);
-            $('.areaheader').html("Önkormányzat rendelkezésére álló források (<span id='areametric'>millió Ft / lakos</span>)");
+            $('.areaheader').html(localization["areaGov"][language] + " (<span id='areametric'>"+localization["moneyMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1561,7 +2063,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(water)), colorArea);
-            $('.areaheader').html("Szolgáltatott víz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup></span>)");
+            $('.areaheader').html(localization["areaWater"][language] + " (<span id='areametric'>"+localization["energMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1569,7 +2071,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(water)), JSON.parse(JSON.stringify(water_country)), JSON.parse(JSON.stringify(water_county)), colorArea);
-            $('.areaheader').html("Szolgáltatott víz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaWater"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1578,7 +2080,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(water)), JSON.parse(JSON.stringify(water_country)), JSON.parse(JSON.stringify(water_county)), colorArea);
-            $('.areaheader').html("Szolgáltatott víz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaWater"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1590,7 +2092,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(culture)), colorArea);
-            $('.areaheader').html("Kulturális rendezvényeken résztvevők száma (<span id='areametric'>fő</span>)");
+            $('.areaheader').html(localization["areaCulture"][language] + " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1598,7 +2100,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(culture)), JSON.parse(JSON.stringify(culture_country)), JSON.parse(JSON.stringify(culture_county)), colorArea);
-            $('.areaheader').html("Kulturális rendezvényeken résztvevők száma (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaCulture"][language] + " (<span id='areametric'>"+localization["capitaCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1607,7 +2109,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(culture)), JSON.parse(JSON.stringify(culture_country)), JSON.parse(JSON.stringify(culture_county)), colorArea);
-            $('.areaheader').html("Kulturális rendezvényeken résztvevők száma (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaCulture"][language] + " (<span id='areametric'>"+localization["capitaCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1619,7 +2121,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(company)), colorArea);
-            $('.areaheader').html("Regisztrált gazdasági szervezetek száma (<span id='areametric'>db</span>)");
+            $('.areaheader').html(localization["areaBusiness"][language] + " (<span id='areametric'>"+localization["businessMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1627,7 +2129,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(company)), JSON.parse(JSON.stringify(company_country)), JSON.parse(JSON.stringify(company_county)), colorArea);
-            $('.areaheader').html("Regisztrált gazdasági szervezetek száma (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaBusiness"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1636,7 +2138,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(company)), JSON.parse(JSON.stringify(education_country)), JSON.parse(JSON.stringify(education_county)), colorArea);
-            $('.areaheader').html("Regisztrált gazdasági szervezetek száma (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaBusiness"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1648,7 +2150,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(aid)), colorArea);
-            $('.areaheader').html("Átmeneti segélyre felhasznált összeg (<span id='areametric'>millió Ft</span>)");
+            $('.areaheader').html(localization["areaAid"][language] + " (<span id='areametric'>"+localization["moneyMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1656,7 +2158,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(aid)), JSON.parse(JSON.stringify(aid_country)), JSON.parse(JSON.stringify(aid_county)), colorArea);
-            $('.areaheader').html("Átmeneti segélyre felhasznált összeg (<span id='areametric'>millió Ft / lakos</span>)");
+            $('.areaheader').html(localization["areaAid"][language] + " (<span id='areametric'>"+localization["moneyMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1665,7 +2167,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(aid)), JSON.parse(JSON.stringify(aid_country)), JSON.parse(JSON.stringify(aid_county)), colorArea);
-            $('.areaheader').html("Átmeneti segélyre felhasznált összeg (<span id='areametric'>millió Ft / lakos</span>)");
+            $('.areaheader').html(localization["areaAid"][language] + " (<span id='areametric'>"+localization["moneyMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1677,7 +2179,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(gas)), colorArea);
-            $('.areaheader').html("Háztartások részére szolgáltatott gáz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup></span>)");
+            $('.areaheader').html(localization["areaEnergy"][language] + " (<span id='areametric'>"+localization["energMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1685,7 +2187,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(gas)), JSON.parse(JSON.stringify(gas_country)), JSON.parse(JSON.stringify(gas_county)), colorArea);
-            $('.areaheader').html("Háztartások részére szolgáltatott gáz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaEnergy"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1694,7 +2196,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(gas)), JSON.parse(JSON.stringify(gas_country)), JSON.parse(JSON.stringify(gas_county)), colorArea);
-            $('.areaheader').html("Háztartások részére szolgáltatott gáz mennyisége (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaEnergy"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1706,7 +2208,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(education)), colorArea);
-            $('.areaheader').html("Általános iskolában tanulók száma (<span id='areametric'>fő</span>)");
+            $('.areaheader').html(localization["areaSchooling"][language] + " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1714,7 +2216,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(education)), JSON.parse(JSON.stringify(education_country)), JSON.parse(JSON.stringify(education_county)), colorArea);
-            $('.areaheader').html("Általános iskolában tanulók száma (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaSchooling"][language] + " (<span id='areametric'>"+localization["capitaCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1723,7 +2225,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(education)), JSON.parse(JSON.stringify(education_country)), JSON.parse(JSON.stringify(education_county)), colorArea);
-            $('.areaheader').html("Általános iskolában tanulók száma (<span id='areametric'>fő / lakos</span>)");
+            $('.areaheader').html(localization["areaSchooling"][language] + " (<span id='areametric'>"+localization["capitaCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1735,7 +2237,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(enviroment)), colorArea);
-            $('.areaheader').html("Szelektív hulladékgyűjtésben elszállított lak. szilárd hulladék (<span id='areametric'>ezer m<sup class='sup_header'>3</sup></span>)");
+            $('.areaheader').html(localization["areaEnvironment"][language] + " (<span id='areametric'>"+localization["energMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1743,7 +2245,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(enviroment)), JSON.parse(JSON.stringify(enviroment_country)), JSON.parse(JSON.stringify(enviroment_county)), colorArea);
-            $('.areaheader').html("Szelektív hulladékgyűjtésben elszállított lak. szilárd hulladék (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaEnvironment"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1752,7 +2254,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(enviroment)), JSON.parse(JSON.stringify(enviroment_country)), JSON.parse(JSON.stringify(enviroment_county)), colorArea);
-            $('.areaheader').html("Szelektív hulladékgyűjtésben elszállított lak. szilárd hulladék (<span id='areametric'>ezer m<sup class='sup_header'>3</sup> / lakos</span>)");
+            $('.areaheader').html(localization["areaEnvironment"][language] + " (<span id='areametric'>"+localization["energMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1764,7 +2266,7 @@ function detailsHighlight () {
         defaultChart = "custom";
         if (metric === "DONATION") {
             renderAreaChart(JSON.parse(JSON.stringify(agriculture)), colorArea);
-            $('.areaheader').html("Regisztrált őstermelők száma (<span id='areametric'>db</span>)");
+            $('.areaheader').html(localization["areaAgri"][language] + " (<span id='areametric'>"+localization["businessMetric"][language]+"</span>)");
             $('#area_legend').hide();
             $('.source').removeClass('source_capita');
             $('.playchart_1').remove();
@@ -1772,7 +2274,7 @@ function detailsHighlight () {
         }
         else if (metric === "CAPITA") {
             renderAreaChartCapita(JSON.parse(JSON.stringify(agriculture)), JSON.parse(JSON.stringify(agriculture_country)), JSON.parse(JSON.stringify(agriculture_county)), colorArea);
-            $('.areaheader').html("Regisztrált őstermelők száma (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaAgri"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1781,7 +2283,7 @@ function detailsHighlight () {
         }
         else {
             renderAreaChartCapita(JSON.parse(JSON.stringify(agriculture)), JSON.parse(JSON.stringify(agriculture_country)), JSON.parse(JSON.stringify(agriculture_county)), colorArea);
-            $('.areaheader').html("Regisztrált őstermelők száma (<span id='areametric'>db / lakos</span>)");
+            $('.areaheader').html(localization["areaAgri"][language] + " (<span id='areametric'>"+localization["businessMetricCAP"][language]+"</span>)");
             $('.city_icon_stripe').css('background-color', colorArea);
             $('#area_legend').show();
             $('.source').addClass('source_capita');
@@ -1803,19 +2305,20 @@ function detailsHighlight () {
             render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
         }
         defaultChart = "default";
-        $('.areaheader').html("Népesség (<span id='areametric'>fő</span>)");
+        $('.areaheader').html(localization["areaCapita"][language]+ "(<span id='areametric'>"+localization["capita"][language]+"</span>)");
         $('#area_legend').hide();
         $('.source').removeClass('source_capita');
     }
     //$('.info_ammount.original_info').css('color', colorArea);
 
     $('.info_category').css('background-color', colorArea);
-    $('.info_category').text(metricPie);
-    if (metricPie.length >= 29) {
-        $('.info_category').text(metricPie.substring(0, 26) + "...");
+    var miniCategory = localization[metricPie][language];
+    $('.info_category').text(miniCategory);
+    if (miniCategory.length >= 29) {
+        $('.info_category').text(miniCategory.substring(0, 26) + "...");
     }
     else {
-        $('.info_category').text(metricPie);
+        $('.info_category').text(miniCategory);
     }
     $('.info_category').show();
 }
@@ -1858,7 +2361,7 @@ function detailsResetHighlight() {
         renderAreaChart(JSON.parse(JSON.stringify(population)), "FFFFFF");
     }
     defaultChart = "default";
-    $('.areaheader').html("Népesség (<span id='areametric'>fő</span>)");
+    $('.areaheader').html(localization["areaCapita"][language]+ " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
     overlayState = "plain";
     hoverState = "off";
     //$('.info_ammount.original_info').css('color', '#91BED4');
@@ -1874,9 +2377,24 @@ function render_chart(songId, inputData) {
     var responsiveHeight = $('#playchart').height();
     var responsivewidth = $('#playchart').width();
 
-    var margin = {top: 22, right: 25, bottom: 22, left: 65},
-        width = responsivewidth - margin.left - margin.right,
-        height = (responsiveHeight-110) - margin.top - margin.bottom;
+    if (language === "HU") {
+
+        var margin = {top: 22, right: 25, bottom: 22, left: 65},
+            width = responsivewidth - margin.left - margin.right,
+            height = (responsiveHeight-110) - margin.top - margin.bottom;
+    }
+    else if (language === "EN") {
+        if (metric === "DONATION") {
+            var margin = {top: 22, right: 25, bottom: 22, left: 90},
+                width = responsivewidth - margin.left - margin.right,
+                height = (responsiveHeight-110) - margin.top - margin.bottom;
+        }
+        else if (metric === "CAPITA") {
+            var margin = {top: 22, right: 25, bottom: 22, left: 65},
+                width = responsivewidth - margin.left - margin.right,
+                height = (responsiveHeight-110) - margin.top - margin.bottom;
+        }
+    }
 
     var parseDate = d3.time.format("%Y").parse
     var parseDate2 = d3.time.format("%Y").parse
@@ -1906,7 +2424,73 @@ function render_chart(songId, inputData) {
 
     if ($('#detailed_overlay').is(':visible')) {
 
-        if (metric === "DONATION") {
+        if (language === "HU") {
+            if (metric === "DONATION") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = d.EU,
+                    d.KTIA = d.KT,
+                    delete d.KT,
+                    d.szechenyi = d.SZ,
+                    delete d.SZ,
+                    d.ujszechenyi = d.US,
+                    delete d.US,
+                    d.nemzeti = d.NE,
+                    delete d.NE
+                });
+            }
+            else if (metric === "CAPITA") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = ((parseInt(d.EU)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
+                    d.KTIA = ((parseInt(d.KT)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.KT,
+                    d.szechenyi = ((parseInt(d.SZ)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.SZ,
+                    d.ujszechenyi = ((parseInt(d.US)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.US,
+                    d.nemzeti = ((parseInt(d.NE)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.NE
+                });
+            }
+        }
+        else if (language === "EN") {
+            if (metric === "DONATION") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = (parseInt(d.EU)*1000000)/EURHUF,
+                    d.KTIA = (parseInt(d.KT)*1000000)/EURHUF,
+                    delete d.KT,
+                    d.szechenyi = (parseInt(d.SZ)*1000000)/EURHUF,
+                    delete d.SZ,
+                    d.ujszechenyi = (parseInt(d.US)*1000000)/EURHUF,
+                    delete d.US,
+                    d.nemzeti = (parseInt(d.NE)*1000000)/EURHUF,
+                    delete d.NE
+                });
+            }
+            else if (metric === "CAPITA") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = (((parseInt(d.EU)*1000000)/EURHUF) / population.slice(-1)[0]['value']).toFixed(2),
+                    d.KTIA = (((parseInt(d.KT)*1000000)/EURHUF) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.KT,
+                    d.szechenyi = (((parseInt(d.SZ)*1000000)/EURHUF) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.SZ,
+                    d.ujszechenyi = (((parseInt(d.US)*1000000)/EURHUF) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.US,
+                    d.nemzeti = (((parseInt(d.NE)*1000000)/EURHUF) / population.slice(-1)[0]['value']).toFixed(2),
+                    delete d.NE
+                });
+            }
+        }
+    }
+    else {
+        if (language === "HU") {
             data.forEach(function(d) {
                 d.TrDate = formatDate2(parseDate(d.DA)),
                 delete d.DA,
@@ -1921,36 +2505,39 @@ function render_chart(songId, inputData) {
                 delete d.NE
             });
         }
-        else if (metric === "CAPITA") {
-            data.forEach(function(d) {
-                d.TrDate = formatDate2(parseDate(d.DA)),
-                delete d.DA,
-                d.EU = ((parseInt(d.EU)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
-                d.KTIA = ((parseInt(d.KT)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
-                delete d.KT,
-                d.szechenyi = ((parseInt(d.SZ)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
-                delete d.SZ,
-                d.ujszechenyi = ((parseInt(d.US)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
-                delete d.US,
-                d.nemzeti = ((parseInt(d.NE)*1000000) / population.slice(-1)[0]['value']).toFixed(2),
-                delete d.NE
-            });
+        else if (language === "EN") {
+            if (metric === "DONATION") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = (parseInt(d.EU)*1000000)/EURHUF,
+                    d.KTIA = (parseInt(d.KT)*1000000)/EURHUF,
+                    delete d.KT,
+                    d.szechenyi = (parseInt(d.SZ)*1000000)/EURHUF,
+                    delete d.SZ,
+                    d.ujszechenyi = (parseInt(d.US)*1000000)/EURHUF,
+                    delete d.US,
+                    d.nemzeti = (parseInt(d.NE)*1000000)/EURHUF,
+                    delete d.NE
+                });
+
+            }
+            else if (metric === "CAPITA") {
+                data.forEach(function(d) {
+                    d.TrDate = formatDate2(parseDate(d.DA)),
+                    delete d.DA,
+                    d.EU = parseInt(d.EU)/EURHUF,
+                    d.KTIA = parseInt(d.KT)/EURHUF,
+                    delete d.KT,
+                    d.szechenyi = parseInt(d.SZ)/EURHUF,
+                    delete d.SZ,
+                    d.ujszechenyi = parseInt(d.US)/EURHUF,
+                    delete d.US,
+                    d.nemzeti = parseInt(d.NE)/EURHUF,
+                    delete d.NE
+                });
+            }
         }
-    }
-    else {
-        data.forEach(function(d) {
-            d.TrDate = formatDate2(parseDate(d.DA)),
-            delete d.DA,
-            d.EU = d.EU,
-            d.KTIA = d.KT,
-            delete d.KT,
-            d.szechenyi = d.SZ,
-            delete d.SZ,
-            d.ujszechenyi = d.US,
-            delete d.US,
-            d.nemzeti = d.NE,
-            delete d.NE
-        });
     }
 
     color.domain(d3.keys(data[0]).filter(function(key) { return key !== "TrDate"; }));
@@ -2764,7 +3351,7 @@ function zoomToFeature(e) {
 
         if (layer.properties && layer.properties.TEL_NEV) {
             //var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='//adat.atlatszo.hu/eu-kereso/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
-            var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>részletek</div>"+"</div>");
+            var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
         }
         pop = layer.bindPopup(popupContent);
         pop.openPopup();
@@ -2794,7 +3381,7 @@ function onEachFeature(feature, layer) {
 
         if (feature.properties && feature.properties.TEL_NEV) {
             //var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='//adat.atlatszo.hu/eu-kereso/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
-            var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>részletek</div>"+"</div>");
+            var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
             layer.bindPopup(content);
         }
     }
@@ -2843,28 +3430,67 @@ info.update = function (props) {
 
     if (metric === "DONATION") {
         if (props) {
-            this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4 class="original_info">Átlagos EU támogatás (millió Ft / év)</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div></div>' +
-                                  '<b>' + '<h4 class="hidden_info" >Összes EU támogatás (millió Ft / év)</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + (props[metric]/9).format(0, 3, ' ') + ' millió Ft</div></div>';
+            if (adminUnit === "megye") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["county"][language];
+            }
+            else if (adminUnit === "kisterseg") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["region"][language];
+            }
+            else {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (props["TEL_NEV"] === "Budapest") {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (language === "HU") {
+                this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>' +
+                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + (props[metric]/9).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>';
+            }
+            else if (language === "EN") {
+                this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["aidMetric"][language] + (((props[metric]/9)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>' +
+                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + localization["aidMetric"][language] + (((props[metric]/9)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>';
+
+            }
         }
         else {
 
             if ($('.chart:hover').length === 0) {
-                this._div.innerHTML = 'Átlagos évenkénti EU támogatás 2007-2015.';
+                this._div.innerHTML = localization["cashIconDefault"][language];
             }
         }
     }
     else if (metric === "CAPITA") {
 
         if (props) {
-            this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4 class="original_info">Egy főre jutó EU támogatás (Ft / fő / év)</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div></div>';
-                                  '<b>' + '<h4 class="hidden_info">Egy főre jutó EU támogatás (Ft / fő / év)</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + (props[metric]/9).format(0, 3, ' ') + ' Ft</div></div>';
+            if (adminUnit === "megye") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["county"][language];
+            }
+            else if (adminUnit === "kisterseg") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["region"][language];
+            }
+            else {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (props["TEL_NEV"] === "Budapest") {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (language === "HU") {
+                this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/9).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
+                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + (props[metric]/9).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
+            }
+            else if (language === "EN") {
+                this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["currency"][language] + ((props[metric]/9)/EURHUF).format(0, 3, ',') +'</div></div>';
+                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + localization["currency"][language] + ((props[metric]/9)/EURHUF).format(0, 3, ',') +'</div></div>';
+            }
         }
         else {
 
             if ($('.chart:hover').length === 0) {
-                this._div.innerHTML = 'Egy főre jutó évi EU támogatás 2007-2015.';
+                this._div.innerHTML = localization["humanIconDefault"][language];
             }
         }
     }
@@ -2873,42 +3499,78 @@ info.update = function (props) {
         //console.log(props);
 
         if (props) {
-            this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
-                                  '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
+            if (adminUnit === "megye") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["county"][language];
+            }
+            else if (adminUnit === "kisterseg") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["region"][language];
+            }
+            else {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (props["TEL_NEV"] === "Budapest") {
+                var nameSpace = props["TEL_NEV"];
+            }
+            this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                  '<b>' + '<h4 class="original_info">'+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="hidden_info" >'+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
 
             if ($('.chart:hover').length === 0) {
-                this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                this._div.innerHTML = localization["bankIconDefault"][language];
             }
         }
     }
     else if (metric === "DEVIATION_2010") {
 
         if (props) {
-            this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
-                                  '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
+            if (adminUnit === "megye") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["county"][language];
+            }
+            else if (adminUnit === "kisterseg") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["region"][language];
+            }
+            else {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (props["TEL_NEV"] === "Budapest") {
+                var nameSpace = props["TEL_NEV"];
+            }
+            this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                  '<b>' + '<h4 class="original_info">'+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="hidden_info" '+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
 
             if ($('.chart:hover').length === 0) {
-                this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                this._div.innerHTML = localization["bankIconDefault"][language];
             }
         }
     }
     else if (metric === "DEVIATION_2014") {
 
         if (props) {
-            this._div.innerHTML = '<div class="info_header">'+props["TEL_NEV"]+'</div>' +
-                                  '<b>' + '<h4 class="original_info">Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
-                                  '<b>' + '<h4 class="hidden_info" >Mo. fő / év átlagától való eltérés <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
+            if (adminUnit === "megye") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["county"][language];
+            }
+            else if (adminUnit === "kisterseg") {
+                var nameSpace = props["TEL_NEV"] + " " + localization["region"][language];
+            }
+            else {
+                var nameSpace = props["TEL_NEV"];
+            }
+            if (props["TEL_NEV"] === "Budapest") {
+                var nameSpace = props["TEL_NEV"];
+            }
+            this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
+                                  '<b>' + '<h4 class="original_info">'+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + parseInt(props[metric]) + ' %</div></div>' +
+                                  '<b>' + '<h4 class="hidden_info">'+localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span></h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + parseInt(props[metric]) + ' %</div></div>';
         }
         else {
 
             if ($('.chart:hover').length === 0) {
-                this._div.innerHTML = 'Választási ciklus szerinti EU támogatás';
+                this._div.innerHTML = localization["bankIconDefault"][language];
             }
         }
     }
@@ -2955,10 +3617,19 @@ legend.onAdd = function (map) {
                 grades = [0, 200731, 316724, 339350, 411402, 477280, 590827],
                 labels = [];
 
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " + localization["aidMetric"][language]+'<br>' : "+ " + localization["aidMetric"][language])+'</div></div>';
+                }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/9)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/9)*1000000)/EURHUF).format(0, 3, ',') +'<br>' : "+ ")+'</div></div>';
+                }
             }
             return div;
         }
@@ -2966,11 +3637,19 @@ legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = [0, 387974, 672658, 805802, 883432, 1008979, 1400640],
                 labels = [];
-
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ ' +localization["currency"][language])+'</div></div>';
+                }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+localization["currency"][language] + (((grades[i]/9)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/9)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
+                }
             }
             return div;
         }
@@ -2994,10 +3673,19 @@ legend.onAdd = function (map) {
                 grades = [0, 17620, 24723, 31826, 45328, 155903, 393346],
                 labels = [];
 
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
+                }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/9)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/9)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
+                }
             }
             return div;
         }
@@ -3005,11 +3693,19 @@ legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = [0, 280575, 561674, 730618, 1022784, 1214538, 3991456],
                 labels = [];
-
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " +localization["currency"][language] + '<br>' :'+ '+localization["currency"][language])+'</div></div>';
+                }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+ localization["currency"][language] + (((grades[i]/9)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/9)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
+                }
             }
             return div;
         }
@@ -3032,11 +3728,19 @@ legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = [0, 130, 361, 592, 1828, 3316, 271551],
                 labels = [];
-
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' millió Ft<br>' :'+ millió Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
+                }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/9)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] + (((grades[i + 1]/9)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
+                }
             }
             return div;
         }
@@ -3044,12 +3748,20 @@ legend.onAdd = function (map) {
             var div = L.DomUtil.create('div', 'info legend'),
                 grades = [0, 147594, 280175, 429965, 864218, 1635418, 10738345],
                 labels = [];
-
-            for (var i = 0; i < grades.length; i++) {
-                div.innerHTML +=
-                    '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                    '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + ' Ft<br>' :'+ Ft')+'</div></div>';
+            if (language === "HU") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">'+((grades[i]/9)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/9).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ '+localization["currency"][language])+'</div></div>';
                 }
+            }
+            else if (language === "EN") {
+                for (var i = 0; i < grades.length; i++) {
+                    div.innerHTML +=
+                        '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
+                        '<div class="legend_text2">' + localization["currency"][language] + (((grades[i]/9)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/9)/EURHUF).format(0, 3, ',') + '<br>' :'+ ')+'</div></div>';
+                }
+            }
             return div;
         }
         else if (metric === "DEVIATION_2007" || metric === "DEVIATION_2010" || metric === "DEVIATION_2014") {
@@ -3180,19 +3892,28 @@ map.on('zoomend', function() {
         searching = false;
     }
 });
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
+function setGetParameter(paramName, paramValue) {
+    var url = window.location.href;
+    var hash = location.hash;
+    url = url.replace(hash, '');
+    if (url.indexOf(paramName + "=") >= 0) {
+        var prefix = url.substring(0, url.indexOf(paramName));
+        var suffix = url.substring(url.indexOf(paramName));
+        suffix = suffix.substring(suffix.indexOf("=") + 1);
+        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+        url = prefix + paramName + "=" + paramValue + suffix;
+    }
+    else {
+        if (url.indexOf("?") < 0) {
+            url += "?" + paramName + "=" + paramValue;
+        }
+        else {
+            url += "&" + paramName + "=" + paramValue;
         }
     }
-};
+    window.location.href = url + hash;
+}
 
 $(document).ready(function(){
     $('.chart').append('<div id="playchart"> \
@@ -3201,33 +3922,33 @@ $(document).ready(function(){
                             <div class="chart_legend_a"> \
                                 <div class="legend_left legend_chart EU" id="EU"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">EU 2007-2013 tám. program</div> \
+                                    <div class="legend_text">'+localization["legendEU"][language]+'</div> \
                                 </div> \
                                 <div class="legend_right legend_chart KTIA" id="KTIA"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Kutatási, techn.<br>és innov. alap</div> \
+                                    <div class="legend_text">'+localization["legendKTIA"][language]+'</div> \
                                 </div> \
                                 <div class="legend_left legend_chart szechenyi USZ" id="szechenyi"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Széchenyi<br>2020</div> \
+                                    <div class="legend_text">'+localization["legendSZEC2020"][language]+'</div> \
                                 </div> \
                                 <div class="legend_right legend_chart ujszechenyi SZ" id="ujszechenyi"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Új Széchenyi<br>Terv</div> \
+                                    <div class="legend_text">'+localization["legendUJSZEC"][language]+'</div> \
                                 </div> \
                                 <div class="legend_left legend_chart nemzeti N" id="nemzeti"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Nemzeti Fej-<br>lesztési Terv</div> \
+                                    <div class="legend_text">'+localization["legendNEMZ"][language]+'</div> \
                                 </div> \
                             </div> \
                             <div class="chart_legend_b"> \
                                 <div class="legend_left legend_chart REIGN"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Kormánypárti polgármester</div> \
+                                    <div class="legend_text">'+localization["legendREIGN"][language]+'</div> \
                                 </div> \
                                 <div class="legend_right legend_chart OPP"> \
                                     <div class="legend_icon"></div> \
-                                    <div class="legend_text">Ellenzéki polgármester</div> \
+                                    <div class="legend_text">'+localization["legendOPP"][language]+'</div> \
                                 </div> \
                                 <div class="legend_left legend_chart IND"> \
                                     <div class="legend_icon"></div> \
@@ -3416,7 +4137,7 @@ $(document).ready(function(){
 
             if (!$('#detailed_overlay').is(':visible') ) {
                 $('.popup.leaflet-control').addClass('hover_pop');
-                $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["humanIconDefault"][language]);
                 $('.popup').append(loader);
                 $('#playchart').hide();
             }
@@ -3430,22 +4151,22 @@ $(document).ready(function(){
             }
 
             if (metric ==="DONATION") {
-                $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["cashIconDefault"][language]);
             }
             else if (metric ==="CAPITA") {
-                $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["humanIconDefault"][language]);
                 $("#human_logo").addClass('active_logo');
             }
             else if (metric === "DEVIATION_2007") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
             }
             else if (metric === "DEVIATION_2010") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
             }
             else if (metric === "DEVIATION_2014") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
             }
         }
@@ -3482,7 +4203,8 @@ $(document).ready(function(){
                 $(this).removeClass('hover_logo');
             });
             $("#human_logo").addClass('active_logo');
-            $('.info h4').text('Egy főre jutó EU támogatás (Ft / fő / év)');
+            $('.info h4').text(localization["humanIconSecondary"][language]);
+            $("#rankingmetric").text(localization["rankingMetricCAP"][language]);
 
             if ($('#detailed_overlay').is(':visible')) {
                 if (overlayState != "plain") {
@@ -3491,13 +4213,23 @@ $(document).ready(function(){
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][2])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed[metricPie])));
                     var selectedValue = $('.info_ammount.original_info').text();
-                    $('.info_ammount.original_info').text(((((pieSelected*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                    if (language === "HU") {
+                        $('.info_ammount.original_info').text(((((pieSelected*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
+                    }
+                    else if (language === "EN") {
+                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((pieSelected*1000000)/9)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+                    }
                 }
                 else {
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
-                    $('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
+                    if (language === "HU") {
+                        $('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
+                    }
+                    else if (language === "EN") {
+                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/9)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+                    }
                 }
             }
 
@@ -3647,7 +4379,7 @@ $(document).ready(function(){
 
             if (!$('#detailed_overlay').is(':visible') ) {
                 $('.popup.leaflet-control').addClass('hover_pop');
-                $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["cashIconDefault"][language]);
                 $('.popup').append(loader);
                 $('#playchart').hide();
             }
@@ -3663,22 +4395,22 @@ $(document).ready(function(){
             }
 
             if (metric ==="DONATION") {
-                $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["cashIconDefault"][language]);
                 $("#cash_logo").addClass('active_logo');
             }
             else if (metric ==="CAPITA") {
-                $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["humanIconDefault"][language]);
             }
             else if (metric === "DEVIATION_2007") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
             }
             else if (metric === "DEVIATION_2010") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
             }
             else if (metric === "DEVIATION_2014") {
-                $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span>');
                 //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
             }
         }
@@ -3715,7 +4447,8 @@ $(document).ready(function(){
                 $(this).removeClass('hover_logo');
             });
             $("#cash_logo").addClass('active_logo');
-            $('.info h4').text('Átlagos EU támogatás (millió Ft / év)');
+            $('.info h4').text(localization["cashIconDefault"][language]);
+            $("#rankingmetric").text(localization["rankingMetric"][language]);
 
             if ($('#detailed_overlay').is(':visible')) {
                 if (overlayState != "plain") {
@@ -3723,13 +4456,23 @@ $(document).ready(function(){
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][0])));
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][1])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed[metricPie])));
-                    $('.info_ammount.original_info').text((pieSelected/9).format(0, 3, " ").toString() + " millió Ft");
+                    if (language === "HU") {
+                        $('.info_ammount.original_info').text((pieSelected/9).format(0, 3, " ").toString() + " "+ localization["aidMetric"][language]);
+                    }
+                    else if (language === "EN") {
+                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((pieSelected/9)*1000000)/EURHUF).format(0, 3, ",").toString());
+                    }
                 }
                 else {
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][0])));
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][1])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
-                    $('.info_ammount.original_info').text((detailedSum/9).format(0, 3, " ").toString() + " millió Ft");
+                    if (language === "HU") {
+                        $('.info_ammount.original_info').text((detailedSum/9).format(0, 3, " ").toString() + " " + localization["aidMetric"][language]);
+                    }
+                    else if (language === "EN") {
+                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/9)*1000000)/EURHUF).format(0, 3, ",").toString());
+                    }
                 }
             }
 
@@ -3878,7 +4621,7 @@ $(document).ready(function(){
 
             if (!$('#detailed_overlay').is(':visible') ) {
                 $('.popup.leaflet-control').addClass('hover_pop');
-                $('.popup.leaflet-control').html('Választási ciklus szerinti EU támogatás');
+                $('.popup.leaflet-control').html(localization["bankIconDefault"][language]);
                 $('.popup').append(loader);
                 $('#playchart').hide();
             }
@@ -3893,23 +4636,23 @@ $(document).ready(function(){
             }
 
             if (metric ==="DONATION") {
-                $('.popup.leaflet-control').html('Átlagos évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["cashIconDefault"][language]);
             }
             else if (metric ==="CAPITA") {
-                $('.popup.leaflet-control').html('Egy főre jutó évi EU támogatás 2007-2015.');
+                $('.popup.leaflet-control').html(localization["humanIconDefault"][language]);
             }
             else {
                 if (!$('body').hasClass('busy')) {
                     if (metric === "DEVIATION_2007") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
                     }
                     else if (metric === "DEVIATION_2010") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
                     }
                     else if (metric === "DEVIATION_2014") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
                     }
                 }
@@ -3939,15 +4682,18 @@ $(document).ready(function(){
                     $('.playchart_1').remove();
                     render_chart2("1", JSON.parse(JSON.stringify(deviation[metricPie])));
                     if (metric === "DEVIATION_2007") {
-                        var value = parseInt(deviation_sum[metricPie]["2007"])
+                        var value = parseInt(deviation_sum[metricPie]["2007"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language] + '<span class="deviation_years">(2007-2009)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                     else if (metric === "DEVIATION_2010") {
-                        var value = parseInt(deviation_sum[metricPie]["2010"])
+                        var value = parseInt(deviation_sum[metricPie]["2010"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language]  + '<span class="deviation_years">(2010-2013)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                     else if (metric === "DEVIATION_2014") {
-                        var value = parseInt(deviation_sum[metricPie]["2014"])
+                        var value = parseInt(deviation_sum[metricPie]["2014"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language]  + '<span class="deviation_years">(2014-2015)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][3])));
@@ -3959,18 +4705,22 @@ $(document).ready(function(){
                     $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][3])));
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
                     if (metric === "DEVIATION_2007") {
-                        var value = parseInt(deviation_sum['Summa']["2007"])
+                        var value = parseInt(deviation_sum['Summa']["2007"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language]  + '<span class="deviation_years">(2007-2009)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                     else if (metric === "DEVIATION_2010") {
-                        var value = parseInt(deviation_sum['Summa']["2010"])
+                        var value = parseInt(deviation_sum['Summa']["2010"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language]  + '<span class="deviation_years">(2010-2013)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                     else if (metric === "DEVIATION_2014") {
-                        var value = parseInt(deviation_sum['Summa']["2014"])
+                        var value = parseInt(deviation_sum['Summa']["2014"]);
+                        $('.info h4').html(localization["bankIconSecondary"][language]  + '<span class="deviation_years">(2014-2015)</span>');
                         $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " %");
                     }
                 }
+                $("#rankingmetric").text(localization["rankingMetricPER"][language]);
             }
             $.ajax({
                 dataType: "json",
@@ -3996,15 +4746,15 @@ $(document).ready(function(){
                     $('body').removeClass('busy');
                     if (!$('#detailed_overlay').is(':visible')) {
                         if (metric === "DEVIATION_2007") {
-                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                            $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span>');
                             //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
                         }
                         else if (metric === "DEVIATION_2010") {
-                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                            $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span>');
                             //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
                         }
                         else if (metric === "DEVIATION_2014") {
-                            $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                            $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span>');
                             //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
                         }
                     }
@@ -4029,7 +4779,7 @@ $(document).ready(function(){
         if (selectedValue === "DEVIATION_2007") {
             metric = "DEVIATION_2007";
             if (!$('#detailed_overlay').is(':visible') ) {
-                $('.popup').html('2007-2009. szerinti EU támogatás');
+                $('.popup').html('2007-2009 '+localization['popupLoader'][language]);
                 $('.popup').append(loader);
             }
             else {
@@ -4050,7 +4800,7 @@ $(document).ready(function(){
         else if (selectedValue === "DEVIATION_2010") {
             metric = "DEVIATION_2010";
             if (!$('#detailed_overlay').is(':visible') ) {
-                $('.popup').html('2010-2013. szerinti EU támogatás');
+                $('.popup').html('2010-2013 '+localization['popupLoader'][language]);
                 $('.popup').append(loader);
             }
             else {
@@ -4071,7 +4821,7 @@ $(document).ready(function(){
         else if (selectedValue === "DEVIATION_2014") {
             metric = "DEVIATION_2014";
             if (!$('#detailed_overlay').is(':visible') ) {
-                $('.popup').html('2014-2015. szerinti EU támogatás');
+                $('.popup').html('2014-2015 '+localization['popupLoader'][language]);
                 $('.popup').append(loader);
             }
             else {
@@ -4121,15 +4871,15 @@ $(document).ready(function(){
                 $('body').removeClass('busy');
                 if (metric === "DEVIATION_2007") {
                     if (!$('#detailed_overlay').is(':visible') ) {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2007-2009)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2007-2009)</span>');
                     }
                     else if (metric === "DEVIATION_2010") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2010-2013)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2010-2013)</span>');
                     }
                     else if (metric === "DEVIATION_2014") {
-                        $('.popup.leaflet-control').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
+                        $('.popup.leaflet-control').html(localization["bankIconSecondary"][language]+' <span class="deviation_years">(2014-2015)</span>');
                         //$('.info h4').html('Mo. fő / év átlagához mérve <span class="deviation_years">(2014-2015)</span>');
                     }
                 }
@@ -4908,27 +5658,32 @@ $(document).ready(function(){
             //}
         }
         if (overlayState != "plain") {
-            $('#rankheader_category').text(overlayState);
+            if (language === "HU") {
+                $('#rankheader_category').text(localization[overlayState][language] + " " + localization["rankingSuffix"][language] + " ");
+            }
+            else if (language === "EN") {
+                $('#rankheader_category').text(localization["rankingSuffix"][language] + " " + localization[overlayState][language] + " ");
+            }
             if (metric === "DONATION") {
-                $("#rankingmetric").text("millió Ft / év");
+                $("#rankingmetric").text(localization["rankingMetric"][language]);
             }
             else if (metric === "CAPITA") {
-                $("#rankingmetric").text("Ft / fő / év");
+                $("#rankingmetric").text(localization["rankingMetricCAP"][language]);
             }
             else {
-                $("#rankingmetric").text("országos átlaghoz mérve, 2007-2015, %");
+                $("#rankingmetric").text(localization["rankingMetricPER"][language]);
             }
         }
         else {
-            $('#rankheader_category').text("Összes támogatás");
+            $('#rankheader_category').text(localization["rankingAll"][language] + " ");
             if (metric === "DONATION") {
-                $("#rankingmetric").text("millió Ft / év");
+                $("#rankingmetric").text(localization["rankingMetric"][language]);
             }
             else if (metric === "CAPITA") {
-                $("#rankingmetric").text("Ft / fő / év");
+                $("#rankingmetric").text(localization["rankingMetricCAP"][language]);
             }
             else {
-                $("#rankingmetric").text("országos átlaghoz mérve, 2007-2015, %");
+                $("#rankingmetric").text(localization["rankingMetricPER"][language]);
             }
         }
 
@@ -5077,5 +5832,26 @@ $(document).ready(function(){
             $('.area_cap.country').show();
             $('.area_cap.county').show();
         }, this),100);
+    });
+
+    $('.language_change').on('click', function(){
+        if (getUrlParameter('lan')) {
+            if (language == "HU") {
+                setGetParameter("lan", "en");
+            }
+            else {
+                setGetParameter("lan", "hu");
+            }
+        }
+        else {
+            $('#language').text('EN');
+                language = "EN";
+                var url=window.location.href,
+                    separator = (url.indexOf("?")===-1)?"?":"&",
+                    newParam=separator + "lan=en";
+                newUrl=url.replace(newParam,"");
+                newUrl+=newParam;
+                window.location.href =newUrl;
+        }
     });
 });

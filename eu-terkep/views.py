@@ -9,6 +9,7 @@ import os.path
 
 import json
 import sys
+from functools import wraps
 
 from whoosh.index import open_dir
 from whoosh import qparser

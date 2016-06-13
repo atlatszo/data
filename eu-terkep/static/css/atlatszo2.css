@@ -253,6 +253,19 @@ a {
 
 }
 
+.exchange_rate {
+    font-family: helvetica;
+    color: #FFFFFF;
+    font-size: 10px;
+    clear: both;
+    float: right;
+    position: absolute;
+    right: 10px;
+    top: 62px;
+    z-index: 10001;
+    display: none;
+}
+
 #map {
     width: 100vw;
     height: 100vh;

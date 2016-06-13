@@ -42,11 +42,68 @@ def ping_connection(dbapi_connection, connection_record, connection_proxy):
 
 #----------MySQL CONNECTION CHECK END-------------------------------------------
 
+def check_auth(username, password):
+    """This function is called to check if a username /
+    password combination is valid.
+    """
+    return username == '' and password == ''
+
+def authenticate():
+    """Sends a 401 response that enables basic auth"""
+    return Response(
+    'Ehhez a címhez nincs jogosultsága!\n'
+    'Kérjük adjon meg érvényes felhasználónevet és jelszót!', 401,
+    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
+xchange_rate = 0
+xchange_date = ""
+with open('static/resources/exchange_rate.json') as data_file:
+    exchange_data = json.load(data_file)
+    global xchange_rate
+    xchange_rate = exchange_data["results2"]
+    xchange_date = exchange_data["results1"]
+
+from sqlalchemy import text
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 @app.route('/', methods=['GET', 'POST'])
 def atlatszo():
-    return render_template('index.html')
+    global xchange_rate
+    global xchange_date
+    xchange_rate_loc = xchange_rate
+    xchange_date_loc = xchange_date
+    return render_template('index.html', xchange_rate = xchange_rate_loc, xchange_date = xchange_date_loc)
+
+@application.route('/valuta_konverzio', methods=['GET', 'POST'])
+@requires_auth
+def valuta():
+    xchange_rate_loc = xchange_rate
+    xchange_date_loc = xchange_date
+    return render_template('valuta.html', xchange_rate = xchange_rate_loc, xchange_date = xchange_date_loc)
+
+@application.route('/valuta_refresh', methods=['GET', 'POST'])
+@requires_auth
+def valuta_refresh():
+    if request.method == "POST":
+        dateRate = request.json["date"]
+        rateRate = request.json["rate"]
+        with open('static/resources/exchange_rate.json', 'wb') as out_file:
+            out_file.write(json.dumps({"results1": dateRate, "results2": rateRate}))
+        global xchange_rate
+        xchange_rate = rateRate
+        global xchange_date
+        xchange_date = dateRate
+        return jsonify(results1 = dateRate, results2 = rateRate)
 
 @app.route('/categoryfind2', methods=['GET', 'POST'])
 def categoryfind2():

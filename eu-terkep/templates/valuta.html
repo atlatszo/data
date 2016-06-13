@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="author" content="atlatszo.hu" />
+        <meta name="description" content="EUR árfolyam megadása az angol nyelvű verzióhoz.">
+        <title>Valuta konverzió</title>
+
+        <!-- add styles and scripts -->
+        <link rel="icon" type="image/ico" href="//atlatszo.hu/wp-content/themes/atlatszo/favicon.ico?v=1"/>
+        <!--<link rel="stylesheet" type="text/css" href="css/atlatszo2.css"/>-->
+        <link rel="stylesheet" type="text/css" href="css/vendor/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/vendor/bootstrap-datepicker.css"/>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/vendor/bootstrap-datepicker.min.js"></script>
+        <script type="text/javascript" src="js/vendor/bootstrap-datepicker.hu.js"></script>
+        <style>
+            .center_holder {
+                width: 50%;
+                margin: 0 auto;
+                display: block;
+                margin-top: 20vh;
+                border-radius: 4px;
+                background-color: #ededed;
+                box-shadow: 1px 1px 3px rgba(0,0,0, 1);
+            }
+            legend {
+                text-align: center;
+                padding: 15px;
+            }
+            .dateIcon {
+                cursor: pointer;
+            }
+            .after_success {
+                display: none;
+                text-align: center;
+                padding: 20px;
+            }
+            .success_labe {
+                font-weight: 800;
+            }
+            .exchange_link {
+                width: 50%;
+                margin: 0 auto;
+                display: block;
+                text-align: right;
+                padding-right: 5px;
+                margin-top: 5px;
+            }
+            .error {
+                border: 1px solid #c40000 !important;
+            }
+            .rate_help {
+                display: none;
+                color: #c40000;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="center_holder">
+            <form class="form-horizontal" id="changeMoney">
+                <fieldset>
+                    <!-- Form Name -->
+                    <legend>Átlátszó EU-térkép € árfolyam megadása</legend>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="textinput">Dátum</label>
+                        <div class="col-md-4">
+                            <div class="input-group date" id="datepicker">
+                                <input id="dateinput" name="dateinput" type="text" placeholder="pl. 2016.01.02." class="form-control input-md" autocomplete="off">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar dateIcon"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="searchinput">1 € =</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input id="rateinput" name="rateinput" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" placeholder="pl. 312" class="form-control" autocomplete="off">
+                                <span class="input-group-addon">Ft</span>
+                            </div>
+                            <p class="help-block rate_help">Kötelező mező</p>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Frissít</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+            <div class="after_success">
+                <h1>A valutaárfolyam sikeresen frissült!</h1>
+                <h4><span class="succes_label">Új árfolyam konverziós dátuma: </span><span class="new_date"></span></h4>
+                <h4><span class="succes_label">Új árfolyam: 1 € = </span><span class="new_rate"></span> Ft</h4>
+            </div>
+        </div>
+        <div class="exchange_link"><a class="link_to_pound" href="" target="_blank">Tegnapi árfolyam megtekintése</a></div>
+        <script>
+            $('#datepicker').datepicker({
+                format: 'yyyy/mm/dd',
+                todayBtn: 'linked',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'hu',
+                endDate: '0d'
+            });
+
+            $("#changeMoney").submit(function(event) {
+                event.preventDefault();
+                if ($("#rateinput").val()) {
+                    submitForm();
+                }
+                else {
+                    $(".rate_help").show();
+                    $("#rateinput").focus();
+                    $("#rateinput").addClass('error');
+                }
+                //alert("Working");
+            });
+
+            $("#rateinput").keyup(function(e){
+               if(/^([0-9]+)((\.|,)([0-9]{1,2}))?$/.test($('#rateinput').val())){
+                    $("#rateinput").removeClass('error');
+                    $(".rate_help").hide();
+                }
+            });
+
+            function submitForm(){
+                // Initiate Variables With Form Content
+                var date = $("#dateinput").val();
+                var rate = $("#rateinput").val();
+
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "valuta_refresh",
+                    data: JSON.stringify({"date": date, "rate": rate}),
+                    contentType: 'application/json;charset=UTF-8',
+                    success : function(text){
+                        console.log(JSON.stringify(text));
+                        formSuccess(text);
+                    }
+                });
+            }
+
+            function formSuccess(text){
+                $('#changeMoney').hide();
+                $('.new_date').text(text['results1']);
+                $('.new_rate').text(text['results2']);
+                $('.after_success').show();
+            }
+            function getYesterdaysDate() {
+                var date = new Date();
+                date.setDate(date.getDate()-1);
+                return date.getFullYear() + '-' + (date.getMonth()+1 < 10 ? '0' : '') + (date.getMonth()+1) + '-' + (date.getDate() < 10 ? '0' : '') + date.getDate();
+            }
+
+            $(document).ready(function(){
+                $('#rateinput').val("{{ xchange_rate }}");
+                $('#dateinput').val("{{ xchange_date }}");
+                var today = $.datepicker.formatDate('yy-mm-dd', new Date());
+                console.log(today);
+                $('.link_to_pound').attr('href', '//www.poundsterlinglive.com/best-exchange-rates/euro-to-hungarian-forint-exchange-rate-on-'+getYesterdaysDate());
+            });
+        </script>
+    </body>
+</html>

@@ -468,10 +468,14 @@ var localization = {
     "rankingAll": {
         "HU": "Összes támogatás",
         "EN": "All subsidies"
+    },
+    "fullview": {
+        "HU": "Megtekintés teljes nézetben",
+        "EN": "Fullview"
     }
 };
 
-var EURHUF = 312;
+var EURHUF;
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -497,6 +501,7 @@ if (getUrlParameter('lan')) {
         $(".help_icon_container.help_country").addClass("english");
         var defaultURL = $('.defaultURL').attr('href') + "?lan=en";
         $('.defaultURL').attr('href', defaultURL);
+        $('.exchange_rate').show();
     }
     else {
         language = "HU";
@@ -506,6 +511,7 @@ if (getUrlParameter('lan')) {
         $(".help_icon_container.help_country").removeClass("english");
         var defaultURL = $('.defaultURL').attr('href') + "?lan=hu";
         $('.defaultURL').attr('href', defaultURL);
+        $('.exchange_rate').hide();
     }
     $('.chartheader.pie').text(localization["pieHeader"][language]);
     $('.areaheader').html(localization["areaCapita"][language]+ " (<span id='areametric'>"+localization["capita"][language]+"</span>)");
@@ -523,9 +529,7 @@ if (getUrlParameter('lan')) {
     $('.search_tutorial').attr('data-intro', localization["tutorialTwo"][language]);
     $('#piechart_tutorial').attr('data-intro', localization["tutorialThree"][language]);
     $('#pos_container').attr('data-intro', localization["tutorialFour"][language]);
-
-
-
+    $('#fullview_link').text(localization["fullview"][language]);
 
 }
 else {
@@ -3779,7 +3783,7 @@ legend.onAdd = function (map) {
     }
 };
 
-legend.addTo(map);
+//legend.addTo(map);
 
 map.on('zoomend', function() {
     $('.playchart_1').remove();
@@ -3916,6 +3920,12 @@ function setGetParameter(paramName, paramValue) {
 }
 
 $(document).ready(function(){
+    EURHUF = parseInt($('.exchange_huf').attr('data-rate'));
+    var dateAr = $('.exchange_huf').attr('data-date').split('/');
+    var newDate = dateAr[2] + '/' + dateAr[1] + '/' + dateAr[0];
+    $('.exchange_huf').text(EURHUF);
+    $('.exchange_date').text(newDate);
+    legend.addTo(map);
     $('.chart').append('<div id="playchart"> \
                             <div class="legend_header">Támogatás összesen:</div> \
                             <div class="legend_subheader"></div> \

@@ -84,14 +84,14 @@ def atlatszo():
     xchange_date_loc = xchange_date
     return render_template('index.html', xchange_rate = xchange_rate_loc, xchange_date = xchange_date_loc)
 
-@application.route('/valuta_konverzio', methods=['GET', 'POST'])
+@app.route('/valuta_konverzio', methods=['GET', 'POST'])
 @requires_auth
 def valuta():
     xchange_rate_loc = xchange_rate
     xchange_date_loc = xchange_date
     return render_template('valuta.html', xchange_rate = xchange_rate_loc, xchange_date = xchange_date_loc)
 
-@application.route('/valuta_refresh', methods=['GET', 'POST'])
+@app.route('/valuta_refresh', methods=['GET', 'POST'])
 @requires_auth
 def valuta_refresh():
     if request.method == "POST":

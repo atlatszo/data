@@ -1,0 +1,729 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49485191-1', 'eugrants.org');
+      ga('send', 'pageview');
+
+    </script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=7" /><title>
+	
+        EU Grants Successes
+    
+</title><link rel="stylesheet" type="text/css" href="Style/Common.css" /><link rel="stylesheet" type="text/css" href="Style/Controls.css" /><link rel="stylesheet" type="text/css" href="Style/Menu.css" />
+
+    <script language="javascript" type="text/javascript" src="Js/Common.js"></script>
+
+</head>
+<body>
+    <form name="aspnetForm" method="post" action="default.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=2DepFdSmpiq8e76ugywalTDIvyGeYsJ2vVJ2jF97NDkf7EvTPFhxtFFT3b0AAtxP1uZNJfzEppD-A5h0cI8D3-RFun41&amp;t=635295095132453548" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=8mJrVhZkMBWwU00rj5-TJQeF_4Xa46ROHmz4S1GZUggAPTF8YByUyyh6Ux3GHzHXqFRFNrMtF7JDZ2STodn0jEr_eITJiI0vmWAv-6b7I8Z0TcDs_uQ4v1ZIA9OBuFG5jE_4VIdmAIYlPRPeX4-DuAIjC1E1&amp;t=635295095132453548" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=DgFj8iOalX46vC2FbXQvnaJkgl7Q73n1TlQi-uTkg8Z-GWcThP2dUiCly0BndJ0dXgKf1qpUFXGbseOgUXhLw7khDRg7CHJzeSq6OaCFu0UUdd7uJwPg2xR_mheC47g8yOpBgQ2&amp;t=633049125920000000" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_wbLzxPYXn2C6q-3oOXBF7d4n8kSIF6bH_pdYbp9BkRulbcDj4KTHD3y7IQaL5KhJiL6KXUY7txz8fgb1g7UzCMGqfbkmH3gf-kLcPo1OqmLWSgfER3qPTu2SqxzsmoLKSv_XQ2&amp;t=633049125920000000" type="text/javascript"></script>
+<script src="js/webkit.js" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=zM2whIM5ZiA9ZBGZ-oo2jFUM8mMXNH10eroXkTJw8W_kHxxm2O7jZep1RgJhcJXGn55r-nJChtP-YD_Yzv83j6esODEZ69mRGRLeRbeeoY0vuSrmewJUYavNVs_dA3quw-1KaIfmfrSwWC4xBEHSAnn9lhI1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=HQsB2VC1iog3baGQU9xK7jz8Aw3CAc0ffOGdEUwbIX-iAjoo_CaRPeTPfhTEKI4strOV82SNOl7y73iwsZ_k86OVumuWxAa_6OyGN2qGJFc3wwVi-6GVOzJb5-T1Z2XJGLQhL_oWhRRLc30o_nkE0AGwnEw1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=ij2fzfMBKBbNcs0eIp10lsRvNei9Wn6Fpeb9_Nyj38UZDM9aFy0xUFouawVxwmmUp6uRcYxycPSPgn3GlWmRVI5lDlzj33P3H7aTfiqm-pVaAHGZDumGZVDu1h8BXM-HseIyGQ_MzfgRKMCoSdF6arNqvUs1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=elFhZwpJhBvQlIugLtUTokZsyppZXn1VzcT8eSk8mwn-QP1fo9uk4su9IsULD18Ry3xV8jf7o0zCiHt20XqDiNTvzhG93CuXfDG1tIWzlRtyb7LRq7Yw0hnK2nRgVMqTNV8KMs-Wa7gawJblrGMXurvzbAk1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_zA2y-7I40-k79ziAkRAOsmc0Mzp4uXC33Ex5eLZofVPH3CFWPH8G-RACAwbzsw63DSmHcHhKG8YRvWRSOVpe28GVXQwfPre41eFDAmCwikwTyiaRn1oiVYXs9Mu5sT5uhSby5f6PGwmRBFnHAJB4cHNlMo1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=HzVIaB9dsh5tGP_4uTvGjHKyvkmwXQtDigDwJdwg-BKrfTfgqeCr5rMJ7hqqDxme1o5TmqoPBsrc5VDnVw43fn3vPYPImsQ0WohJ9_SG8dN6j42zCPnKH6imY_YPO4BWcZqDeYePn4gkgmnItdt9SXKJLAE1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=w91kipFy2irBcIlvUvBPRSPgwmE17LGfqqhom382ZtjZ_2ie2PbNhQKDpX9DpKPWFUamMezE3EmypksKrepE60xY9gm7sYVU-rGRvD50IO-W55i6xQbs1CrjETV86wB2afpR1fNjO7WzavDsO-v-11I3vPJhRmuuXByRduZG283krxO90&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=dVjDdJXO6JROo-G3v4P0JBpFN8Atd9hqsTZv2EeyOaml3nHu9rBx1XJ9I_7Pess0kGTEAlcqBl9AhHIf-k_1CFb0D_6aqNyHcOoD4PPzDUXbbwrgEayFMOkPazMdDY-_82popvklhSc9mvEqvzsfhWD72oU5yh1LMqx9PWHu2xte8x8g0&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=M8P33Mf7zzjaBlzxH-EunNNFqY4kLso2wvF_vtGZx9w8Q15fHxt_TVoiktFzrVlXf2gJhJ8B3iZQNx8nDnZ8ekGoBJYdHXuXkKfFgnWV5zOedK7lW-g6sj_NMvT62bsFSlp3seoTFTJ6f-cGV7CrQny2bsM1&amp;t=634242941264544300" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=BnymN_Ajx9W2V-yJiPc3GNtKMxp09gcoHfCG_JvBSGliLWhucMKJmh3CdGaxzloBqGPXYEfVsLeIkBBSqiPzeufKt8Zee0KCcW-yiKBNhGaxgkkDzRlGhtx64S3_fNb0gi7VByPEAKXna1iE0qEHQjmcEVQ1&amp;t=634242941264544300" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="KxEQg6UnsYajXqDoVIhSAFsSwUyfBREzkEL4aVWJ/pN+4SRinQLzFgw97evcqD+7ZS9fb6o5rZlqaIRk8UHobNr8RMnuz7BhTL60HQ9Q13hPct70Em8+UsilHu4xfYVTAC5uycCegal5+BZ0tNEi6wj6XY9aAV6jKvZjKmm5cLXtksFWeu9lmEZyVwzHFCqs3z1tWa+f+xfbe7oGt5FiqxaZA3S7ZHBWwCni0WECM3WWw/G/ld/ztgcQlpbxYwR/4c5JYXpSxmr4ljS1Hx7HbaClt3fFvyDlimfYJxV/KBCUxPCY8NioColRDe0i9NURaqJzbgqevlOQbhfsnIBfyKB/JzXArpR9raLAkKyt7qrFAQhPfXdZ/obkB9itV3VJ+dzq3hT6uFg+ELuKDWTSwo3f0CY=" />
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$sm', document.getElementById('aspnetForm'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls([], [], [], 90);
+//]]>
+</script>
+
+        <div id="container">
+            <div id="inner">
+                <div id="top_structure">
+                    <div id="str_top_left">
+                    </div>
+                    <div id="str_top_repeat">
+                        <div id="str_top_logo">
+                        </div>
+                        <div id="str_top_eup">
+                        </div>
+                        <div id="str_top_sa">
+                        </div>
+                    </div>
+                    <div id="str_top_repeat2">
+                    </div>
+                    <div id="str_top_repeat3">
+                    </div>
+                    <div id="str_top_right">
+                    </div>
+                </div>
+                <div id="top_down_structure">
+                    <div id="str_top_left_down">
+                    </div>
+                    <div id="str_top_left_down_repeat">
+                        <div style="float: left; width: 99%; height: 22px; line-height: 22px; border: solid 0px red;
+                            text-align: left; padding-top: 3px">
+                            <div style="float: left; width: 90px; height: 22px; border: solid 0px red;">
+                            </div>
+                            <div style="float: left; width: 180px; height: 22px; border: solid 0px red;">
+                                <img id="ctl00_imgApplicationSearch" src="Images/selectedDownArrow.gif" alt="Application" style="border-width:0px;" />
+                                <input type="image" name="ctl00$ibtnApplicationSearch" id="ctl00_ibtnApplicationSearch" src="Images/ApplicationSearchLink.gif" alt="Application" style="border-width:0px;" />
+                            </div>
+                            <div style="float: left; width: 110px; height: 22px; border: solid 0px red;">
+                                <img id="ctl00_imgContacts" src="Images/unselectedDownArrow.gif" alt="Contacts" style="border-width:0px;" />
+                                <input type="image" name="ctl00$ibtnContact" id="ctl00_ibtnContact" src="Images/ContactsLink.gif" alt="Contacts" style="border-width:0px;" />
+                            </div>
+                            <div style="float: left; width: 180px; height: 22px; border: solid 0px red;">
+                                <img id="ctl00_imgEUgrants" src="Images/unselectedDownArrow.gif" alt="EUgrants" style="border-width:0px;" />
+                                <input type="image" name="ctl00$ibtnEUgrants" id="ctl00_ibtnEUgrants" src="Images/EUgrantsLink.gif" alt="EUgrants" onclick="javascript:popupEUgrants();" style="border-width:0px;" />
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <div id="str_top_left_down_repeat1">
+                    </div>
+                    <div id="str_top_left_down_repeat2">
+                    </div>
+                    <div id="str_top_left_down_right">
+                    </div>
+                </div>
+                <div id="str_center">
+                    <div id="str_center_left_repeat">
+                    </div>
+                    <div id="str_center_content">
+                      
+                                
+    <div class="welcome_text">
+        <div style="margin: 12px 12px 0px 14px;">
+            Welcome to the EU Funds Successes website. This site is used to provide details
+            of successful applications for grants to the following European Union programmes;
+            Interreg IVA programme, Peace III programme, Northern Ireland Rural Development
+            Programme, The Northern Ireland European Social Fund programme and Regional Competitiveness
+            ERDF programme.
+        </div>
+    </div>
+    <div class="quick_search_bg">
+        <div class="quick_search_panel">
+            <span style="float: left; margin: 10px 0px 0px 10px; font-family: Verdana; font-weight: normal;
+                font-weight: bold; font-size: 11px; color: White; width: 99%; text-align: left">
+                QUICK SEARCH</span> <span style="font-family: Verdana; margin: 5px 0px 0px 10px;
+                    font-weight: normal; font-size: 10px; color: White; float: left; width: 99%;
+                    text-align: left">Please enter application reference number, project title or organisation
+                    name in the following field, then click the quick search button.</span>
+            <div style="float: left; font-family: Verdana; font-weight: normal; font-size: 10px;
+                margin: 5px 0px 0px 5px; padding: 0px">
+                <div style="float: left; width: 300px;">
+                    <input name="ctl00$ContentPlaceHolder1$txtQuickSearch" type="text" id="ctl00_ContentPlaceHolder1_txtQuickSearch" style="width:286px;" />
+                </div>
+                <input type="image" name="ctl00$ContentPlaceHolder1$ibtnQuickSearch" id="ctl00_ContentPlaceHolder1_ibtnQuickSearch" src="Images/str_quickSearch_button.gif" alt="Quick Search" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$ibtnQuickSearch&quot;, &quot;&quot;, true, &quot;QuickSearch&quot;, &quot;&quot;, false, false))" style="height:22px;width:83px;border-width:0px;" />
+                <span id="ctl00_ContentPlaceHolder1_rfvsearchword" style="color:Red;display:none;"></span>
+                
+            </div>
+        </div>
+    </div>
+    <div style="float: left; height: auto;">
+        
+                <div class="center_frame">
+                    <div style="height: 28px; width: 100%; border: solid 0px #63666F; font-family: Verdana;
+                        line-height: 12px; font-size: 11px; padding: 2px 1px 1px 1px;">
+                        <div style="float: left; width: 91%;">
+                            Please find listed below your search results, use the page number displayed at the
+                            bottom of the page to browse through your results. Click on the reference number
+                            for application details.
+                        </div>
+                        <div style="float: right; width: 8.5%; margin-top: 2px;">
+                            <input type="image" name="ctl00$ContentPlaceHolder1$ibtnReturnToAdv" id="ctl00_ContentPlaceHolder1_ibtnReturnToAdv" src="Images/button_return.gif" alt="return to Adv." style="border-width:0px;" />
+                        </div>
+                    </div>
+                    <div>
+	<table cellspacing="1" cellpadding="4" border="0" id="ctl00_ContentPlaceHolder1_gvSearchResult" style="background-color:White;width:100%;">
+		<tr style="color:White;background-color:#4B5676;font-family:Verdana;font-size:11px;font-weight:bold;">
+			<th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$ApplicationReferenceNo')" style="color:White;">Ref. No</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$OrgName')" style="color:White;">Organisation Name</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$ProjectTitle')" style="color:White;">Project Title</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$DateApplicationApproved')" style="color:White;">Year Approved</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$TotalGrantApproved')" style="color:White;">Total Grant Approved</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$DateProjectCompleted')" style="color:White;">Year Completed</a></th><th scope="col"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Sort$TotalAmountPaid')" style="color:White;">Total Paid Amount</a></th><th scope="col">Currency</th>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$0')" style="color:#0066FF;text-decoration:none;">050654</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        OCO Global Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_lblOrgName">OCO Global Limite...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        RD0113734 - Development of corporate intelligence platform for trade and
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_lblProjectTitle">RD0113734 - Devel...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">2,662.00</td><td align="center" style="width:50px;">2015</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_lblTotalAmountPaid">2,113.96</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$1')" style="color:#0066FF;text-decoration:none;">050657</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        McElwaine Security Services Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_lblOrgName">McElwaine Securit...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        LoO 1308/101234207 MIS
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_lblProjectTitle">LoO 1308/10123420...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">10,660.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_lblTotalAmountPaid">10,660.00</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$2')" style="color:#0066FF;text-decoration:none;">050660</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        University of Ulster
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_lblOrgName">University of Uls...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        LoO 1212/101182767 POC 305
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_lblProjectTitle">LoO 1212/10118276...</span>
+                                </td><td align="center" style="width:50px;">2012</td><td align="right" style="width:100px;">96,785.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_lblTotalAmountPaid">58,880.57</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$3')" style="color:#0066FF;text-decoration:none;">050665</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Waste Systems Ltd
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_lblOrgName">Waste Systems Ltd...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        RD0213781 - High Density Waste Material Seperator
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_lblProjectTitle">RD0213781 - High ...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">47,064.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_lblTotalAmountPaid">44,149.68</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$4')" style="color:#0066FF;text-decoration:none;">050668</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Core Systems (NI) Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_lblOrgName">Core Systems (NI)...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        RD0313793 - Parole & Probation
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_lblProjectTitle">RD0313793 - Parol...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">4,355.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_lblTotalAmountPaid">3,510.83</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$5')" style="color:#0066FF;text-decoration:none;">050669</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Coleraine Borough Council
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_lblOrgName">Coleraine Borough...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        West Bay
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_lblProjectTitle">West Bay</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">781,688.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_lblTotalAmountPaid">572,778.12</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$6')" style="color:#0066FF;text-decoration:none;">050670</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Teemore Engineering Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_lblOrgName">Teemore Engineeri...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        LoO 11/0848 SFA
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_lblProjectTitle">LoO 11/0848 SFA</span>
+                                </td><td align="center" style="width:50px;">2011</td><td align="right" style="width:100px;">21,902.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_lblTotalAmountPaid">14,830.46</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$7')" style="color:#0066FF;text-decoration:none;">050671</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        ATC Systems Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_lblOrgName">ATC Systems Limit...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        LoO 1306/101218716 MIS
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_lblProjectTitle">LoO 1306/10121871...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">13,504.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_lblTotalAmountPaid">9,953.55</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$8')" style="color:#0066FF;text-decoration:none;">050672</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Queens University Belfast
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_lblOrgName">Queens University...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        POC 333
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_lblProjectTitle">POC 333</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">103,686.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_lblTotalAmountPaid">51,367.75</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$9')" style="color:#0066FF;text-decoration:none;">050673</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Queens University Belfast
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_lblOrgName">Queens University...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        POC 340
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_lblProjectTitle">POC 340</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">106,000.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_lblTotalAmountPaid">78,771.18</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$10')" style="color:#0066FF;text-decoration:none;">050674</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Provita Eurotech Ltd
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_lblOrgName">Provita Eurotech ...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        RD0313788 - Process Improvement of Dermatological
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_lblProjectTitle">RD0313788 - Proce...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">32,620.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_lblTotalAmountPaid">28,131.73</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$11')" style="color:#0066FF;text-decoration:none;">050675</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Queens University Belfast
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_lblOrgName">Queens University...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        POC 410
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_lblProjectTitle">POC 410</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">105,992.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_lblTotalAmountPaid">66,936.92</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$12')" style="color:#0066FF;text-decoration:none;">050676</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        DETI - IPU
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_lblOrgName">DETI - IPU</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Smart Specialisation Conference - IPU
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_lblProjectTitle">Smart Specialisat...</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">6,000.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_lblTotalAmountPaid">5,009.59</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$13')" style="color:#0066FF;text-decoration:none;">050677</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        John H. Lunn (Jewellers), Limited
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_lblOrgName">John H. Lunn (Jew...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        MIS - 13/05/2013
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_lblProjectTitle">MIS - 13/05/2013</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">15,299.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_lblTotalAmountPaid">15,047.38</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="left" style="color:Black;background-color:#DEDFDE;font-family:Verdana;font-size:11px;white-space:nowrap;">
+			<td style="color:#0066FF;font-family:Verdana;font-size:8pt;font-weight:bold;text-decoration:none;width:40px;"><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Select$14')" style="color:#0066FF;text-decoration:none;">050678</a></td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_pnlOrgName" style="background-color:White;height:20px;width:600px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        Apt Innovations Ltd
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_lblOrgName">Apt Innovations L...</span>
+                                </td><td style="width:150px;">
+                                    
+                                    <div id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_pnlProjectTitle" style="background-color:White;height:20px;width:400px;display: none; padding: 2px 2px 2px 2px; text-align: justify;
+                                        border: solid 1px black;">
+				
+                                        MIS - 19/06/2013
+                                    
+			</div>
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_lblProjectTitle">MIS - 19/06/2013</span>
+                                </td><td align="center" style="width:50px;">2013</td><td align="right" style="width:100px;">10,053.00</td><td align="center" style="width:50px;">2016</td><td align="right" style="width:100px;">
+                                    <span id="ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_lblTotalAmountPaid">10,053.00</span>
+                                </td><td align="center" style="width:50px;">STG</td>
+		</tr><tr align="center" style="color:Black;background-color:#C6C3C6;font-family:Verdana;font-size:11px;font-weight:bold;height:5px;">
+			<td colspan="8"><table border="0">
+				<tr>
+					<td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$First')" style="color:Black;">First</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$130')" style="color:Black;">...</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$131')" style="color:Black;">131</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$132')" style="color:Black;">132</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$133')" style="color:Black;">133</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$134')" style="color:Black;">134</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$135')" style="color:Black;">135</a></td><td><span>136</span></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$137')" style="color:Black;">137</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$138')" style="color:Black;">138</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$139')" style="color:Black;">139</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$140')" style="color:Black;">140</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$141')" style="color:Black;">...</a></td><td><a href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$gvSearchResult','Page$Last')" style="color:Black;">Last</a></td>
+				</tr>
+			</table></td>
+		</tr>
+	</table>
+</div>
+                </div>
+            
+    </div>
+    
+    
+    
+    
+    
+    
+    
+
+                          
+                    </div>
+                    <div id="str_center_right_repeat">
+                    </div>
+                </div>
+                <div id="str_bottom">
+                    <div id="str_bottom_top_line">
+                    </div>
+                    <div id="str_bottom_top_line_right">
+                    </div>
+                    <div id="str_bottom_left">
+                    </div>
+                    <div id="str_bottom_repeat">
+                        <div style="float: left; font-size: 10px; font-family: Arial; color: White; text-align: left;
+                            margin-top: 5px; margin-left: 10px; width: 45%; height: 45px;">
+                            Website developed by RMA Systems &#38; Services Ltd.
+                        </div>
+                        <div style="float: right; width: 50%; height: 45px; margin-top: 5px;">
+                            <div style="float: left; background-repeat: no-repeat; width: 105px; height: 40px;
+                                margin-right: 24px; margin-left: 50px;">
+                                <img src="/Images/erdf_small.jpg" alt="ERDF" style="border: 1px solid;" />
+                            </div>
+                            <div style="float: left; background-image: url(/Images/str_bottom_logo3.gif); background-repeat: no-repeat;
+                                width: 74px; height: 38px; margin-right: 24px;">
+                            </div>
+                            <div style="float: left; background-image: url(/Images/str_bottom_logo4.gif); background-repeat: no-repeat;
+                                width: 45px; height: 38px; margin-right: 24px;">
+                            </div>
+                            <div style="float: left; background-image: url(/Images/str_bottom_logo5.gif); background-repeat: no-repeat;
+                                width: 30px; height: 38px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="str_bottom_right_repeat">
+                    </div>
+                </div>
+                <div id="str_bottom_curve">
+                    <div id="str_bottom_left_curve">
+                    </div>
+                    <div id="str_bottom_curve_repeat">
+                    </div>
+                    <div id="str_bottom_right_curve">
+                    </div>
+                </div>
+                <br />
+                <br />
+            </div>
+        </div>
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("ctl00_ContentPlaceHolder1_rfvsearchword"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_ContentPlaceHolder1_rfvsearchword = document.all ? document.all["ctl00_ContentPlaceHolder1_rfvsearchword"] : document.getElementById("ctl00_ContentPlaceHolder1_rfvsearchword");
+ctl00_ContentPlaceHolder1_rfvsearchword.controltovalidate = "ctl00_ContentPlaceHolder1_txtQuickSearch";
+ctl00_ContentPlaceHolder1_rfvsearchword.errormessage = "Please Enter Search Word.";
+ctl00_ContentPlaceHolder1_rfvsearchword.display = "None";
+ctl00_ContentPlaceHolder1_rfvsearchword.validationGroup = "QuickSearch";
+ctl00_ContentPlaceHolder1_rfvsearchword.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_ContentPlaceHolder1_rfvsearchword.initialvalue = "";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        Sys.Application.initialize();
+
+document.getElementById('ctl00_ContentPlaceHolder1_rfvsearchword').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('ctl00_ContentPlaceHolder1_rfvsearchword'));
+}
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.ValidatorCalloutBehavior, {"closeImageUrl":"/WebResource.axd?d=gHolWEXw7Q9W95ecRIq81YmZ8AdN9alONYbvGb4NTWw5lJoEu50eKBfCHv56R4FSlnA8kEY9X-7Aj7FJgm6NKIa4_jp1USsg3oPKxtRGlUHOdLU2qFPqiU4suoX1BugezMbJMIursrHVtniaHSmPNKBuK4g1&t=634242941264544300","highlightCssClass":"validatorCalloutHighlight","id":"ctl00_ContentPlaceHolder1_QsReqE","warningIconImageUrl":"/WebResource.axd?d=vlORWNCFgSxavsaiwbnOQW7GyWIfcEQG4lCcWGlTSA_HwtapYCbdqplkhc6NR2VHWuroUUdLkexzXhqNtpvAs8RprQnHvgtqSgbErSZVMVR88R0fLYlm6369rl2xz3wNH3TZGu2Egwq9BBuRiubzhPPkQCI1&t=634242941264544300"}, null, null, $get("ctl00_ContentPlaceHolder1_rfvsearchword"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl02_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl03_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl04_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl05_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl06_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl07_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl08_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl09_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl10_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl11_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl12_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl13_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl14_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl15_lblProjectTitle"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_HoverMenuExtender1","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_pnlOrgName")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_lblOrgName"));
+});
+Sys.Application.add_init(function() {
+    $create(AjaxControlToolkit.HoverMenuBehavior, {"PopDelay":25,"PopupPosition":3,"dynamicServicePath":"/default.aspx","id":"ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_HoverMenuExtender2","popupElement":$get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_pnlProjectTitle")}, null, null, $get("ctl00_ContentPlaceHolder1_gvSearchResult_ctl16_lblProjectTitle"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>

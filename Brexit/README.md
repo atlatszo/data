@@ -6,12 +6,12 @@ For now, the following programmes are collected:
 * European Regional Development Funds (ERDF) 2007 - 2013
 * European Social Funds (ESF) 2007 - 2013
 
-The final aim of this project is to show the results of the 2016 UK referendum and the subsidies received on a map, where electoral wards and administrative regions are harmonized / aggregated.
+The final aim of this project is to show the results of the 2016 UK referendum and the subsidies received on a map, where electoral wards and administrative regions are harmonized / properly aggregated.
 
 ## License:
 
     UK Subsidies & The Referendum
-    Copyright (C) 2016 Krich Balazs
+    Copyright (C) 2016 Krich Balazs, [atlatszo.hu](https://atlatszo.hu)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published

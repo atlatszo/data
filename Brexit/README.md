@@ -1,6 +1,6 @@
 # UK Subsidies & The Referendum
 
-This is a project aimed at collecting subsidies received by the United Kingdom under the European Structural Funds programme.<br><br>
+This is a project aimed at collecting subsidies received by the United Kingdom under the European Structural Funds programme.
 
 For now, the following programmes are collected:
 * European Regional Development Funds (ERDF) 2007 - 2013

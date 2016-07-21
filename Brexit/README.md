@@ -19,17 +19,16 @@ Changing with zoom levels, both electoral and subsidy data should be aggregated 
 
 ## Data model
 
-For each transaction, the following attributes are scraped, if available. Generally, missing records are indicated as "N/A"
+For each transaction, the following attributes are scraped, if available. Generally, missing records are indicated as "N/A".
 
 * Priority (<i>from P1 to P5</i>)
 * Organization (<i>the beneficiary</i>)
 * Project (<i>name of the operation</i>)
 * Type (<i>ERDF or ESF, respectively</i>)
-* Subsidy (<i>known funding amount in GBP - if there's matching fund, it is not included</i>)
+* Subsidy (<i>known funding amount in GBP - if there's matching funding also, it is not included</i>)
 * Matching (<i>if matching funding is available, amount in GBP</i>)
 * Total (<i>total operation cost amount in GBP</i>)
 * Start_date (<i>operation or contract start date</i>)
-* End_date (<i>operation or contract end date</i>)
 * End_date (<i>operation or contract end date</i>)
 * State (<i>regional tag attained from source data as a helper for geocoding</i>)
 * Region (<i>regional tag attained from source data as a helper for geocoding</i>)
@@ -39,6 +38,19 @@ For each transaction, the following attributes are scraped, if available. Genera
 * Postal_code (<i>geocoded from <b>Organization</b> column</i>)
 * Lat_coords (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
 * Long_coord (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
+
+## Geocoding
+
+Geocoding is performed by <b>Organization</b> - therefore subsidies are located according to the beneficiary's known address. Please keep in mind that this might not be the geolocation where the funding was spent, but due to the fact that there's no information provided about the approved project's geoloaction, this still seems the best - and fairest - method.
+
+Where <b>Region</b> column was available, we included that information when geolocating the beneficiary's address - therefore trying to get the geographically most accurate result when there were multiple addresses available for the given Organization name accross the UK. <b>State</b> column was always included in geolocation.
+
+Geolocation was done by the Google Places API Web Service and the Google Maps Geocoding API. Unsuccesfull results were geocoded in severeal rounds, gradually leaving out <b>Region</b>, <b>State</b> then country ("United Kingdom") additions. Only addresses within the UK were considered successfull.
+
+Minor transformations were made on the <b>Organization</b> name, to get better results. This could be further improved.
+
+With this method, about 90 % of all transactions could be geocoded.
+
 
 ## Datasources
 

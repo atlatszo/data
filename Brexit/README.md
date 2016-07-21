@@ -17,6 +17,29 @@ Changing with zoom levels, both electoral and subsidy data should be aggregated 
 * NUTS 3
 * LAU 1
 
+## Data model
+
+For each transaction, the following attributes are scraped, if available. Generally, missing records are indicated as "N/A"
+
+* Priority (<i>from P1 to P5</i>)
+* Organization (<i>the beneficiary</i>)
+* Project (<i>name of the operation</i>)
+* Type (<i>ERDF or ESF, respectively</i>)
+* Subsidy (<i>known funding amount in GBP - if there's matching fund, it is not included</i>)
+* Matching (<i>if matching funding is available, amount in GBP</i>)
+* Total (<i>total operation cost amount in GBP</i>)
+* Start_date (<i>operation or contract start date</i>)
+* End_date (<i>operation or contract end date</i>)
+* End_date (<i>operation or contract end date</i>)
+* State (<i>regional tag attained from source data as a helper for geocoding</i>)
+* Region (<i>regional tag attained from source data as a helper for geocoding</i>)
+* Geocoding_round (<i>a descriptive record indicating the suspected accuracy of geocoding processes - the lower the round nr. the more accurate is geocoding</i>)
+* County (<i>geocoded from <b>Organization</b> column for aggregation and to crosscheck geocoding accuracy with <b>Region</b> column - TBD</i>)
+* City_name (<i>geocoded from <b>Organization</b> column</i>)
+* Postal_code (<i>geocoded from <b>Organization</b> column</i>)
+* Lat_coords (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
+* Long_coord (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
+
 ## Datasources
 
 Subsidy data was scraped from the following sources:

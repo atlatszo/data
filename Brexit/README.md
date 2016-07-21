@@ -8,7 +8,22 @@ For now, the following programmes are collected:
 
 The final aim of this project is to show the results of the 2016 UK referendum and the subsidies received on a map, where electoral wards and administrative regions are harmonized / properly aggregated.
 
-## License:
+
+## Datasources
+
+Subsidy data was scraped from the following sources:
+
+* [England ERDF 2007-2013](https://www.gov.uk/guidance/erdf-programmes-progress-and-achievements)
+* [England ESF 2007-2013](https://www.gov.uk/government/collections/esf-funding-allocations-2007-to-2013)
+* [Scotland - Highlands and Islands ERDF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17404/HIERDFJuly2013)
+* [Scotland - Highlands and Islands ESFF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17404/HIESFJuly2013)
+* [Scotland - Lowlands and Uplands ERDF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSERDFPojectsJul2013)
+* [Scotland - Lowlands and Uplands ESF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSESFProjectsJul13)
+* To be done: [Wales ERDF, ESF 2007-2013](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
+* [Wales ERDF, ESF 2014-2020](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
+* [Northern Ireland ERDF, ESF 2007-2013](http://successes.eugrants.org/default.aspx)
+
+## License
 
 UK Subsidies & The Referendum
 Copyright (C) 2016 Krich Balazs, [atlatszo.hu](https://atlatszo.hu)

@@ -1,0 +1,4 @@
+SOA2011.shp
+LGD2014
+
+mapshaper SOA2011.shp -dissolve2 LGD2014 -o states.shp

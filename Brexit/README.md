@@ -3,11 +3,19 @@
 This is a project aimed at collecting subsidies received by the United Kingdom under the European Structural Funds programme.
 
 For now, the following programmes are collected:
+
 * European Regional Development Funds (ERDF) 2007 - 2013
 * European Social Funds (ESF) 2007 - 2013
 
 The final aim of this project is to show the results of the 2016 UK referendum and the subsidies received on a map, where electoral wards and administrative regions are harmonized / properly aggregated.
 
+Changing with zoom levels, both electoral and subsidy data should be aggregated to the following levels:
+
+* Countries
+* NUTS 1
+* NUTS 2
+* NUTS 3
+* LAU 1
 
 ## Datasources
 

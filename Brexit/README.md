@@ -38,6 +38,8 @@ For each transaction, the following attributes are scraped, if available. Genera
 * Postal_code (<i>geocoded from <b>Organization</b> column</i>)
 * Lat_coords (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
 * Long_coord (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
+* LAU1_code (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
+* LAU1_name <i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
 
 ## Geocoding
 
@@ -51,6 +53,7 @@ Minor transformations were made on the <b>Organization</b> name, to get better r
 
 With this method, about 90 % of all transactions could be geocoded.
 
+To get the parenting LAU1 units name for each transaction, we used the transaction's coordinates and the shapefiles containing all the LAU1 units - if the coordinates fell within a given unit's boundaries, the transaction received it's LAU1_code and LAU1_name attributes. We tried to do the matching on the basis of city names with the help of lookup tables provided by the UK member countries' statistical institutions - this was a miserable fail. The number of written variants for each municipality name and the complexity of their administrative hierarchies also made us wonder about all those Monthy Python jokes on British bureaucrats.
 
 ## Datasources
 

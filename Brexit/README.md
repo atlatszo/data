@@ -39,7 +39,7 @@ For each transaction, the following attributes are scraped, if available. Genera
 * Lat_coords (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
 * Long_coord (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
 * LAU1_code (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
-* LAU1_name <i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
+* LAU1_name (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
 
 ## Geocoding
 

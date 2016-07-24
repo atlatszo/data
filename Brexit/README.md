@@ -1,7 +1,5 @@
 # UK Subsidies & The Referendum
 
-![UK Subsidies & The Referendum](/Brexit/img/code.jpg)
-
 This is a project aimed at collecting subsidies received by the United Kingdom under the European Structural Funds programme.
 
 For now, the following programmes are collected:

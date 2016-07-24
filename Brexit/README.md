@@ -71,7 +71,7 @@ Subsidy data was scraped from the following sources:
 * [Scotland - Lowlands and Uplands ERDF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSERDFPojectsJul2013)
 * [Scotland - Lowlands and Uplands ESF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSESFProjectsJul13)
 * To be done: [Wales ERDF, ESF 2007-2013](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
-* [Wales ERDF, ESF 2014-2020](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
+* [Wales ERDF, ESF 2014-2020](http://gov.wales/funding/eu-funds/2014-2020/looking/approved-projects/?lang=en)
 * [Northern Ireland ERDF, ESF 2007-2013](http://successes.eugrants.org/default.aspx)
 
 ## License

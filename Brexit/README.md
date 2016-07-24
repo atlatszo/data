@@ -41,8 +41,8 @@ For each transaction, the following attributes are scraped, if available. Genera
 * County (<i>geocoded from <b>Organization</b> column for aggregation and to crosscheck geocoding accuracy with <b>Region</b> column - TBD</i>)
 * City_name (<i>geocoded from <b>Organization</b> column</i>)
 * Postal_code (<i>geocoded from <b>Organization</b> column</i>)
-* Lat_coords (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
-* Long_coord (<i>geocoded from <b>Organization</b> column, WGS84 projection</i>)
+* Lat_coords (<i>geocoded from <b>Organization</b> column</i>)
+* Long_coord (<i>geocoded from <b>Organization</b> column</i>)
 * LAU1_code (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
 * LAU1_name (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
 

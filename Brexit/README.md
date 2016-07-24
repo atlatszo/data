@@ -17,6 +17,11 @@ Changing with zoom levels, both electoral and subsidy data should be aggregated 
 * NUTS 3
 * LAU 1
 
+## Demo
+
+Building a custom map application is in the works. Until then, the data is published @ Carto:
+https://balkey.carto.com/viz/c97f6030-5179-11e6-aa76-0e05a8b3e3d7/embed_map
+
 ## Data model
 
 For each transaction, the following attributes are scraped, if available. Generally, missing records are indicated as "N/A".

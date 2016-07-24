@@ -38,13 +38,13 @@ For each transaction, the following attributes are scraped, if available. Genera
 * State (*regional tag attained from source data as a helper for geocoding*)
 * Region (*regional tag attained from source data as a helper for geocoding*)
 * Geocoding_round (*a descriptive record indicating the suspected accuracy of geocoding processes - the lower the round nr. the more accurate is geocoding*)
-* County (*geocoded from **Organization** column for aggregation and to crosscheck geocoding accuracy with **Region** column - TBD*)
-* City_name (*geocoded from **Organization** column*)
-* Postal_code (*geocoded from **Organization** column*)
-* Lat_coords (*geocoded from **Organization** column*)
-* Long_coord (*geocoded from **Organization** column*)
-* LAU1_code (*geocoded from the **Lat_coords**, **Long coords** columns*)
-* LAU1_name (*geocoded from the **Lat_coords**, **Long coords** columns*)
+* County (*geocoded from __Organization__ column for aggregation and to crosscheck geocoding accuracy with **Region** column TBD*)
+* City_name (*geocoded from __Organization__ column*)
+* Postal_code (*geocoded from __Organization__ column*)
+* Lat_coords (*geocoded from __Organization__ column*)
+* Long_coord (*geocoded from __Organization__ column*)
+* LAU1_code (*geocoded from the __Lat_coords__, __Long coords__ columns*)
+* LAU1_name (*geocoded from the __Lat_coords__, __Long coords__ columns*)
 
 ## Geocoding
 

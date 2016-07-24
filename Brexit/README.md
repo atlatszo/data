@@ -1,5 +1,7 @@
 # UK Subsidies & The Referendum
 
+![UK Subsidies & The Referendum](/img/code.jpg)
+
 This is a project aimed at collecting subsidies received by the United Kingdom under the European Structural Funds programme.
 
 For now, the following programmes are collected:
@@ -26,35 +28,35 @@ https://balkey.carto.com/viz/c97f6030-5179-11e6-aa76-0e05a8b3e3d7/embed_map
 
 For each transaction, the following attributes are scraped, if available. Generally, missing records are indicated as "N/A".
 
-* Priority (<i>from P1 to P5</i>)
-* Organization (<i>the beneficiary</i>)
-* Project (<i>name of the operation</i>)
-* Type (<i>ERDF or ESF, respectively</i>)
-* Subsidy (<i>known funding amount in GBP - if there's matching funding also, it is not included</i>)
-* Matching (<i>if matching funding is available, amount in GBP</i>)
-* Total (<i>total operation cost amount in GBP</i>)
-* Start_date (<i>operation or contract start date</i>)
-* End_date (<i>operation or contract end date</i>)
-* State (<i>regional tag attained from source data as a helper for geocoding</i>)
-* Region (<i>regional tag attained from source data as a helper for geocoding</i>)
-* Geocoding_round (<i>a descriptive record indicating the suspected accuracy of geocoding processes - the lower the round nr. the more accurate is geocoding</i>)
-* County (<i>geocoded from <b>Organization</b> column for aggregation and to crosscheck geocoding accuracy with <b>Region</b> column - TBD</i>)
-* City_name (<i>geocoded from <b>Organization</b> column</i>)
-* Postal_code (<i>geocoded from <b>Organization</b> column</i>)
-* Lat_coords (<i>geocoded from <b>Organization</b> column</i>)
-* Long_coord (<i>geocoded from <b>Organization</b> column</i>)
-* LAU1_code (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
-* LAU1_name (<i>geocoded from the <b>Lat_coords</b>, <b>Long coords</b> columns</i>)
+* Priority (*from P1 to P5*)
+* Organization (*the beneficiary*)
+* Project (*name of the operation*)
+* Type (*ERDF or ESF, respectively*)
+* Subsidy (*known funding amount in GBP - if there's matching funding also, it is not included*)
+* Matching (*if matching funding is available, amount in GBP*)
+* Total (*total operation cost amount in GBP*)
+* Start_date (*operation or contract start date*)
+* End_date (*operation or contract end date*)
+* State (*regional tag attained from source data as a helper for geocoding*)
+* Region (*regional tag attained from source data as a helper for geocoding*)
+* Geocoding_round (*a descriptive record indicating the suspected accuracy of geocoding processes - the lower the round nr. the more accurate is geocoding*)
+* County (*geocoded from **Organization** column for aggregation and to crosscheck geocoding accuracy with **Region** column - TBD*)
+* City_name (*geocoded from **Organization** column*)
+* Postal_code (*geocoded from **Organization** column*)
+* Lat_coords (*geocoded from **Organization** column*)
+* Long_coord (*geocoded from **Organization** column*)
+* LAU1_code (*geocoded from the **Lat_coords**, **Long coords** columns*)
+* LAU1_name (*geocoded from the **Lat_coords**, **Long coords** columns*)
 
 ## Geocoding
 
-Geocoding is performed by <b>Organization</b> - therefore subsidies are located according to the beneficiary's known address. Please keep in mind that this might not be the geolocation where the funding was spent, but due to the fact that there's no information provided about the approved project's geoloaction, this still seems the best - and fairest - method.
+Geocoding is performed by **Organization** - therefore subsidies are located according to the beneficiary's known address. Please keep in mind that this might not be the geolocation where the funding was spent, but due to the fact that there's no information provided about the approved project's geoloaction, this still seems the best - and fairest - method.
 
-Where <b>Region</b> column was available, we included that information when geolocating the beneficiary's address - therefore trying to get the geographically most accurate result when there were multiple addresses available for the given Organization name accross the UK. <b>State</b> column was always included in geolocation.
+Where **Region** column was available, we included that information when geolocating the beneficiary's address - therefore trying to get the geographically most accurate result when there were multiple addresses available for the given Organization name accross the UK. **State** column was always included in geolocation.
 
-Geolocation was done by the Google Places API Web Service and the Google Maps Geocoding API. Unsuccesfull results were geocoded in severeal rounds, gradually leaving out <b>Region</b>, <b>State</b> then country ("United Kingdom") additions. Only addresses within the UK were considered successfull.
+Geolocation was done by the Google Places API Web Service and the Google Maps Geocoding API. Unsuccesfull results were geocoded in severeal rounds, gradually leaving out **Region**, **State** then country ("United Kingdom") additions. Only addresses within the UK were considered successfull.
 
-Minor transformations were made on the <b>Organization</b> name, to get better results. This could be further improved.
+Minor transformations were made on the **Organization** name, to get better results. This could be further improved.
 
 With this method, about 90 % of all transactions could be geocoded.
 

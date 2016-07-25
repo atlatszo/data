@@ -20,7 +20,7 @@ Changing with zoom levels, both electoral and subsidy data should be aggregated 
 ## Demo
 
 Building a custom map application is in the works. Until then, the data is published @ Carto:
-https://balkey.carto.com/viz/c97f6030-5179-11e6-aa76-0e05a8b3e3d7/embed_map
+https://balkey.carto.com/viz/ddd30c32-528a-11e6-9801-0ee66e2c9693/embed_map
 
 ## Data model
 
@@ -70,8 +70,8 @@ Subsidy data was scraped from the following sources:
 * [Scotland - Highlands and Islands ESFF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17404/HIESFJuly2013)
 * [Scotland - Lowlands and Uplands ERDF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSERDFPojectsJul2013)
 * [Scotland - Lowlands and Uplands ESF 2007-2013](http://www.gov.scot/Topics/Business-Industry/support/17404/StructuralFunds2007-201/17405/LUPSESFProjectsJul13)
-* To be done: [Wales ERDF, ESF 2007-2013](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
-* [Wales ERDF, ESF 2014-2020](http://gov.wales/funding/eu-funds/2014-2020/looking/approved-projects/?lang=en)
+* [Wales ERDF, ESF 2007-2013](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
+* [~~Wales ERDF, ESF 2014-2020~~](http://gov.wales/funding/eu-funds/2014-2020/looking/approved-projects/?lang=en)
 * [Northern Ireland ERDF, ESF 2007-2013](http://successes.eugrants.org/default.aspx)
 
 ## License

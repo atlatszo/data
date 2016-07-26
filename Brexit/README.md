@@ -86,6 +86,8 @@ Population data was acquired from the following sources:
 
 ### Spatial data
 
+Spatial data was downloaded from the following sources. In the case of Northern Ireland, the original boundaries available in the source data were dissolved into 11 districts, according to the 2015 regulation.
+
 * <a href="https://geoportal.statistics.gov.uk/Docs/Boundaries/LAU_level_1_(E+W)_2014_Boundaries_(Full_Extent).zip" target="_blank">England and Wales - LAU 1 2014 boundaries from the Open Geography Portal</a>
 * <a href="http://www.nisra.gov.uk/geography/SOA.htm" target="_blank">Northern Ireland - LAU1 were created on the basis of Super Output Areas (SOA) with lookup tables available on the NISRA website</a>
 * <a href="http://sedsh127.sedsh.gov.uk/arcgis/rest/services/ScotGov/StatisticalUnits/MapServer/exts/InspireFeatureDownload/service?Service=WFS&count=10000&REQUEST=GetFeature&VErsion=2.0.0&TYPENAMES=SU:SG_LAULevel1_2011" target="_blank">Scotland - LAU1 downloaded from the Scottish Government's website</a>

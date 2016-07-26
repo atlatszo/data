@@ -19,8 +19,10 @@ Changing with zoom levels, both electoral and subsidy data should be aggregated 
 
 ## Demo
 
-Building a custom map application is in the works. Until then, the data is published @ Carto:
-https://balkey.carto.com/viz/ddd30c32-528a-11e6-9801-0ee66e2c9693/embed_map
+Building a custom map application is in the works. Until then, the data is published @ Carto.
+
+* [All subsidies received by LAU1](https://balkey.carto.com/viz/ddd30c32-528a-11e6-9801-0ee66e2c9693/embed_map)
+* [Subsidies per capita by LAU1](https://balkey.carto.com/viz/0be19286-5346-11e6-9a2a-0e05a8b3e3d7/embed_map)
 
 ## Data model
 

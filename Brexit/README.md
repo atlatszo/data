@@ -81,7 +81,7 @@ Subsidy data was scraped from the following sources:
 
 Population data was acquired from the following sources:
 
-* [Scotland - LAU1/NUTS4 population estimates by sex and single year of age 2011](http://www.nrscotland.gov.uk/files//statistics/population-estimates/special-area/NUTS/2014nuts-pop-est-table3.xlsx)
+* [Scotland - LAU1/NUTS4 population estimates by sex and single year of age 2011](http://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/special-area-population-estimates/nuts-population-estimates)
 * [Northern Ireland - List of districts in Northern Ireland by population from the 2011 Census](https://en.wikipedia.org/wiki/List_of_districts_in_Northern_Ireland_by_population)
 * [England, Wales - Mid 2011 population estimates (Census based) on 2011 wards ](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/wardlevelmidyearpopulationestimatesexperimental)
 

@@ -62,6 +62,8 @@ To get the parenting LAU1 units name for each transaction, we used the transacti
 
 ## Datasources
 
+### Subsidy data
+
 Subsidy data was scraped from the following sources:
 
 * [England ERDF 2007-2013](https://www.gov.uk/guidance/erdf-programmes-progress-and-achievements)
@@ -73,6 +75,19 @@ Subsidy data was scraped from the following sources:
 * [Wales ERDF, ESF 2007-2013](http://gov.wales/funding/eu-funds/previous/searchprojects/?lang=en)
 * [~~Wales ERDF, ESF 2014-2020~~](http://gov.wales/funding/eu-funds/2014-2020/looking/approved-projects/?lang=en)
 * [Northern Ireland ERDF, ESF 2007-2013](http://successes.eugrants.org/default.aspx)
+
+
+### Population data
+
+Population data was acquired from the following sources:
+
+* [Scotland - LAU1/NUTS4 population estimates by sex and single year of age 2011](http://www.nrscotland.gov.uk/files//statistics/population-estimates/special-area/NUTS/2014nuts-pop-est-table3.xlsx)
+* [Northern Ireland - List of districts in Northern Ireland by population from the 2011 Census](https://en.wikipedia.org/wiki/List_of_districts_in_Northern_Ireland_by_population)
+* [England, Wales - Mid 2011 population estimates (Census based) on 2011 wards ](https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/wardlevelmidyearpopulationestimatesexperimental)
+
+### Spatial data
+
+* Coming soon!
 
 ## License
 

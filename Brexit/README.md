@@ -86,7 +86,7 @@ Population data was acquired from the following sources:
 
 ### Spatial data
 
-* Coming soon!
+* <a href="http://www.nisra.gov.uk/geography/SOA.htm" target="_blank">Northern Ireland: LAU1 were created on the basis of Super Output Areas (SOA) with lookup tables available on the NISRA website</a>
 
 ## License
 

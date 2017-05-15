@@ -1,6 +1,6 @@
 # EU tamogatasok terkepen
 
-How to:
+How to :
 
 1. Provide the following variables in the config.py:<br/>
     username = "your_MySQL_username"<br/>

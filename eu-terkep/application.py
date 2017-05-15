@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+#from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import re
 from flask import request
 from werkzeug.serving import WSGIRequestHandler

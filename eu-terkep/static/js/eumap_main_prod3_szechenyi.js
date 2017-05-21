@@ -4069,7 +4069,7 @@ $(document).ready(function(){
                         map.on('movestart', function() {
                             geojson.resetStyle(markersById[searchHamlet]);
                         });
-                        info.update(objectSearchedTest['feature']['properties']);
+                        //info.update(objectSearchedTest['feature']['properties']);
                     }
                 });
             }

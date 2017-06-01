@@ -3355,10 +3355,10 @@ function zoomToFeature(e) {
 
         if (layer.properties && layer.properties.TEL_NEV) {
             //var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='//adat.atlatszo.hu/eu-kereso/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
-            var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
+            //var popupContent =L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
         }
-        pop = layer.bindPopup(popupContent);
-        pop.openPopup();
+        //pop = layer.bindPopup(popupContent);
+        //pop.openPopup();
     }
 }
 
@@ -3385,8 +3385,8 @@ function onEachFeature(feature, layer) {
 
         if (feature.properties && feature.properties.TEL_NEV) {
             //var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<a href='//adat.atlatszo.hu/eu-kereso/?varos=" + encodeURIComponent(feature.properties.TEL_NEV)+"' target='_blank'><div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'>"+feature.properties.TEL_NEV+":<br>az összes pályázat listázása"+"</div></a>");
-            var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
-            layer.bindPopup(content);
+            //var content = L.popup({autoPanPaddingTopLeft: L.point(10, 100), autoPanPaddingBottomRight: L.point(350, 10)}).setContent("<div class='popupButton' data-uid='"+feature.properties.TEL_NEV+"'><div class='popup_big'>"+feature.properties.TEL_NEV+"</div><div class='popup_small'>"+localization["popUpButton"][language]+"</div>"+"</div>");
+            //layer.bindPopup(content);
         }
     }
 
@@ -4069,7 +4069,7 @@ $(document).ready(function(){
                         map.on('movestart', function() {
                             geojson.resetStyle(markersById[searchHamlet]);
                         });
-                        //info.update(objectSearchedTest['feature']['properties']);
+                        info.update(objectSearchedTest['feature']['properties']);
                     }
                 });
             }

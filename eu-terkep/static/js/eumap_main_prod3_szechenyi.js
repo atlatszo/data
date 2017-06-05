@@ -1063,11 +1063,11 @@ function renderPie (dataToRender) {
                         $('.city_country_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][0])));
                         $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][1])));
                         if (language == "HU") {
-                            var value = parseFloat($(this).attr('data-value'))/24;
+                            var value = parseFloat($(this).attr('data-value'))/26;
                             $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " " + localization["aidMetric"][language]);
                         }
                         else if (language == "EN") {
-                            var value = parseFloat(($(this).attr('data-value')*1000000)/EURHUF)/24;
+                            var value = parseFloat(($(this).attr('data-value')*1000000)/EURHUF)/26;
                             $('.info_ammount.original_info').text(localization["aidMetric"][language] + (value.format(0, 3, ",")).toString());
                         }
                     }
@@ -1076,11 +1076,11 @@ function renderPie (dataToRender) {
                         $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[metricPie][2])));
                         //$('.info_ammount.original_info').text(((((detailedSum*1000000)/9)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " Ft");
                         if (language === "HU") {
-                            var value = ((parseFloat($(this).attr('data-value'))*1000000)/24)/population.slice(-1)[0]['value'];
+                            var value = ((parseFloat($(this).attr('data-value'))*1000000)/26)/population.slice(-1)[0]['value'];
                             $('.info_ammount.original_info').text((value.format(0, 3, " ")).toString() + " " + localization["currency"][language]);
                         }
                         else if (language === "EN") {
-                            var value = (((parseFloat($(this).attr('data-value'))*1000000)/24)/EURHUF)/population.slice(-1)[0]['value'];
+                            var value = (((parseFloat($(this).attr('data-value'))*1000000)/26)/EURHUF)/population.slice(-1)[0]['value'];
                             $('.info_ammount.original_info').text(localization["currency"][language] + (value.format(0, 3, ",")).toString());
                         }
                     }
@@ -1125,18 +1125,18 @@ function renderPie (dataToRender) {
                     detailsResetHighlight ();
                     if (metric === "DONATION") {
                         if (language === "HU") {
-                            $('.info_ammount.original_info').text((detailedSum/24).format(0, 3, " ").toString() +  " " + localization["aidMetric"][language]);
+                            $('.info_ammount.original_info').text((detailedSum/26).format(0, 3, " ").toString() +  " " + localization["aidMetric"][language]);
                         }
                         else if (language === "EN") {
-                            $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/24)*1000000)/EURHUF).format(0, 3, ",").toString());
+                            $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/26)*1000000)/EURHUF).format(0, 3, ",").toString());
                         }
                     }
                     else if (metric === "CAPITA") {
                         if (language === "HU") {
-                            $('.info_ammount.original_info').text(((((detailedSum*1000000)/24)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " " + localization["currency"][language]);
+                            $('.info_ammount.original_info').text(((((detailedSum*1000000)/26)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " " + localization["currency"][language]);
                         }
                         else if (language === "EN") {
-                            $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/24)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+                            $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/26)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
 
                         }
                     }
@@ -1755,14 +1755,14 @@ function renderRankChart (data) {
         if (language === "HU") {
             data.forEach(function(d) {
                 //d.value = +d.capita*1000000/9;
-                d.value = +d.value/24;
+                d.value = +d.value/26;
                 d.name = d.name;
             });
         }
         else if (language === "EN") {
             data.forEach(function(d) {
                 //d.value = +d.capita*1000000/9;
-                d.value = +((d.value/24)*1000000)/EURHUF;
+                d.value = +((d.value/26)*1000000)/EURHUF;
                 d.name = d.name;
             });
         }
@@ -1771,14 +1771,14 @@ function renderRankChart (data) {
         if (language === "HU") {
             data.forEach(function(d) {
                 //d.value = +d.capita*1000000/9;
-                d.value = +d.capita/24;
+                d.value = +d.capita/26;
                 d.name = d.name;
             });
         }
         else if (language === "EN") {
             data.forEach(function(d) {
                 //d.value = +d.capita*1000000/9;
-                d.value = +(d.capita/24)/EURHUF;
+                d.value = +(d.capita/26)/EURHUF;
                 d.name = d.name;
             });
         }
@@ -1786,10 +1786,10 @@ function renderRankChart (data) {
     else {
         data.forEach(function(d) {
             if (overlayState === "plain") {
-                d.value = +((d.capita/24) / categories['Summa'])*100;
+                d.value = +((d.capita/26) / categories['Summa'])*100;
             }
             else {
-                d.value = +((d.capita/24) / categories[metricPie])*100;
+                d.value = +((d.capita/26) / categories[metricPie])*100;
             }
             d.name = d.name;
         });
@@ -3448,13 +3448,13 @@ info.update = function (props) {
             }
             if (language === "HU") {
                 this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
-                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/24).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>' +
-                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + (props[metric]/24).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>';
+                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/26).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>' +
+                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + (props[metric]/26).format(0, 3, ' ') +  " " + localization["aidMetric"][language]+'</div></div>';
             }
             else if (language === "EN") {
                 this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
-                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["aidMetric"][language] + (((props[metric]/24)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>' +
-                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + localization["aidMetric"][language] + (((props[metric]/24)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>';
+                                      '<b>' + '<h4 class="original_info">'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["aidMetric"][language] + (((props[metric]/26)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>' +
+                                      '<b>' + '<h4 class="hidden_info" >'+localization["cashIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_ammount hidden_info">' + localization["aidMetric"][language] + (((props[metric]/26)*1000000)/EURHUF).format(0, 3, ',') + '</div></div>';
 
             }
         }
@@ -3482,13 +3482,13 @@ info.update = function (props) {
             }
             if (language === "HU") {
                 this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
-                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/24).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
-                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + (props[metric]/24).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
+                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + (props[metric]/26).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
+                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + (props[metric]/26).format(0, 3, ' ') + ' ' + localization["currency"][language] +'</div></div>';
             }
             else if (language === "EN") {
                 this._div.innerHTML = '<div class="info_header">'+nameSpace+'</div>' +
-                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["currency"][language] + ((props[metric]/24)/EURHUF).format(0, 3, ',') +'</div></div>';
-                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + localization["currency"][language] + ((props[metric]/24)/EURHUF).format(0, 3, ',') +'</div></div>';
+                                      '<b>' + '<h4 class="original_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount original_info">' + localization["currency"][language] + ((props[metric]/26)/EURHUF).format(0, 3, ',') +'</div></div>';
+                                      '<b>' + '<h4 class="hidden_info">'+localization["humanIconSecondary"][language]+'</h4>' + '</b><div class="info_wrapper"><div class="info_category"></div><div class="info_ammount hidden_info">' + localization["currency"][language] + ((props[metric]/26)/EURHUF).format(0, 3, ',') +'</div></div>';
             }
         }
         else {
@@ -3625,14 +3625,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " + localization["aidMetric"][language]+'<br>' : "+ " + localization["aidMetric"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " + localization["aidMetric"][language]+'<br>' : "+ " + localization["aidMetric"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/24)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/24)*1000000)/EURHUF).format(0, 3, ',') +'<br>' : "+ ")+'</div></div>';
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/26)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/26)*1000000)/EURHUF).format(0, 3, ',') +'<br>' : "+ ")+'</div></div>';
                 }
             }
             return div;
@@ -3645,14 +3645,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ ' +localization["currency"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ ' +localization["currency"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_m(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+localization["currency"][language] + (((grades[i]/24)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/24)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
+                        '<div class="legend_text2">'+localization["currency"][language] + (((grades[i]/26)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/26)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
                 }
             }
             return div;
@@ -3681,14 +3681,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/24)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/24)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/26)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] +  (((grades[i + 1]/26)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
                 }
             }
             return div;
@@ -3701,14 +3701,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " +localization["currency"][language] + '<br>' :'+ '+localization["currency"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " +localization["currency"][language] + '<br>' :'+ '+localization["currency"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_k(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+ localization["currency"][language] + (((grades[i]/24)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/24)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
+                        '<div class="legend_text2">'+ localization["currency"][language] + (((grades[i]/26)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/26)/EURHUF).format(0, 3, ',') +'<br>' :'+ ')+'</div></div>';
                 }
             }
             return div;
@@ -3736,14 +3736,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " + localization["aidMetric"][language] +'<br>' :"+ " + localization["aidMetric"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/24)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] + (((grades[i + 1]/24)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
+                        '<div class="legend_text2">'+ localization["aidMetric"][language] + ((((grades[i]/26)*1000000)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["aidMetric"][language] + (((grades[i + 1]/26)*1000000)/EURHUF).format(0, 3, ',') +'<br>' :"+ ")+'</div></div>';
                 }
             }
             return div;
@@ -3757,14 +3757,14 @@ legend.onAdd = function (map) {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">'+((grades[i]/24)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/24).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ '+localization["currency"][language])+'</div></div>';
+                        '<div class="legend_text2">'+((grades[i]/26)+1).format(0, 3, ' ') + (grades[i + 1] ? ' &ndash; ' + (grades[i + 1]/26).format(0, 3, ' ') + " " + localization["currency"][language] +'<br>' :'+ '+localization["currency"][language])+'</div></div>';
                 }
             }
             else if (language === "EN") {
                 for (var i = 0; i < grades.length; i++) {
                     div.innerHTML +=
                         '<div class="legend_elem" data-range_start="'+(grades[i]+1)+'" data-range_end="'+grades[i + 1]+'">'+'<div class="legend_icon" style="background:' + getColor_t(grades[i] + 1, metric) + '"></div>' +
-                        '<div class="legend_text2">' + localization["currency"][language] + (((grades[i]/24)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/24)/EURHUF).format(0, 3, ',') + '<br>' :'+ ')+'</div></div>';
+                        '<div class="legend_text2">' + localization["currency"][language] + (((grades[i]/26)/EURHUF)+1).format(0, 3, ',') + (grades[i + 1] ? ' &ndash; ' + localization["currency"][language] + ((grades[i + 1]/26)/EURHUF).format(0, 3, ',') + '<br>' :'+ ')+'</div></div>';
                 }
             }
             return div;
@@ -4225,10 +4225,10 @@ $(document).ready(function(){
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed[metricPie])));
                     var selectedValue = $('.info_ammount.original_info').text();
                     if (language === "HU") {
-                        $('.info_ammount.original_info').text(((((pieSelected*1000000)/24)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
+                        $('.info_ammount.original_info').text(((((pieSelected*1000000)/26)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
                     }
                     else if (language === "EN") {
-                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((pieSelected*1000000)/24)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((pieSelected*1000000)/26)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
                     }
                 }
                 else {
@@ -4236,10 +4236,10 @@ $(document).ready(function(){
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][2])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
                     if (language === "HU") {
-                        $('.info_ammount.original_info').text(((((detailedSum*1000000)/24)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
+                        $('.info_ammount.original_info').text(((((detailedSum*1000000)/26)/population.slice(-1)[0]['value'])).format(0, 3, " ").toString() + " "+localization["currency"][language]);
                     }
                     else if (language === "EN") {
-                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/24)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
+                        $('.info_ammount.original_info').text(localization["currency"][language] + (((((detailedSum*1000000)/26)/EURHUF)/population.slice(-1)[0]['value'])).format(0, 3, ",").toString());
                     }
                 }
             }
@@ -4468,10 +4468,10 @@ $(document).ready(function(){
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country[overlayState][1])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed[metricPie])));
                     if (language === "HU") {
-                        $('.info_ammount.original_info').text((pieSelected/24).format(0, 3, " ").toString() + " "+ localization["aidMetric"][language]);
+                        $('.info_ammount.original_info').text((pieSelected/26).format(0, 3, " ").toString() + " "+ localization["aidMetric"][language]);
                     }
                     else if (language === "EN") {
-                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((pieSelected/24)*1000000)/EURHUF).format(0, 3, ",").toString());
+                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((pieSelected/26)*1000000)/EURHUF).format(0, 3, ",").toString());
                     }
                 }
                 else {
@@ -4479,10 +4479,10 @@ $(document).ready(function(){
                     $('.city_county_pos').text(JSON.parse(JSON.stringify(ranking_country['Summa'][1])));
                     render_chart("1", JSON.parse(JSON.stringify(timeSeries_detailed['Summa'])));
                     if (language === "HU") {
-                        $('.info_ammount.original_info').text((detailedSum/24).format(0, 3, " ").toString() + " " + localization["aidMetric"][language]);
+                        $('.info_ammount.original_info').text((detailedSum/26).format(0, 3, " ").toString() + " " + localization["aidMetric"][language]);
                     }
                     else if (language === "EN") {
-                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/24)*1000000)/EURHUF).format(0, 3, ",").toString());
+                        $('.info_ammount.original_info').text(localization["aidMetric"][language] + (((detailedSum/26)*1000000)/EURHUF).format(0, 3, ",").toString());
                     }
                 }
             }

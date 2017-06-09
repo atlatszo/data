@@ -4984,7 +4984,7 @@ $(document).ready(function(){
             $.ajax({
                 dataType: "json",
                 async: true,
-                url: "resources/telepules_index.json",
+                url: "resources/szechenyi/telepules_index.json",
                 success: function(data) {
                     telepules = data;
                     indexHamlet = L.geoJson(telepules, {onEachFeature: onEachFeatureIndex});
